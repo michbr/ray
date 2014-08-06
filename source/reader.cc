@@ -236,11 +236,12 @@ void Reader::tokenize (string line) {
 		vup->push_back(arguments[8]);
 		vup->push_back(arguments[9]);
 		cameras.push_back(new Camera(name, arguments[0], arguments[1], arguments[2], arguments[3], vpn, vup));
-		cout << "Adding camera." << endl;
+		renderer = new Renderer(cameras.back());
+		//cout << "Adding camera." << endl;
 	}
-
+	//TODO
 	else if (token[0] == 'w') { //read in a wire frame?
-		stringstream s;
+		/*stringstream s;
 		string trash;
 		string name;
 		s << token;
@@ -259,7 +260,7 @@ void Reader::tokenize (string line) {
 			if (cameras[i]->get_name().compare(name) == 0) {
 				cameras[i]->add_frame(new Wireframe(name, arguments[0], arguments[1], arguments[2], arguments[3], 1));
 			}
-		}
+		}*/
 	}
 	
 	else if (token[0] == 'e') {
@@ -289,7 +290,7 @@ void Reader::tokenize (string line) {
 		int depth;
 		s >> trash >> name >> width >> height >> depth;
 		for (int i = 0; i < cameras.size(); i++) {
-			cameras[i]->add_frame(new Wireframe(name, -(width/2), -(height/2), width/2, height/2, depth));
+			renderer->set_frame(new Wireframe(name, -(width/2), -(height/2), width/2, height/2, depth));
 		}
 		//cout << "pushing back: "  << name << endl;
 		files.push_back(name);
@@ -360,7 +361,7 @@ void Reader::write (string file_name) {
 	output.close();
 }
 
-void Reader::wireframe (string file_name) {
+/*void Reader::wireframe (string file_name) {
 	string file;
 	for (int i = 0; i < cameras.size(); i++) {
 		if (cameras[i]->hasFrame()) {
@@ -395,12 +396,12 @@ void Reader::wireframe (string file_name) {
 			output.close();
 		}
 	}
-}
+}*/
 
 void Reader::raycast () {
 	string file = files[0];
 	for (int i = 0; i < cameras.size(); i++) {
-		if (cameras[i]->hasFrame()) {
+		if (renderer->hasFrame()) {
 			
 			//vector<Group *> copy = vector<Group *>();
 			//for (int j = 0; j < groups.size(); j++) {
@@ -408,7 +409,7 @@ void Reader::raycast () {
 			//	copy.push_back(temp);
 			//}
 			//cameras[i]->prepare_wireframe(copy);
-			cameras[i]->prepare_raycast(faces, elipses, lights, materials);
+			renderer->prepare_raycast(faces, elipses, lights, materials);
 			ofstream output;
 			//cout << cameras.size() << endl;
 			//if (cameras.size() > 1) {
@@ -434,7 +435,7 @@ void Reader::raycast () {
 			s >> file_name;
 		//	cout << "file name: " << file_name << endl;
 			output.open(file_name.c_str());
-			output << *(cameras[i]);
+			output << (*renderer);
 			output.close();
 		}
 	}

@@ -10,6 +10,8 @@
 #include "camera.h"
 #include "face.h"
 
+#include "renderer.h"
+
 #include <vector>
 
 class Reader {
@@ -23,7 +25,9 @@ class Reader {
 		std::vector<Light *> lights;
 		std::vector<std::string> files;
 		
+		
 		Group * current_group;
+		Renderer * renderer;
 		std::string current_material;
 		Material materials;
 		void tokenize(std::string);
