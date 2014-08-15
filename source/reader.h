@@ -13,9 +13,11 @@
 #include "renderer.h"
 
 #include <vector>
+#include <unordered_map>
 
 class Reader {
 	private:
+		std::unordered_map<std::string, Material *> matMap;
 		std::vector<int> used_vertices;
 		std::vector<Vertex *> vertices;
 		std::vector<Face *> faces;
@@ -29,7 +31,7 @@ class Reader {
 		Group * current_group;
 		Renderer * renderer;
 		std::string current_material;
-		Material materials;
+		Material * material;
 		void tokenize(std::string);
 	public:
 		Reader();

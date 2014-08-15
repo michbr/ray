@@ -3,14 +3,16 @@
 #include "face.h"
 #include "group.h"
 #include "wireframe.h"
+#include "materialparser.h"
 
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <ctime>
 
 using namespace std;
 
-Reader::Reader() {
+Reader::Reader() : matMap () {
 	//vertices;
 	//used_vertices;
 	//groups;
@@ -32,13 +34,13 @@ void Reader::tokenize (string line) {
 
 	if (token[0] == 'v') {
 		Vertex * vert = new Vertex(line);
-		cout << "Adding Vertex:\n\t" << *vert << endl;
+		//cout << "Adding Vertex:\n\t" << *vert << endl;
 		vertices.push_back(vert);
 	}
 	
 	else if (token[0] == 'f') {
-		current_group->add_face(line, current_material, &vertices, &faces);
-		cout << "Adding face." << endl;
+		current_group->add_face(line, matMap.at(current_material), &vertices, &faces);
+		cout << "Adding face " << faces.size() << endl;
 	}
 	else if (token[0] == 'g'){
 		stringstream s;
@@ -264,7 +266,7 @@ void Reader::tokenize (string line) {
 	}
 	
 	else if (token[0] == 'e') {
-		current_group->add_elipse(line, current_material, &vertices, &elipses);
+		current_group->add_elipse(line, matMap.at(current_material), &vertices, &elipses);
 		
 	}
 	else if (token[0] == 'l' ) {
@@ -301,7 +303,13 @@ void Reader::tokenize (string line) {
 		string trash, name;
 		s >> trash >> name;
 		if (trash.compare("mtllib") == 0) {
-			materials.load_materials(name);
+			MaterialParser p;
+			p.tokenize(name);
+			vector<Material *> mats = p.getMaterials();
+			for (int i = 0; i < mats.size(); i++) {
+				matMap[mats[i]->getName()] = mats[i];
+			}
+//			materials.load_materials(name); //TODO
 		}
 	}
 	else if (token[0] == 'u') {
@@ -409,7 +417,14 @@ void Reader::raycast () {
 			//	copy.push_back(temp);
 			//}
 			//cameras[i]->prepare_wireframe(copy);
-			renderer->prepare_raycast(faces, elipses, lights, materials);
+			time_t t;
+			time_t after;
+			time(&t);
+			renderer->prepare_raycast(faces, elipses, lights);
+			time(&after);
+			//cout << after - t << endl;
+			cout << (after - t) / 60.0 << endl;
+
 			ofstream output;
 			//cout << cameras.size() << endl;
 			//if (cameras.size() > 1) {

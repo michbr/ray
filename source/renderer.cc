@@ -1,6 +1,7 @@
 #include "renderer.h"
 #include "MatMath.h"
-#include <iostream>
+#include <cmath>
+//#include <iostream>
 
 using namespace std;
 
@@ -54,7 +55,7 @@ void Renderer::fill(int x, int y, int r, int g, int b) {
 	//}
 }
 
-vector<int> * Renderer::find_closest_face(std::vector<double> * source, std::vector<double> * destination, const std::vector<Face *> & faces, const vector<Elipse *> & elipses, const vector<Light *> & lights, const Material & materials, int depth, double * distance, bool * found) {
+vector<int> * Renderer::find_closest_face(std::vector<double> * source, std::vector<double> * destination, const std::vector<Face *> & faces, const vector<Elipse *> & elipses, const vector<Light *> & lights, int depth, double * distance, bool * found) {
 	// cout << "find face" << endl;
 	double d;
 	*found = false;
@@ -64,8 +65,9 @@ vector<int> * Renderer::find_closest_face(std::vector<double> * source, std::vec
 
 	double current_distance;
 	double min_distance = 0;
+	double T;
 	for (int i = 0; i < faces.size(); i++) {
-		double T;
+		
 		vector<double> * temp = faces[i]->intersect(source, destination, &T);
 		if (faces[i]->is_inside(temp)) {
 			if (T > 0) {
@@ -74,26 +76,35 @@ vector<int> * Renderer::find_closest_face(std::vector<double> * source, std::vec
 				if (!(*found)) {
 					min_distance = current_distance;
 					face = faces[i];
+
 					point = temp;
 					*found = true;
 				}
 				else if (min_distance > current_distance) {
 					min_distance = current_distance;
 					face = faces[i];
+					//point->clear();
+					//point->~vector();
+					delete(point);
 					point = temp;
 				}
 			}
-
+			else {
+				delete(temp);
+			}
+		}
+		else {
+			delete(temp);
 		}
 	}
 	*distance = min_distance;
 	if (*found) {
-		return color_face_pixel(source, point, face, faces, elipses, lights, materials, depth);
+		return color_face_pixel(source, point, face, faces, elipses, lights, depth);
 	}
 
 }
 
-vector<int> * Renderer::find_closest_elipse(std::vector<double> * source, std::vector<double> * destination, const std::vector<Face *> & faces, const std::vector<Elipse *> & elipses, const vector<Light *> & lights, const Material & materials, int depth, double * distance, bool * found) {
+vector<int> * Renderer::find_closest_elipse(std::vector<double> * source, std::vector<double> * destination, const std::vector<Face *> & faces, const std::vector<Elipse *> & elipses, const vector<Light *> & lights, int depth, double * distance, bool * found) {
 	// cout << "starting" << endl;
 	double d;
 	*found = false;
@@ -133,27 +144,34 @@ vector<int> * Renderer::find_closest_elipse(std::vector<double> * source, std::v
 	//cout << "distance" << endl;
 	if (*found) {
 		//cout << "returning" << endl;
-		return color_elipse_pixel(source, point, elipse, faces, elipses, lights, materials, depth);
+		return color_elipse_pixel(source, point, elipse, faces, elipses, lights, depth);
 	}
 }
 
-vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vector<double> * destination, Face * face, const vector<Face *> &faces, const vector<Elipse *> &elipses, const std::vector<Light * > & lights, const Material &materials, int depth) {
+vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vector<double> * destination, Face * face, const vector<Face *> &faces, const vector<Elipse *> &elipses, const std::vector<Light * > & lights, int depth) {
 	//cout << "got here" << endl;   
 	vector<int> * final = new vector<int>();
 	int r, g, b;
 	r = g = b = 0;
 	//cout << "got here" << endl;
-	vector<int> * ambient = materials.color_ambient(face->get_material(), lights[0]->get_color());
+	vector<int> * ambient = face->get_material()->color_ambient(lights[0]->get_color());
 	// cout << "got here" << endl;
 	r += (*ambient)[0];
 	g += (*ambient)[1];
 	b += (*ambient)[2];
+	ambient->clear();
 	ambient->~vector();
 
 	if (depth > 1) {
 		const vector<double> * normal = face->get_normal();
 		vector<double> * L = subtract(source, destination);
-		vector<double> * new_dest = add(subtract(scale(normal, 2 * dot_product(L, normal)), L), destination);
+		vector<double> * scl = scale(normal, 2 * dot_product(L, normal));
+		vector<double> * sbt = subtract(scl, L);
+		vector<double> * new_dest = add(sbt, destination);
+		sbt->clear();
+		sbt->~vector();
+		scl->clear();
+		scl->~vector();
 		//double dot = dot_product(subtract(source, destination), normal);
 		//vector<double> * p = scale(normal, dot);
 		//vector<double> * q = add(destination, p);
@@ -171,86 +189,152 @@ vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vect
 
 
 		double f_dist;
-		double e_dist;
+		//double e_dist;
 
 		bool found_face = false;
 		bool found_elipse = false;
 		//cout << "color face" << endl;
-		vector<int> * reflective = find_closest_face(destination, new_dest, faces, elipses, lights, materials, depth - 1, &f_dist, &found_face);
-		vector<int> * sphere = find_closest_elipse(destination, new_dest, faces, elipses, lights, materials, depth - 1, &e_dist, &found_elipse);
+		vector<int> * reflective = find_closest_face(destination, new_dest, faces, elipses, lights, depth - 1, &f_dist, &found_face);
+	//	vector<int> * sphere = find_closest_elipse(destination, new_dest, faces, elipses, lights, depth - 1, &e_dist, &found_elipse);
 		//cout << "after find" << endl;
 
 		vector<double> * dest;
 		Light * reflection;
 		//string mat;
-		if (found_face && found_elipse) {
+		/*if (found_face && found_elipse) {
 			//  cout << "found both" << endl;
 			if (f_dist < e_dist) {
-				dest = scale(normalize(subtract(new_dest, destination)), f_dist);
+				vector<double> * sbt = subtract(new_dest, destination);
+				vector<double> * norm = normalize(sbt);
+				dest = scale(norm, f_dist);
 				reflection = new Light((*dest)[0], (*dest)[1], (*dest)[2], 1, (*reflective)[0], (*reflective)[1], (*reflective)[2]);
+				sbt->clear();
+				sbt->~vector();
+				norm->clear();
+				norm->~vector();
 			}
 			else {
-				dest = scale(normalize(subtract(new_dest, destination)), e_dist);
+				vector<double> * sbt = subtract(new_dest, destination);
+				vector<double> * norm = normalize(sbt);
+				dest = scale(norm, e_dist);
 				reflection = new Light((*dest)[0], (*dest)[1], (*dest)[2], 1, (*sphere)[0], (*sphere)[1], (*sphere)[2]);
-			}
+				sbt->clear();
+				sbt->~vector();
+				norm->clear();
+				norm->~vector();
+			}*/
 
-		}
-		else if (found_face) {
+		//}
+		//else
+		if (found_face) {
 			//  cout << found_face << endl;
-			dest = scale(normalize(subtract(new_dest, destination)), f_dist);
+			vector<double> * sbt = subtract(new_dest, destination);
+			vector<double> * norm = normalize(sbt);
+			dest = scale(norm, f_dist);
 			reflection = new Light((*dest)[0], (*dest)[1], (*dest)[2], 1, (*reflective)[0], (*reflective)[1], (*reflective)[2]);
+			sbt->clear();
+			sbt->~vector();
+			norm->clear();
+			norm->~vector();
 		}
-		else if (found_elipse){
-			dest = scale(normalize(subtract(new_dest, destination)), e_dist);
+		/*else if (found_elipse){
+			vector<double> * sbt = subtract(new_dest, destination);
+			vector<double> * norm = normalize(sbt);
+			dest = scale(norm, e_dist);
 			reflection = new Light((*dest)[0], (*dest)[1], (*dest)[2], 1, (*sphere)[0], (*sphere)[1], (*sphere)[2]);
-		}
+			sbt->clear();
+			sbt->~vector();
+			norm->clear();
+			norm->~vector();
+		}*/
 		//cout << "got light color" << endl;
 		//reflective->~vector();
 		//sphere->~vector();
 
-		if (found_face || found_elipse) {
-			vector<int> * reflection_color = materials.color_specular(face->get_material(), reflection->get_color(), 1);
+		if (found_face) {// || found_elipse) {
+			vector<int> * reflection_color = face->get_material()->color_specular(reflection->get_color(), 1);
 			r += (*reflection_color)[0];
 			g += (*reflection_color)[1];
 			b += (*reflection_color)[2];
+			reflection_color->clear();
 			reflection_color->~vector();
 		}
+		new_dest->clear();
+		new_dest->~vector();
+		reflection->~Light();
+		dest->clear();
+		dest->~vector();
 	}
 
 
 	//cout << lights.size() << endl;
 	for (int j = 1; j < lights.size(); j++) {
 		if (!lights[j]->is_blocked(destination, faces, elipses)) {
-			double c = dot_product(face->get_normal(), normalize(subtract(lights[j]->get_center(), destination))); //switched these
-			double awesome = dot_product(face->get_normal(), normalize(subtract(source, destination)));
+			vector<double> * sbt = subtract(lights[j]->get_center(), destination);
+			vector<double> * norm = normalize(sbt);
+			double c = dot_product(face->get_normal(), norm); //switched these
+			sbt->clear();
+			sbt->~vector();
+			norm->clear();
+			norm->~vector();
+
+			sbt = subtract(source, destination);
+			norm = normalize(sbt);
+			double awesome = dot_product(face->get_normal(), norm);
+			sbt->clear();
+			sbt->~vector();
+			norm->clear();
+			norm->~vector();
 			//  cout << "into loop" << endl;
 			if (((c < 0) && (awesome < 0)) || ((c > 0) && (awesome > 0))) {
 				// cout << "past c" << endl;
-				vector<int> * color = materials.color_diffuse(face->get_material(), lights[j]->get_color(), c);
+				vector<int> * color = face->get_material()->color_diffuse(lights[j]->get_color(), c);
 				r += (*color)[0];
 				g += (*color)[1];
 				b += (*color)[2];
+				color->clear();
 				color->~vector();
 			}
-			vector<double> * L = normalize(subtract(lights[j]->get_center(), destination));
+			sbt = subtract(lights[j]->get_center(), destination);
+			vector<double> * L = normalize(sbt);
+			sbt->clear();
+			sbt->~vector();
+
 			const vector<double> * N = face->get_normal();
-			vector<double> * V = normalize(subtract(source, destination));
-			double dot = dot_product(V, subtract(scale(N, 2 * dot_product(L, N)), L));
+
+			sbt = subtract(source, destination);
+			vector<double> * V = normalize(sbt);
+			sbt->clear();
+			sbt->~vector();
+
+			vector<double> * scl = scale(N, 2 * dot_product(L, N));
+			sbt = subtract(scl, L);
+			double dot = dot_product(V, sbt);
+			sbt->clear();
+			sbt->~vector();
+			scl->clear();
+			scl->~vector();
 
 			if (dot > 0) {
-				vector<int> * specular = materials.color_specular(face->get_material(), lights[j]->get_color(), dot);
+				vector<int> * specular = face->get_material()->color_specular(lights[j]->get_color(), dot);
 				r += (*specular)[0];
 				g += (*specular)[1];
 				b += (*specular)[2];
+				specular->clear();
 				specular->~vector();
 			}
+			L->clear();
 			L->~vector();
 			//N->~vector();
+			V->clear();
 			V->~vector();
 
 		}
 	}
-
+//	destination->clear();
+//	destination->~vector();
+	delete(destination);
+	
 	final->push_back(r);
 	final->push_back(g);
 	final->push_back(b);
@@ -258,11 +342,11 @@ vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vect
 
 }
 
-vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<double> * destination, const Elipse * elipse, const vector<Face *> &faces, const vector<Elipse *> &elipses, const std::vector<Light * > & lights, const Material &materials, int depth) {
+vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<double> * destination, const Elipse * elipse, const vector<Face *> &faces, const vector<Elipse *> &elipses, const std::vector<Light * > & lights, int depth) {
 	vector<int> * final = new vector<int>();
 	int r, g, b;
 	r = g = b = 0;
-	vector<int> * ambient = materials.color_ambient(elipse->get_material(), lights[0]->get_color());
+	vector<int> * ambient = elipse->get_material()->color_ambient(lights[0]->get_color());
 	r += (*ambient)[0];
 	g += (*ambient)[1];
 	b += (*ambient)[2];
@@ -326,11 +410,11 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 		bool found_face = false;
 		bool found_elipse = false;
 
-		vector<int> * reflective = find_closest_face(destination, new_dest, faces, elipses, lights, materials, depth - 1, &f_dist, &found_face);
+		vector<int> * reflective = find_closest_face(destination, new_dest, faces, elipses, lights, depth - 1, &f_dist, &found_face);
 		//cout << "new_dest: " << (*new_dest)[0] << " " << (*new_dest)[1]  << " " << (*new_dest)[2]  << endl;
 		//vector<int> * sphere = find_closest_elipse(new_dest, destination, faces, elipses, lights, materials, depth -1, &e_dist, &found_elipse);
 		//cout << "depth " << depth << endl; 
-		vector<int> * sphere = find_closest_elipse(destination, new_dest, faces, elipses, lights, materials, depth - 1, &e_dist, &found_elipse);
+		vector<int> * sphere = find_closest_elipse(destination, new_dest, faces, elipses, lights, depth - 1, &e_dist, &found_elipse);
 
 		vector<double> * dest;
 		Light * reflection;
@@ -369,7 +453,7 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 		//reflective->~vector();
 		//sphere->~vector();
 		if (found_face || found_elipse) {
-			vector<int> * reflection_color = materials.color_reflection(elipse->get_material(), reflection->get_color());
+			vector<int> * reflection_color = elipse->get_material()->color_reflection(reflection->get_color());
 			r += (*reflection_color)[0];
 			g += (*reflection_color)[1];
 			b += (*reflection_color)[2];
@@ -384,7 +468,7 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 		if (!lights[j]->is_blocked(destination, faces, elipses)) {
 			double c = dot_product(normalize(elipse->get_normal(destination)), normalize(subtract(lights[j]->get_center(), destination)));
 			if (c > 0) {
-				vector<int> * color = materials.color_diffuse(elipse->get_material(), lights[j]->get_color(), c);
+				vector<int> * color = elipse->get_material()->color_diffuse(lights[j]->get_color(), c);
 				r += (*color)[0];
 				g += (*color)[1];
 				b += (*color)[2];
@@ -396,7 +480,7 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 			vector<double> * V = normalize(subtract(source, destination));
 			double dot = dot_product(V, subtract(scale(N, 2 * dot_product(L, N)), L));
 			if (dot > 0) {
-				vector<int> * specular = materials.color_specular(elipse->get_material(), lights[j]->get_color(), dot);
+				vector<int> * specular = elipse->get_material()->color_specular(lights[j]->get_color(), dot);
 				r += (*specular)[0];
 				g += (*specular)[1];
 				b += (*specular)[2];
@@ -408,7 +492,7 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 		}
 	}
 
-	double tr = materials.get_tr(elipse->get_material());
+	double tr = elipse->get_material()->get_tr();
 	if (tr > 0) {
 		vector<double> * ray = normalize(subtract(source, destination));
 		vector<double> * e_normal = elipse->get_normal(destination);
@@ -436,7 +520,7 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 				alpha = 1.5;
 				vector<double> * exit_point = elipse->intersect(add(scale(T, 2), destination), add(scale(T, 1.5), destination));//add(scale(normalize(T), 2*d), destination);
 				if (!elipse->is_inside(exit_point)) {
-					cerr << "Point is not inside!" << endl;
+					//cerr << "Point is not inside!" << endl;
 					exit(1);
 				}
 				vector<double> * exit_normal = elipse->get_normal(exit_point);
@@ -460,8 +544,8 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 				double e_dist;
 
 				//cout << "got here" << endl;
-				f_color = find_closest_face(exit_point, add(T1, exit_point), faces, elipses, lights, materials, depth - 1, &f_dist, &found_face);
-				e_color = find_closest_elipse(exit_point, add(T1, exit_point), faces, elipses, lights, materials, depth - 1, &e_dist, &found_elipse);
+				f_color = find_closest_face(exit_point, add(T1, exit_point), faces, elipses, lights, depth - 1, &f_dist, &found_face);
+				e_color = find_closest_elipse(exit_point, add(T1, exit_point), faces, elipses, lights, depth - 1, &e_dist, &found_elipse);
 
 				vector<int> * color;
 				if (found_face && found_elipse) {
@@ -533,7 +617,7 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 }
 
 //void Renderer::prepare_raycast(const vector<Group *> models, const vector<Light * > & lights, const Material & materials) {
-void Renderer::prepare_raycast(const vector<Face *> & faces, const vector<Elipse *> & elipses, const vector<Light * > & lights, const Material & materials) {
+void Renderer::prepare_raycast(const vector<Face *> & faces, const vector<Elipse *> & elipses, const vector<Light * > & lights) {
 
 	vector<double> * camPos = cam->getPos();
 	vector<double> * fp = cam->getFocalPoint();
@@ -566,38 +650,40 @@ void Renderer::prepare_raycast(const vector<Face *> & faces, const vector<Elipse
 			double e_dist;
 
 
-			f_color = find_closest_face(fp, &pixel, faces, elipses, lights, materials, depth, &f_dist, &found_face);
-			e_color = find_closest_elipse(fp, &pixel, faces, elipses, lights, materials, depth, &e_dist, &found_elipse);
+			f_color = find_closest_face(fp, &pixel, faces, elipses, lights, depth, &f_dist, &found_face);
+			//e_color = find_closest_elipse(fp, &pixel, faces, elipses, lights, depth, &e_dist, &found_elipse);
 
 			vector<int> * color;
-			if (found_face && found_elipse) {
-				if (f_dist < e_dist) {
+		//	if (found_face && found_elipse) {
+			//	if (f_dist < e_dist) {
 					color = f_color;
-				}
-				else {
-					color = e_color;
-				}
+			//	}
+			//	else {
+			//		color = e_color;
+			//	}
 
-			}
-			else if (found_face) {
-				color = f_color;
-			}
-			else {
-				color = e_color;
-			}
+			//}
+			//else if (found_face) {
+			//	color = f_color;
+			//}
+			//else {
+			//	color = e_color;
+			//}
 
-			if (found_face || found_elipse) {
+			if (found_face ) {//|| found_elipse) {
 				//if (found_face) {
 				int r = standardize((*color)[0]);
 				int g = standardize((*color)[1]);
 				int b = standardize((*color)[2]);
 				fill(grid_x, grid_y, r, g, b);
+				color->clear();
+				color->~vector();
 				// f_color->~vector();
 				//   e_color->~vector();
 			}
 		}
 	}
-	cout << "test" << endl;
+	//cout << "test" << endl;
 }
 
 /*void Renderer::prepare_wireframe(vector<Group *> models) {

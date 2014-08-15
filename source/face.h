@@ -5,6 +5,7 @@
 
 #include <string>
 #include <vector>
+#include "material.h"
 
 class Face {
 	private:
@@ -12,14 +13,13 @@ class Face {
 		std::vector<Vertex> vertices;
 		std::vector<double> normal;
 		
-		std::string material;
+		Material * material;
 		
-		void calculate_normal();
+		bool calculate_normal();
 		bool test_coplanarity(Vertex);
 	public:
-		Face(std::string);
+		Face(Material * mat);
 		Face(const Face&);
-		~Face();
 		Face& operator=(const Face&);
 		
 		void add_vertex(Vertex, int);
@@ -34,7 +34,7 @@ class Face {
 		bool is_inside(std::vector<double> *) const;
 		
 		const std::vector<Vertex> * get_vertices() const;
-		std::string get_material() const;
+		Material * get_material() const;
 		const std::vector<double> * get_normal() const;
 
 		std::ostream & operator<<(std::ostream &);

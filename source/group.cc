@@ -100,7 +100,7 @@ void Group::scale(double x_val, double y_val, double z_val) {
 	
 }
 
-void Group::add_face(string line, string material, const vector<Vertex *> * vertexes, vector<Face *> * face_list) {
+void Group::add_face(string line, Material * material, const vector<Vertex *> * vertexes, vector<Face *> * face_list) {
 	stringstream s;
 	string trash;
 	s << line;
@@ -143,7 +143,7 @@ void Group::add_face(string line, string material, const vector<Vertex *> * vert
 		faces.push_back(face);
 }
 
-void Group::add_elipse(string line, string material, const vector<Vertex *> * vertexes, vector<Elipse *> * elipse_list) {
+void Group::add_elipse(string line, Material * material, const vector<Vertex *> * vertexes, vector<Elipse *> * elipse_list) {
 	stringstream s;
 	string trash;
 	int vertex_num;

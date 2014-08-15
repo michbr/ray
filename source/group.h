@@ -4,6 +4,7 @@
 #include "vertex.h"
 #include "face.h"
 #include "elipse.h"
+#include "material.h"
 
 #include <string>
 #include <vector>
@@ -31,8 +32,8 @@ class Group {
 		void arbitrary(std::vector<std::vector<double> *> *);
 		void translate(double, double, double);
 		void scale(double, double, double);
-		void add_face(std::string, std::string, const std::vector<Vertex *> *, std::vector<Face *> *);
-		void add_elipse(std::string, std::string, const std::vector<Vertex *> *, std::vector<Elipse *> *);
+		void add_face(std::string, Material * mat, const std::vector<Vertex *> *, std::vector<Face *> *);
+		void add_elipse(std::string, Material * mat, const std::vector<Vertex *> *, std::vector<Elipse *> *);
 		void wipe(std::vector<Vertex *> *);
 		int num_vertices();
 		const std::vector<Vertex> * get_lines();

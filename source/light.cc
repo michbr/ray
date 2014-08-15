@@ -72,15 +72,21 @@ bool Light::is_blocked(vector<double> * point, const vector<Face *> & faces, con
 		double T;
 		vector<double> * temp = faces[i]->intersect(point, get_center(), &T); //switched these
 		if (faces[i]->is_inside(temp)) {
-			double d1 = magnitude(subtract(temp, get_center()));
+			vector<double> * sbt = subtract(temp, get_center());
+			double d1 = magnitude(sbt);
+			sbt->clear();
+			sbt->~vector();
 			if ((d - d1) < 0.000001 && (d1 - d) < .000001) {
 				
 			}
 			else if (d > d1) {
+			delete(temp);
 			return true;
 			}
 		}
-		temp->~vector();
+		delete(temp);
+	//	temp->clear();
+	//	temp->~vector();
 	}
 	
 	for	(int i = 0; i < elipses.size(); i++) {

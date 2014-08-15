@@ -8,13 +8,37 @@
 
 using namespace std;
 //Broke up the material vector into Ka, Kd, and Ks.
-Material::Material() {
-    Ka = new vector<vector<double> * >();
-	Kd = new vector<vector<double> * >();
-	Ks = new vector<vector<double> * >();
+Material::Material(string n) {
+	name = n;
+    Ka = new vector<double>();
+	Kd = new vector<double>();
+	Ks = new vector<double>();
 }
 
-void Material::add_material(fstream & input) {
+void Material::setAmbient(std::vector<double> * a) {
+	Ka = a;
+}
+void Material::setDiffuse(std::vector<double> * a) {
+	Kd = a;
+}
+
+void Material::setSpecular(std::vector<double> * a) {
+	Ks = a;
+}
+
+void Material::setShininess(double a) {
+	Ns = a;
+}
+
+void Material::setTransparency(double a) {
+	Tr = a;
+}
+
+std::string Material::getName() {
+	return name;
+}
+
+/*void Material::add_material(fstream & input) {
     int count = 0;
     while (count < 5 && input.good()) {
 		stringstream s;
@@ -60,9 +84,9 @@ void Material::add_material(fstream & input) {
 		}
 		count++;
     }
-}
+}*/
 
-void Material::load_materials(string file_name) {
+/*void Material::load_materials(string file_name) {
     fstream input;
     input.open(file_name.c_str());
     string line;
@@ -83,20 +107,9 @@ void Material::load_materials(string file_name) {
 			add_material(input);
 		}
     }
-}
+}*/
 
-vector<int> * Material::color_ambient(string material, const vector<int> * light_color) const {
-	int index = -1;
-	for (int i = 0; i < names.size(); i++) {
-		if (names[i].compare(material) == 0) {
-			index = i;
-			i = names.size();
-		}
-	}
-	if (index < 0) {
-		cerr << "Material \"" << material << "\" does not exist." << endl;
-		exit(1);
-	}
+vector<int> * Material::color_ambient(const vector<int> * light_color) const {
 	//vector<vector<double> *> color;
 	//	vector<double> row1;
 	//		row1.push_back((*light_color)[0]);
@@ -117,24 +130,13 @@ vector<int> * Material::color_ambient(string material, const vector<int> * light
 	r = (*light_color)[0];
 	g = (*light_color)[1];
 	b = (*light_color)[2];
-	final->push_back(round((*(*Ka)[index])[0]*r));
-	final->push_back(round((*(*Ka)[index])[1]*g));
-	final->push_back(round((*(*Ka)[index])[2]*b));
+	final->push_back(round((*Ka)[0]*r));
+	final->push_back(round((*Ka)[1]*g));
+	final->push_back(round((*Ka)[2]*b));
 	return final;
 }
 
-vector<int> * Material::color_diffuse(string material, const vector<int> * light_color, double cos) const {
-	int index = -1;
-	for (int i = 0; i < names.size(); i++) {
-		if (names[i].compare(material) == 0) {
-			index = i;
-			i = names.size();
-		}
-	}
-	if (index < 0) {
-		cerr << "Material \"" << material << "\" does not exist." << endl;
-		exit(1);
-	}
+vector<int> * Material::color_diffuse(const vector<int> * light_color, double cos) const {
 	/*vector<vector<double> *> color;
 		vector<double> row1;
 			row1.push_back((*light_color)[0]);
@@ -156,61 +158,37 @@ vector<int> * Material::color_diffuse(string material, const vector<int> * light
 	r = (*light_color)[0];
 	g = (*light_color)[1];
 	b = (*light_color)[2];
-	final->push_back(round((*(*Kd)[index])[0]*r * abs(cos)));
-	final->push_back(round((*(*Kd)[index])[1]*g * abs(cos)));
-	final->push_back(round((*(*Kd)[index])[2]*b * abs(cos)));
+	final->push_back(round((*Kd)[0]*r * abs(cos)));
+	final->push_back(round((*Kd)[1]*g * abs(cos)));
+	final->push_back(round((*Kd)[2]*b * abs(cos)));
 	return final;
 }
 
-vector<int> * Material::color_specular(string material, const vector<int> * light_color, double cos) const {
-	int index = -1;
-	for (int i = 0; i < names.size(); i++) {
-		if (names[i].compare(material) == 0) {
-			index = i;
-			i = names.size();
-		}
-	}
-	if (index < 0) {
-		cerr << "Material \"" << material << "\" does not exist." << endl;
-		exit(1);
-	}
-
+vector<int> * Material::color_specular(const vector<int> * light_color, double cos) const {
 	vector<int> * final = new vector<int>();
-	double alpha = Ns[index];
+	double alpha = Ns;//[index];
 	double r,g,b;
 	r = (*light_color)[0];
 	g = (*light_color)[1];
 	b = (*light_color)[2];
 	//cout << "alpha: " << alpha << endl;
-	final->push_back(round((*(*Ks)[index])[0]*r * pow(cos, alpha)));
-	final->push_back(round((*(*Ks)[index])[1]*g * pow(cos, alpha)));
-	final->push_back(round((*(*Ks)[index])[2]*b * pow(cos, alpha)));
+	final->push_back(round((*Ks)[0]*r * pow(cos, alpha)));
+	final->push_back(round((*Ks)[1]*g * pow(cos, alpha)));
+	final->push_back(round((*Ks)[2]*b * pow(cos, alpha)));
 	return final;
 }
 
-vector<int> * Material::color_reflection(string material, const vector<int> * light_color) const {
-	int index = -1;
-	for (int i = 0; i < names.size(); i++) {
-		if (names[i].compare(material) == 0) {
-			index = i;
-			i = names.size();
-		}
-	}
-	if (index < 0) {
-		cerr << "Material \"" << material << "\" does not exist." << endl;
-		exit(1);
-	}
-
+vector<int> * Material::color_reflection(const vector<int> * light_color) const {
 	vector<int> * final = new vector<int>();
-	double alpha = Ns[index];
+	double alpha = Ns;//[index];
 	double r,g,b;
 	r = (*light_color)[0];
 	g = (*light_color)[1];
 	b = (*light_color)[2];
 	//cout << "alpha: " << alpha << endl;
-	final->push_back(round((*(*Ks)[index])[0]*r));
-	final->push_back(round((*(*Ks)[index])[1]*g));
-	final->push_back(round((*(*Ks)[index])[2]*b));
+	final->push_back(round((*Ks)[0]*r));
+	final->push_back(round((*Ks)[1]*g));
+	final->push_back(round((*Ks)[2]*b));
 	return final;
 }
 
@@ -234,17 +212,6 @@ vector<vector<double> *> * Material::prepare_matrix(vector<double> * properties)
 	return result;
 }
 
-double Material::get_tr (std::string material) const {
-    	int index = -1;
-	for (int i = 0; i < names.size(); i++) {
-		if (names[i].compare(material) == 0) {
-			index = i;
-			i = names.size();
-		}
-	}
-	if (index < 0) {
-		cerr << "Material \"" << material << "\" does not exist." << endl;
-		exit(1);
-	}
-	return Tr[index];
+double Material::get_tr () const {
+	return Tr;
 }

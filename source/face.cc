@@ -7,25 +7,21 @@
 
 using namespace std;
 
-Face::Face(string mat_name) {
+Face::Face(Material * mat) {
 	vertices;
 	vertex_numbers;
-	material = mat_name;
+	material = mat;
 }
 
 Face::Face(const Face& a) {
 	vertices;
 	vertex_numbers;
-	//cout << "face copy called" << endl;
+	cout << "face copy called" << endl;
 	*this = a;
 }
 
-Face::~Face() {
-	cout << "Face destructor called." << endl;
-}
-
 Face& Face::operator=(const Face& a) {
-	//cout << "face = called" << endl;
+	cout << "face = called" << endl;
 	material = a.material;
 	for (int i = 0; i < a.vertex_numbers.size(); i++) {
 		vertex_numbers.push_back(a.vertex_numbers[i]);
@@ -185,7 +181,7 @@ bool Face::is_inside(vector<double> * p) const {
 	return !(count % 2 == 0);
 }
 
-void Face::calculate_normal() {
+bool Face::calculate_normal() {
 	vector<double> a;
 	vector<double> b;
 	a.push_back(vertices[1].get_x() - vertices[0].get_x());
@@ -197,14 +193,16 @@ void Face::calculate_normal() {
 	b.push_back(vertices[2].get_z() - vertices[1].get_z());
 	vector<double> * n = cross_product(&a, &b);
 	if (abs((*n)[0]) < .00001 && abs((*n)[1]) < .00001 && abs((*n)[2]) < .00001) {
-		cerr << "First three points of face are linear!" << endl;
-		exit(1);
+		//cerr << "First three points of face are linear!" << endl;
+		//return false;
+		//exit(1);
 	}
 	n = normalize(n);
 	normal.push_back((*n)[0]);
 	normal.push_back((*n)[1]);
 	normal.push_back((*n)[2]);
 	n->~vector();
+	return true;
 }
 
 bool Face::test_coplanarity(Vertex vert) {
@@ -214,9 +212,12 @@ bool Face::test_coplanarity(Vertex vert) {
 	a->push_back(vert.get_z() - vertices[0].get_z());
 	
 	double test = dot_product(a, &normal);//a[0]*(*normal)[0] + a[1]*(*normal)[1] + a[2]*(*normal)[2];
-	if (abs(test) < .00001) {
+	a->clear();
+	a->~vector();
+	if (abs(test) < .0001) {
 		return true;
 	}
+
 	else return false;
 }
 
@@ -224,7 +225,7 @@ const vector<Vertex> * Face::get_vertices() const{
 	return & vertices;
 }
 
-std::string Face::get_material() const {
+Material * Face::get_material() const {
 	return material;
 }
 

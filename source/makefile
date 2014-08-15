@@ -4,7 +4,7 @@ LIBS =
 INCLUDES =
 TARGET = HW4
 
-SRC = $(wildcard *.cc)
+SRC = $(wildcard *.cc *.cpp)
 OBJS = $(patsubst %.cc,%.o,$(SRC))
 
 #OBJS2 = $(patsubst %.cc,%.gcno,$(SRC))
@@ -29,15 +29,19 @@ clean:
 	rm -f $(OBJS) $(TARGET)
 # DO NOT DELETE
 
-light.o: light.h vertex.h face.h elipse.h MatMath.h
-vertex.o: vertex.h MatMath.h
-camera.o: camera.h wireframe.h light.h vertex.h face.h elipse.h material.h
-camera.o: group.h MatMath.h
+renderer.o: renderer.h vertex.h wireframe.h group.h face.h material.h
+renderer.o: elipse.h light.h camera.h MatMath.h
 MatMath.o: MatMath.h
-material.o: material.h light.h vertex.h face.h elipse.h MatMath.h
-group.o: group.h vertex.h face.h elipse.h
-elipse.o: elipse.h vertex.h MatMath.h
+light.o: light.h vertex.h face.h material.h elipse.h MatMath.h
+vertex.o: vertex.h MatMath.h
+group.o: group.h vertex.h face.h material.h elipse.h
+parser.o: parser.h
+camera.o: camera.h wireframe.h light.h vertex.h face.h material.h elipse.h
+camera.o: group.h MatMath.h
+material.o: material.h MatMath.h
+elipse.o: elipse.h vertex.h material.h MatMath.h
 wireframe.o: wireframe.h
-face.o: face.h vertex.h MatMath.h
-reader.o: reader.h group.h vertex.h face.h elipse.h light.h material.h
-reader.o: camera.h wireframe.h
+face.o: face.h vertex.h material.h MatMath.h
+reader.o: reader.h group.h vertex.h face.h material.h elipse.h light.h
+reader.o: camera.h wireframe.h renderer.h materialparser.h parser.h
+materialparser.o: materialparser.h parser.h material.h

@@ -7,8 +7,8 @@
 
 using namespace std;
 //Elipse::Elipse(double center_x, double center_y, double center_z, double center_w, double x, double y, double z) : {
-Elipse::Elipse(string mat_name, Vertex point, double x, double y, double z) : center(point){
-	material = mat_name;
+Elipse::Elipse(Material * mat, Vertex point, double x, double y, double z) : center(point){
+	material = mat;
 	radius_x = x;
 	radius_y = y;
 	radius_z = z;
@@ -26,7 +26,7 @@ void Elipse::set_center() {
 	center_point[2] = center.get_z();
 }
 
-std::string Elipse::get_material() const {
+Material * Elipse::get_material() const {
 	return material;
 }
 
