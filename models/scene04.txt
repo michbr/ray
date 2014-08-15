@@ -8,4 +8,4 @@ l 0 0 -8 1 180 160 20
 #     FL VRP    VPN    VUP
 #c cam1 1 1 1 -4 0 0 -1 0 1 0
 #s Cube 5 5 5
-q scene04 512 512 1 
+q scene04 256 256 1 

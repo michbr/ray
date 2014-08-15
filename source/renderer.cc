@@ -71,7 +71,9 @@ vector<int> * Renderer::find_closest_face(std::vector<double> * source, std::vec
 		vector<double> * temp = faces[i]->intersect(source, destination, &T);
 		if (faces[i]->is_inside(temp)) {
 			if (T > 0) {
-				current_distance = magnitude(subtract(temp, source));
+				vector<double> * sbt = subtract(temp, source);
+				current_distance = magnitude(sbt);
+				delete(sbt);
 				// cout << "found face" << endl;
 				if (!(*found)) {
 					min_distance = current_distance;
