@@ -635,10 +635,10 @@ void Renderer::prepare_raycast(const vector<Face *> & faces, const vector<Elipse
 			f_color = find_closest_face(fp, &pixel, faces, elipses, lights, depth, &f_dist, &found_face);
 			//e_color = find_closest_elipse(fp, &pixel, faces, elipses, lights, depth, &e_dist, &found_elipse);
 
-			vector<int> * color;
+			//vector<int> * color;
 		//	if (found_face && found_elipse) {
 			//	if (f_dist < e_dist) {
-					color = f_color;
+					//color = f_color;
 			//	}
 			//	else {
 			//		color = e_color;
@@ -654,15 +654,16 @@ void Renderer::prepare_raycast(const vector<Face *> & faces, const vector<Elipse
 
 			if (found_face ) {//|| found_elipse) {
 				//if (found_face) {
-				int r = standardize((*color)[0]);
-				int g = standardize((*color)[1]);
-				int b = standardize((*color)[2]);
+				int r = standardize((*f_color)[0]);
+				int g = standardize((*f_color)[1]);
+				int b = standardize((*f_color)[2]);
 				fill(grid_x, grid_y, r, g, b);
-				color->clear();
-				color->~vector();
+				//color->clear();
+				//color->~vector();
 				// f_color->~vector();
 				//   e_color->~vector();
 			}
+			delete(f_color);
 		}
 	}
 	//cout << "test" << endl;
