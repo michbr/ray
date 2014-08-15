@@ -67,7 +67,9 @@ bool Light::is_blocked(vector<double> * point, const vector<Face *> & faces, con
 	//if (center.get_w() == 0) {
 		//d = magnitude();
 	//}
-	double d = magnitude(subtract(point, get_center()));
+	vector<double> * sbt = subtract(point, get_center());
+	double d = magnitude(sbt);
+	delete(sbt);
 	for	(int i = 0; i < faces.size(); i++) {
 		double T;
 		vector<double> * temp = faces[i]->intersect(point, get_center(), &T); //switched these
