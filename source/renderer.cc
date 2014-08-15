@@ -161,8 +161,7 @@ vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vect
 	r += (*ambient)[0];
 	g += (*ambient)[1];
 	b += (*ambient)[2];
-	ambient->clear();
-	ambient->~vector();
+	delete(ambient);
 
 	if (depth > 1) {
 		const vector<double> * normal = face->get_normal();
@@ -170,10 +169,8 @@ vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vect
 		vector<double> * scl = scale(normal, 2 * dot_product(L, normal));
 		vector<double> * sbt = subtract(scl, L);
 		vector<double> * new_dest = add(sbt, destination);
-		sbt->clear();
-		sbt->~vector();
-		scl->clear();
-		scl->~vector();
+		delete(sbt);
+		delete(scl);
 		//double dot = dot_product(subtract(source, destination), normal);
 		//vector<double> * p = scale(normal, dot);
 		//vector<double> * q = add(destination, p);
@@ -234,10 +231,8 @@ vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vect
 			vector<double> * norm = normalize(sbt);
 			dest = scale(norm, f_dist);
 			reflection = new Light((*dest)[0], (*dest)[1], (*dest)[2], 1, (*reflective)[0], (*reflective)[1], (*reflective)[2]);
-			sbt->clear();
-			sbt->~vector();
-			norm->clear();
-			norm->~vector();
+			delete(sbt);
+			delete(norm);
 		}
 		/*else if (found_elipse){
 			vector<double> * sbt = subtract(new_dest, destination);
@@ -258,14 +253,11 @@ vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vect
 			r += (*reflection_color)[0];
 			g += (*reflection_color)[1];
 			b += (*reflection_color)[2];
-			reflection_color->clear();
-			reflection_color->~vector();
+			delete(reflection_color);
 		}
-		new_dest->clear();
-		new_dest->~vector();
-		reflection->~Light();
-		dest->clear();
-		dest->~vector();
+		delete(new_dest);
+		delete(reflection);
+		delete(dest);
 	}
 
 
@@ -340,7 +332,7 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 	r += (*ambient)[0];
 	g += (*ambient)[1];
 	b += (*ambient)[2];
-	ambient->~vector();
+	delete(ambient);
 
 
 	if (depth > 1) {
