@@ -258,6 +258,7 @@ vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vect
 		delete(new_dest);
 		delete(reflection);
 		delete(dest);
+		delete(reflective);
 	}
 
 
