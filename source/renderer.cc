@@ -275,18 +275,14 @@ vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vect
 			vector<double> * sbt = subtract(lights[j]->get_center(), destination);
 			vector<double> * norm = normalize(sbt);
 			double c = dot_product(face->get_normal(), norm); //switched these
-			sbt->clear();
-			sbt->~vector();
-			norm->clear();
-			norm->~vector();
+			delete(sbt);
+			delete(norm);
 
 			sbt = subtract(source, destination);
 			norm = normalize(sbt);
 			double awesome = dot_product(face->get_normal(), norm);
-			sbt->clear();
-			sbt->~vector();
-			norm->clear();
-			norm->~vector();
+			delete(sbt);
+			delete(norm);
 			//  cout << "into loop" << endl;
 			if (((c < 0) && (awesome < 0)) || ((c > 0) && (awesome > 0))) {
 				// cout << "past c" << endl;
@@ -294,42 +290,34 @@ vector<int> * Renderer::color_face_pixel(std::vector<double> * source, std::vect
 				r += (*color)[0];
 				g += (*color)[1];
 				b += (*color)[2];
-				color->clear();
-				color->~vector();
+				delete(color);
 			}
 			sbt = subtract(lights[j]->get_center(), destination);
 			vector<double> * L = normalize(sbt);
-			sbt->clear();
-			sbt->~vector();
+			delete(sbt);
 
 			const vector<double> * N = face->get_normal();
 
 			sbt = subtract(source, destination);
 			vector<double> * V = normalize(sbt);
-			sbt->clear();
-			sbt->~vector();
+			delete(sbt);
 
 			vector<double> * scl = scale(N, 2 * dot_product(L, N));
 			sbt = subtract(scl, L);
 			double dot = dot_product(V, sbt);
-			sbt->clear();
-			sbt->~vector();
-			scl->clear();
-			scl->~vector();
+			delete(sbt);
+			delete(scl);
 
 			if (dot > 0) {
 				vector<int> * specular = face->get_material()->color_specular(lights[j]->get_color(), dot);
 				r += (*specular)[0];
 				g += (*specular)[1];
 				b += (*specular)[2];
-				specular->clear();
-				specular->~vector();
+				delete(specular);
 			}
-			L->clear();
-			L->~vector();
+			delete(L);
 			//N->~vector();
-			V->clear();
-			V->~vector();
+			delete(V);
 
 		}
 	}
