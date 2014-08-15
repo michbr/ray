@@ -76,8 +76,7 @@ bool Light::is_blocked(vector<double> * point, const vector<Face *> & faces, con
 		if (faces[i]->is_inside(temp)) {
 			vector<double> * sbt = subtract(temp, get_center());
 			double d1 = magnitude(sbt);
-			sbt->clear();
-			sbt->~vector();
+			delete(sbt);
 			if ((d - d1) < 0.000001 && (d1 - d) < .000001) {
 				
 			}
