@@ -1,0 +1,87 @@
+CC = g++
+CPPFLAGS = -std=c++0x -O3 -lassimp -g#-Wall#-fprofile-arcs -ftest-coverage -O0
+LIBS =
+INCLUDES =
+TARGET = Importer
+
+SRC = $(wildcard *.cc *.cpp)
+OBJS = $(patsubst %.cc,%.o,$(SRC))
+
+#OBJS2 = $(patsubst %.cc,%.gcno,$(SRC))
+	
+$(TARGET): $(OBJS)
+	$(CC) $(CPPFLAGS) -o $(TARGET) $(OBJS) $(LIBS)
+
+#$(TARGET).gcno: $(OBJS2) $(OBJS2)
+#	$(CC) $(CPPFLAGS) $(OBJS) $(LIBS)
+
+.PHONY : clean depend
+.PHONY : lines depend
+.PHONY : update depend
+
+depend:		makefile $(SRC)
+	makedepend $(INCLUDES) $(SRC)
+
+lines:
+	cat *.h *.cc | wc -l
+
+clean:
+	rm -f $(OBJS) $(TARGET)
+# DO NOT DELETE
+
+sceneObject.o: sceneObject.h
+MatMath.o: MatMath.h
+loader.o: loader.h sceneObject.h /usr/include/assimp/Importer.hpp
+loader.o: /usr/include/assimp/types.h /usr/include/sys/types.h
+loader.o: /usr/include/features.h /usr/include/stdc-predef.h
+loader.o: /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h
+loader.o: /usr/include/gnu/stubs.h /usr/include/bits/types.h
+loader.o: /usr/include/bits/typesizes.h /usr/include/time.h
+loader.o: /usr/include/endian.h /usr/include/bits/endian.h
+loader.o: /usr/include/bits/byteswap.h /usr/include/bits/byteswap-16.h
+loader.o: /usr/include/sys/select.h /usr/include/bits/select.h
+loader.o: /usr/include/bits/sigset.h /usr/include/bits/time.h
+loader.o: /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h
+loader.o: /usr/include/memory.h /usr/include/string.h /usr/include/xlocale.h
+loader.o: /usr/include/math.h /usr/include/bits/huge_val.h
+loader.o: /usr/include/bits/huge_valf.h /usr/include/bits/huge_vall.h
+loader.o: /usr/include/bits/inf.h /usr/include/bits/nan.h
+loader.o: /usr/include/bits/mathdef.h /usr/include/bits/mathcalls.h
+loader.o: /usr/include/limits.h /usr/include/bits/posix1_lim.h
+loader.o: /usr/include/bits/local_lim.h /usr/include/linux/limits.h
+loader.o: /usr/include/bits/posix2_lim.h /usr/include/assimp/defs.h
+loader.o: /usr/include/assimp/vector3.h
+loader.o: /usr/include/assimp/./Compiler/pushpack1.h
+loader.o: /usr/include/assimp/./Compiler/poppack1.h
+loader.o: /usr/include/assimp/vector2.h /usr/include/assimp/color4.h
+loader.o: /usr/include/assimp/matrix3x3.h /usr/include/assimp/matrix4x4.h
+loader.o: /usr/include/assimp/quaternion.h /usr/include/assimp/vector2.inl
+loader.o: /usr/include/assimp/vector3.inl /usr/include/assimp/color4.inl
+loader.o: /usr/include/assimp/quaternion.inl
+loader.o: /usr/include/assimp/matrix3x3.inl /usr/include/assimp/matrix4x4.inl
+loader.o: /usr/include/assimp/config.h /usr/include/assimp/scene.h
+loader.o: /usr/include/assimp/texture.h /usr/include/assimp/mesh.h
+loader.o: /usr/include/assimp/light.h /usr/include/assimp/camera.h material.h
+loader.o: /usr/include/assimp/anim.h /usr/include/assimp/metadata.h
+loader.o: /usr/include/assert.h /usr/include/stdint.h
+loader.o: /usr/include/bits/wchar.h /usr/include/assimp/postprocess.h
+vertex.o: vertex.h MatMath.h
+worldModel.o: worldModel.h sceneObject.h
+material.o: material.h MatMath.h
+face.o: face.h vertex.h material.h MatMath.h
+driver.o: worldModel.h sceneObject.h /usr/include/sys/types.h
+driver.o: /usr/include/features.h /usr/include/stdc-predef.h
+driver.o: /usr/include/sys/cdefs.h /usr/include/bits/wordsize.h
+driver.o: /usr/include/gnu/stubs.h /usr/include/bits/types.h
+driver.o: /usr/include/bits/typesizes.h /usr/include/time.h
+driver.o: /usr/include/endian.h /usr/include/bits/endian.h
+driver.o: /usr/include/bits/byteswap.h /usr/include/bits/byteswap-16.h
+driver.o: /usr/include/sys/select.h /usr/include/bits/select.h
+driver.o: /usr/include/bits/sigset.h /usr/include/bits/time.h
+driver.o: /usr/include/sys/sysmacros.h /usr/include/bits/pthreadtypes.h
+driver.o: /usr/include/dirent.h /usr/include/bits/dirent.h
+driver.o: /usr/include/bits/posix1_lim.h /usr/include/bits/local_lim.h
+driver.o: /usr/include/linux/limits.h /usr/include/errno.h
+driver.o: /usr/include/bits/errno.h /usr/include/linux/errno.h
+driver.o: /usr/include/asm/errno.h /usr/include/asm-generic/errno.h
+driver.o: /usr/include/asm-generic/errno-base.h
