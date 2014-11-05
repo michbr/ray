@@ -10,6 +10,10 @@
 #include <sstream>
 #include <ctime>
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+
+
 using namespace std;
 
 Reader::Reader() : matMap () {
@@ -420,6 +424,11 @@ void Reader::raycast () {
 			time_t t;
 			time_t after;
 			time(&t);
+		        for (int i = 0; i < lights.size(); i++) {
+        		        cout << (*(lights[i]->get_color()))[0] << ", ";
+                		cout << (*(lights[i]->get_color()))[1] << ", ";
+                		cout << (*(lights[i]->get_color()))[2] << endl;
+		        }
 			renderer->prepare_raycast(faces, elipses, lights);
 			time(&after);
 			//cout << after - t << endl;

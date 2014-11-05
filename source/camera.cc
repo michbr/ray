@@ -22,7 +22,8 @@ Camera::Camera(string cname, double d, double x_val, double y_val, double z_val,
 	fp->push_back(y + (*n)[1]*focal_length);
 	fp->push_back(z + (*n)[2]*focal_length);
 	//image = new vector<vector<int> *>();
-	n->~vector();
+	delete(n);
+	//n->~vector();
 }
 
 string Camera::get_name() {
