@@ -1,13 +1,11 @@
 #include "camera.h"
-#include "MatMath.h"
-#include "vertex.h"
 
 #include <iostream>
 #include <cmath>
 
 using namespace std;
 
-Camera::Camera(string cname, double d, double x_val, double y_val, double z_val, vector<double> * normal, std::vector<double> * vup) {
+Camera::Camera(string cname, double d, double x_val, double y_val, double z_val, Vector3<double> * normal, Vector3<double> * vup) {
 	name = cname;
 	x = x_val;
 	y = y_val;
@@ -16,11 +14,12 @@ Camera::Camera(string cname, double d, double x_val, double y_val, double z_val,
 	vpn = normal;
 	v_up = vup;
 	//has_frame = false;
-	fp = new vector<double>();
-	vector<double> * n = normalize(vpn);
-	fp->push_back(x + (*n)[0]*focal_length);
-	fp->push_back(y + (*n)[1]*focal_length);
-	fp->push_back(z + (*n)[2]*focal_length);
+	fp = new Vector3<double>();
+	Vector3<double> * n;
+	Vector3<double>::normalize(*vpn, *n);
+	(*fp)[0] = (x + (*n)[0]*focal_length);
+	(*fp)[1] = (y + (*n)[1]*focal_length);
+	(*fp)[2] = (z + (*n)[2]*focal_length);
 	//image = new vector<vector<int> *>();
 	delete(n);
 	//n->~vector();
@@ -30,32 +29,43 @@ string Camera::get_name() {
 	return name;
 }
 
-vector<double> * Camera::getPos() {
-	vector<double> * a = new vector<double>();
-	a->push_back(x);
-	a->push_back(y);
-	a->push_back(z);
+Vector3<double> * Camera::getPos() {
+	Vector3<double> * a = new Vector3<double>();
+	(*a)[0] = x;
+	(*a)[1] = y;
+	(*a)[2] = z;
 	return a;
 }
 
-vector<double> * Camera::getFocalPoint() {
-	vector<double> * a = new vector<double>();
-	a->push_back((*fp)[0]);
-	a->push_back((*fp)[1]);
-	a->push_back((*fp)[2]);
+Vector3<double> * Camera::getFocalPoint() {
+	Vector3<double> * a = new Vector3<double>();
+	(*a)[0] = (*fp)[0];
+	(*a)[1] = (*fp)[1];
+	(*a)[2] = (*fp)[2];
 	return a;
 }
 
-vector<double> * Camera::getHorizontalAxis() {
-	vector<double> * n = normalize(vpn);
-	vector<double> * u = normalize(cross_product(normalize(v_up), n));
-	
+Vector3<double> * Camera::getHorizontalAxis() {
+	Vector3<double> n = Vector3<double>();
+	Vector3<double>::normalize(*vpn, n);
+	Vector3<double> * u;
+	Vector3<double> temp;
+	Vector3<double>::normalize(*v_up, temp);
+	Vector3<double>::cross(temp, n, temp);
+	Vector3<double>::normalize(temp, *u);
 	return u;
 }
 
-vector<double> * Camera::getVerticalAxis() {
-	vector<double> * n = normalize(vpn);
-	vector<double> * u = normalize(cross_product(normalize(v_up), n));
-	vector<double> * v = normalize(cross_product(n, u));
+Vector3<double> * Camera::getVerticalAxis() {
+	Vector3<double> n;
+	Vector3<double>::normalize(*vpn, n);
+	Vector3<double> u;
+	Vector3<double> temp;
+	Vector3<double>::normalize(*v_up, temp);
+	Vector3<double>::cross(temp, n, temp);
+	Vector3<double>::normalize(temp, u);
+	Vector3<double>::cross(n, u, temp);
+	Vector3<double> * v;
+	Vector3<double>::normalize(temp, *v);
 	return v;
 }

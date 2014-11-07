@@ -1,3 +1,4 @@
+#include "dragonmath.h"
 #include "worldModel.h"
 #include "camera.h"
 #include "wireframe.h"
@@ -56,16 +57,16 @@ int main (int argc, char * argv [] ) {
 //		cout << test[i] << endl;
 		m.addObject(test[i]);
 	}*/
-	vector<double> * normal = new vector<double>();
-	vector<double> * up = new vector<double>();
+	Vector3<double> * normal = new Vector3<double>();
+	Vector3<double> * up = new Vector3<double>();
 	
-	normal->push_back(.25);
-	normal->push_back(1);
-	normal->push_back(1);
+	(*normal)[0] = (.25);
+	(*normal)[1] = (1);
+	(*normal)[2] = (1);
 	
-	up->push_back(0);
-	up->push_back(1);
-	up->push_back(0);
+	(*up)[0] = (0);
+	(*up)[1] = (1);
+	(*up)[2] = (0);
 	
 	Camera * cam = new Camera("primary", 1, 2, 7, 6, normal, up);
 	

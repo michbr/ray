@@ -3,9 +3,9 @@
 
 #include "wireframe.h"
 #include "light.h"
+#include "dragonmath.h"
 
 #include <string>
-#include <vector>
 
 class Camera {
 	private:
@@ -14,9 +14,9 @@ class Camera {
 		double x,y,z;
 		double focal_length;
 
-		std::vector<double> * vpn;
-		std::vector<double> * v_up;
-		std::vector<double> * fp;
+		Vector3<double> * vpn;
+		Vector3<double> * v_up;
+		Vector3<double> * fp;
 		
 
 		//Wireframe frame;
@@ -24,14 +24,14 @@ class Camera {
 		//std::vector<Vertex> * clip(std::vector<Vertex> *);
 
 	public:
-		Camera(std::string, double, double, double, double, std::vector<double> *, std::vector<double> *);
+		Camera(std::string, double, double, double, double, Vector3<double> *, Vector3<double> *);
 		
 		std::string get_name();
 
-		std::vector<double> * getPos();
-		std::vector<double> * getFocalPoint();
-		std::vector<double> * getHorizontalAxis();
-		std::vector<double> * getVerticalAxis();
+		Vector3<double> * getPos();
+		Vector3<double> * getFocalPoint();
+		Vector3<double> * getHorizontalAxis();
+		Vector3<double> * getVerticalAxis();
 
 		//void prepare_raycast(const std::vector<Group *>, const std::vector<Light * > &, const Material &);
 };

@@ -1,6 +1,9 @@
 #include "renderer.h"
+
+#include "dragonmath.h"
 #include "MatMath.h"
 #include <cmath>
+
 //#include <iostream>
 
 using namespace std;
@@ -610,11 +613,11 @@ vector<int> * Renderer::color_elipse_pixel(std::vector<double> * source, vector<
 //void Renderer::prepare_raycast(const vector<Group *> models, const vector<Light * > & lights, const Material & materials) {
 void Renderer::prepare_raycast(const vector<Face *> & faces, const vector<Elipse *> & elipses, const vector<Light * > & lights) {
 
-	vector<double> * camPos = cam->getPos();
-	vector<double> * fp = cam->getFocalPoint();
+	Vector3<double> * camPos = cam->getPos();
+	Vector3<double> * fp = cam->getFocalPoint();
 
-	vector<double> * u = cam->getHorizontalAxis();
-	vector<double> * v = cam->getVerticalAxis();
+	Vector3<double> * u = cam->getHorizontalAxis();
+	Vector3<double> * v = cam->getVerticalAxis();
 
 	double min_y = frame->get_miny();
 	double min_x = frame->get_minx();
