@@ -1,8 +1,8 @@
 #ifndef FACE_OBJECT_H
 #define FACE_OBJECT_H
 
-#include "vertex.h"
 #include "material.h"
+#include "dragonmath.h"
 
 #include <string>
 #include <vector>
@@ -14,24 +14,24 @@ class Face {
 		//std::vector<int> vertex_numbers;
 		//std::vector<int> texVertNumbers;		
 
-		std::vector<Vertex> vertices;
+		std::vector<Vector3<double>> vertices;
 		//std::vector<Vertex> textureVertices;
 
-		std::unordered_map<int, Vertex *> textureVertices;
+		std::unordered_map<int, Vector3<double> *> textureVertices;
 		
-		std::vector<double> normal;
+		Vector3<double> normal;
 		
 		const Material * material;
 		
 		bool calculate_normal();
-		bool test_coplanarity(Vertex);
+		bool test_coplanarity(Vector3<double>);
 	public:
 		Face(const Material * mat);
 		Face(const Face&);
 		Face& operator=(const Face&);
 		
-		void add_vertex(Vertex);//, int);
-		void add_vertex(Vertex, Vertex *);
+		void addVertex(Vector3<double>);//, int);
+		void addVertex(Vector3<double>, Vector3<double> *);
 		//void addTexVertex(Vertex);
 
 		void rotate(double, double, double, double);
@@ -40,14 +40,14 @@ class Face {
 		void scale(double, double, double);
 
 		//std::vector<double> * intersect(std::vector<double> *, std::vector<double> *);  
-		std::vector<double> * intersect(const std::vector<double> *, const std::vector<double> *, double *) const;  
-		bool is_inside(std::vector<double> *) const;
+		Vector3<double> intersect(const Vector3<double> , const Vector3<double> , double *) const;  
+		bool isInside(Vector3<double> &) const;
 		
-		const std::vector<Vertex> * get_vertices() const;
+		const std::vector<Vector3<double>> & getVertices() const;
 		const Material * get_material() const;
-		const std::vector<double> * get_normal() const;
+		const Vector3<double> * getNormal() const;
 
-		std::vector<int> * color_diffuse(const std::vector<double> * point, const std::vector<int> *, double);
+		std::vector<int> * colorDiffuse(const Vector3<double> point, const std::vector<int> *, double);
 
 		std::ostream & operator<<(std::ostream &);
 		friend std::ostream & operator<<(std::ostream &, const Face &);

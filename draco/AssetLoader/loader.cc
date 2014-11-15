@@ -1,5 +1,4 @@
 #include "loader.h"
-#include "vertex.h"
 #include "face.h"
 
 #include <assimp/Importer.hpp> // C++ importer interface
@@ -41,8 +40,8 @@ bool getFiles (string dir, vector<string> &files) {
 }
 
 
-void constructVertex(aiVector3D & in, Vertex & out) {
-	out = Vertex(in[0], in[1], in[2], 1);
+Vector3<double> constructVertex(aiVector3D & in) {
+	return Vector3<double>(in[0], in[1], in[2]);
 }
 
 void copyMaterials(SceneObject & obj) {
@@ -68,21 +67,18 @@ void copyMaterials(SceneObject & obj) {
 		curMat->Get(AI_MATKEY_SHININESS, Ns);
 		curMat->Get(AI_MATKEY_OPACITY, Tr);
 
-		vector<double> * ambient_color = new vector<double>();
-		vector<double> * diffuse_color = new vector<double>();
-		vector<double> * specular_color = new vector<double>();
-
-		ambient_color->push_back(ambient.r);
-		ambient_color->push_back(ambient.g);
-		ambient_color->push_back(ambient.b);
-
-		diffuse_color->push_back(diffuse.r);
-		diffuse_color->push_back(diffuse.g);
-		diffuse_color->push_back(diffuse.b);
-		
-		specular_color->push_back(specular.r);
-		specular_color->push_back(specular.g);
-		specular_color->push_back(specular.b);
+		Vector3<double> ambient_color = Vector3<double>(
+			ambient.r,
+			ambient.g,
+			ambient.b);
+		Vector3<double> diffuse_color = Vector3<double>(
+			diffuse.r,
+			diffuse.g,
+			diffuse.b);
+		Vector3<double> specular_color = Vector3<double>(
+			specular.r,
+			specular.g,
+			specular.b);
 
 		aiString texName;
 		curMat->GetTexture(aiTextureType_DIFFUSE, 0, &texName, NULL, NULL, NULL, NULL, NULL);
@@ -135,8 +131,7 @@ void copyVertices(aiMesh * m, SceneObject & obj) {
 	cout << "This mesh has " << m->GetNumUVChannels() << " channels. " << endl;
 	for (int i = 0; i < m->mNumVertices; i++) {
 		cout << "start vertex" << endl;
-		Vertex v = Vertex(0,0,0,0);
-		constructVertex(m->mVertices[i], v);
+		Vector3<double> v = constructVertex(m->mVertices[i]);
 		
 		if (!m->HasTextureCoords(0)) {
 			cout << "\tAdd reg vertex" << endl;
@@ -144,8 +139,8 @@ void copyVertices(aiMesh * m, SceneObject & obj) {
 		}
 		else {
 			cout << "\tAdd tex" << endl;
-			Vertex * texV = new Vertex(0,0,0,0);
-			constructVertex((m->mTextureCoords[0][i]), *texV);
+			Vector3<double> * texV = new Vector3<double>(0,0,0);
+			*texV = constructVertex(m->mTextureCoords[0][i]);
 			obj.addVertex(v, texV);
 		}
 	}
@@ -169,11 +164,11 @@ void copyFaces(aiMesh * m, SceneObject & obj, int pivot) {
 			//cout << obj.getVertex(index);
 			if (obj.hasTexCoord(index)) {
 				cout << "\tAdd tex vertex" << endl;
-				f->add_vertex(obj.getVertex(index), obj.getTexVertex(index));
+				f->addVertex(obj.getVertex(index), obj.getTexVertex(index));
 			}
 			else {
 				cout << "\tAdd vertex" << endl;
-				f->add_vertex(obj.getVertex(index));//, index);
+				f->addVertex(obj.getVertex(index));//, index);
 			}
 		}
 		obj.addFace(f);

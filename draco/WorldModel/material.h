@@ -1,6 +1,7 @@
 #ifndef MATERIAL_OBJECT_H
 #define MATERIAL_OBJECT_H
 
+#include "dragonmath.h"
 #include "texture.h"
 
 #include <fstream>
@@ -10,9 +11,9 @@
 class Material {
 private:
 	std::string name;
-	std::vector<double> * Ka;
-	std::vector<double> * Kd;
-	std::vector<double> * Ks;
+	Vector3<double> Ka;
+	Vector3<double> Kd;
+	Vector3<double> Ks;
 	double Ns;
 	double Tr;
 	//void add_material(std::fstream &);
@@ -25,9 +26,9 @@ public:
 	void addTexture(std::string texPath);
 	bool hasTexture() const;
 
-	void setAmbient(std::vector<double> * a);
-	void setDiffuse(std::vector<double> * a);
-	void setSpecular(std::vector<double> * a);
+	void setAmbient(Vector3<double> a);
+	void setDiffuse(Vector3<double> a);
+	void setSpecular(Vector3<double> a);
 	void setShininess(double a);
 	void setTransparency(double a);
 

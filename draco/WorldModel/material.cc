@@ -3,8 +3,6 @@
 
 #include "textureLoader.h"
 
-#include "MatMath.h"
-
 #include <sstream>
 #include <iostream>
 #include <cmath>
@@ -12,11 +10,8 @@
 
 using namespace std;
 //Broke up the material vector into Ka, Kd, and Ks.
-Material::Material(string n) {
+Material::Material(string n) : Ka(0,0,0), Kd(0,0,0), Ks(0,0,0) {
 	name = n;
-	Ka = new vector<double>();
-	Kd = new vector<double>();
-	Ks = new vector<double>();
 }
 
 void Material::addTexture(string texPath) {
@@ -41,14 +36,14 @@ bool Material::hasTexture() const {
 	return textures.size() > 0;
 }
 
-void Material::setAmbient(std::vector<double> * a) {
+void Material::setAmbient(Vector3<double>  a) {
 	Ka = a;
 }
-void Material::setDiffuse(std::vector<double> * a) {
+void Material::setDiffuse(Vector3<double>  a) {
 	Kd = a;
 }
 
-void Material::setSpecular(std::vector<double> * a) {
+void Material::setSpecular(Vector3<double> a) {
 	Ks = a;
 }
 
@@ -85,9 +80,9 @@ vector<int> * Material::color_ambient(const vector<int> * light_color) const {
 	r = (*light_color)[0];
 	g = (*light_color)[1];
 	b = (*light_color)[2];
-	final->push_back(round((*Ka)[0]*r));
-	final->push_back(round((*Ka)[1]*g));
-	final->push_back(round((*Ka)[2]*b));
+	final->push_back(round(Ka[0]*r));
+	final->push_back(round(Ka[1]*g));
+	final->push_back(round(Ka[2]*b));
 	return final;
 }
 
@@ -116,9 +111,9 @@ vector<int> * Material::color_diffuse(const vector<int> * light_color, double co
 	r = (*light_color)[0];
 	g = (*light_color)[1];
 	b = (*light_color)[2];
-	final->push_back(round((*Kd)[0]*r * abs(cos)));
-	final->push_back(round((*Kd)[1]*g * abs(cos)));
-	final->push_back(round((*Kd)[2]*b * abs(cos)));
+	final->push_back(round(Kd[0]*r * abs(cos)));
+	final->push_back(round(Kd[1]*g * abs(cos)));
+	final->push_back(round(Kd[2]*b * abs(cos)));
 	return final;
 }
 
@@ -175,9 +170,9 @@ vector<int> * Material::color_specular(const vector<int> * light_color, double c
 	g = (*light_color)[1];
 	b = (*light_color)[2];
 	//cout << "alpha: " << alpha << endl;
-	final->push_back(round((*Ks)[0]*r * pow(cos, alpha)));
-	final->push_back(round((*Ks)[1]*g * pow(cos, alpha)));
-	final->push_back(round((*Ks)[2]*b * pow(cos, alpha)));
+	final->push_back(round(Ks[0]*r * pow(cos, alpha)));
+	final->push_back(round(Ks[1]*g * pow(cos, alpha)));
+	final->push_back(round(Ks[2]*b * pow(cos, alpha)));
 	return final;
 }
 
@@ -189,9 +184,9 @@ vector<int> * Material::color_reflection(const vector<int> * light_color) const 
 	g = (*light_color)[1];
 	b = (*light_color)[2];
 	//cout << "alpha: " << alpha << endl;
-	final->push_back(round((*Ks)[0]*r));
-	final->push_back(round((*Ks)[1]*g));
-	final->push_back(round((*Ks)[2]*b));
+	final->push_back(round(Ks[0]*r));
+	final->push_back(round(Ks[1]*g));
+	final->push_back(round(Ks[2]*b));
 	return final;
 }
 

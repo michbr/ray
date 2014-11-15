@@ -1,6 +1,7 @@
 #include "dragon.h"
 
 #include <iostream>
+#include <cstdlib>
 
 #if defined(__linux__)
 #include <X11/Xlib.h>
@@ -31,7 +32,7 @@ int main( int argc, const char* argv[] ) {
 	vi = glXChooseVisual(dpy, 0, att);
 
 	if(vi == NULL) {
-		printf("\n\tno appropriate visual found\n\n");
+		cout << "\n\tno appropriate visual found\n" << endl;
 		exit(0);
 	} 
 

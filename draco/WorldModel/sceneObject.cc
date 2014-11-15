@@ -12,11 +12,11 @@ void SceneObject::addChild(SceneObject * c) {
 	children.push_back(c);
 }
 
-void SceneObject::addVertex(Vertex v) {
+void SceneObject::addVertex(Vector3<double> v) {
 	vertices.push_back(v);
 }
 
-void SceneObject::addVertex(Vertex vert, Vertex * texVert) {
+void SceneObject::addVertex(Vector3<double> vert, Vector3<double> * texVert) {
 	int index = vertices.size();
 	addVertex(vert);
 	textureVertices[index] = texVert;
@@ -39,11 +39,11 @@ const Material * SceneObject::getMaterial(int index) {
 	return materials[index];
 }
 
-Vertex SceneObject::getVertex(int index) {
+Vector3<double> SceneObject::getVertex(int index) {
 	return vertices[index];
 }
 
-Vertex * SceneObject::getTexVertex(int index) {
+Vector3<double> * SceneObject::getTexVertex(int index) {
 	return textureVertices[index];
 }
 

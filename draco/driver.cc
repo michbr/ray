@@ -2,7 +2,6 @@
 #include "worldModel.h"
 #include "camera.h"
 #include "wireframe.h"
-#include "elipse.h"
 #include "renderer.h"
 #include "loader.h"
 
@@ -57,18 +56,10 @@ int main (int argc, char * argv [] ) {
 //		cout << test[i] << endl;
 		m.addObject(test[i]);
 	}*/
-	Vector3<double> * normal = new Vector3<double>();
-	Vector3<double> * up = new Vector3<double>();
+	Vector3<double> normal = Vector3<double>(0, 0, 1);
+	Vector3<double> up = Vector3<double>(0, 1, 0);
 	
-	(*normal)[0] = (.25);
-	(*normal)[1] = (1);
-	(*normal)[2] = (1);
-	
-	(*up)[0] = (0);
-	(*up)[1] = (1);
-	(*up)[2] = (0);
-	
-	Camera * cam = new Camera("primary", 1, 2, 7, 6, normal, up);
+	Camera * cam = new Camera("primary", 1, 1, 1, 1, &normal, &up);
 	
 	
 	
@@ -86,13 +77,7 @@ int main (int argc, char * argv [] ) {
 	for (int i = 0; i < m.getFaces().size(); i++) {
 		cout << i << endl;
 	}*/
-	for (int i = 0; i < lights.size(); i++) {
-		cout << (*(lights[i]->get_color()))[0] << ", ";
-		cout << (*(lights[i]->get_color()))[1] << ", ";
-		cout << (*(lights[i]->get_color()))[2] << endl;
-	}
-	
-	r.prepare_raycast(m.getFaces(), vector<Elipse *>(), lights);
+	r.prepareRaycast(m.getFaces(), lights);
 	
 	ofstream output;
 	

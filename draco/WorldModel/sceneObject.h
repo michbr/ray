@@ -1,7 +1,6 @@
 #ifndef SCENE_OBJECT_OBJ_H
 #define SCENE_OBJECT_OBJ_H
 
-#include "vertex.h"
 #include "material.h"
 #include "face.h"
 
@@ -11,8 +10,8 @@ class SceneObject {
 private:
 	std::vector<SceneObject * > children;
 	std::vector<Material *> materials;
-	std::vector<Vertex> vertices;
-	std::unordered_map<int, Vertex *> textureVertices;
+	std::vector<Vector3<double>> vertices;
+	std::unordered_map<int, Vector3<double> *> textureVertices;
 	std::vector<Face *> faces;
 	std::vector<std::string> textures;	
 
@@ -21,15 +20,15 @@ public:
 	SceneObject();
 	void addChild(SceneObject * c);
 	void addMaterial(Material * m);
-	void addVertex(Vertex);
-	void addVertex(Vertex, Vertex *);
+	void addVertex(Vector3<double>);
+	void addVertex(Vector3<double>, Vector3<double> *);
 	void addFace(Face * f);
 	void addTexture(std::string path);
 
 	const Material * getMaterial(int index);
-	Vertex getVertex(int index);
+	Vector3<double> getVertex(int index);
 	bool hasTexCoord(int index);
-	Vertex * getTexVertex(int index);
+	Vector3<double> * getTexVertex(int index);
 	const std::vector<std::string> getTextures();
 	std::vector<Face *> &getFaces();
 	

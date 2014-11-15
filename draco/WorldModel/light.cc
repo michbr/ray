@@ -7,7 +7,8 @@
 
 using namespace std;
 
-Light::Light(double x, double y, double z, double w, int r, int g, int b) : center(x, y, z, w){
+Light::Light(double x, double y, double z, double double_u, int r, int g, int b) : center(x, y, z){
+	w = double_u;
 	//cout << "creating light: " << r << " " << g << " " << b << endl;
 	/*if (center.get_w() == 0) {
 		double x_pos = center.get_x()*9999 - center.get_x();
@@ -17,9 +18,10 @@ Light::Light(double x, double y, double z, double w, int r, int g, int b) : cent
 	}*/
 
 	//cout << "after cond" << endl;
-	center_point.push_back(center.get_x());
+	
+	/*center_point.push_back(center.get_x());
 	center_point.push_back(center.get_y());
-	center_point.push_back(center.get_z());
+	center_point.push_back(center.get_z());*/
 	//cout << "created c_p" << endl;
 	color.push_back(r);
 	color.push_back(g);
@@ -27,73 +29,62 @@ Light::Light(double x, double y, double z, double w, int r, int g, int b) : cent
 	//cout << "pushed" << endl;
 }
 
-void Light::set_center() {
-	center_point[0] = center.get_x();
-	center_point[1] = center.get_y();
-	center_point[2] = center.get_z();
-}
-
 const std::vector<int> * Light::get_color() const{
 	return &color;
 }
 
 double Light::get_x() const {
-	return center.get_x();
+	return center[0];
 }
 
 double Light::get_y() const {
-	return center.get_y();
+	return center[1];
 }
 
 double Light::get_z() const {
-	return center.get_z();
+	return center[2];
 }
 
 double Light::get_w() const {
-	return center.get_w();
+	return w;
 }
 
-const vector<double> * Light::get_center() const{
+const Vector3<double> * Light::getCenter() const{
 	//vector<double> * result = new vector<double>();
 	//result->push_back(center.get_x());
 	//result->push_back(center.get_y());
 	//result->push_back(center.get_z());
-	return &center_point;//result;
+	return &center;//result;
 }
 
-bool Light::is_blocked(vector<double> * point, const vector<Face *> & faces, const vector<Elipse *> & elipses) {
+bool Light::isBlocked(Vector3<double> point, const vector<Face *> & faces) const {
 	//vector<double> * ray 
 //	double d;
 	//if (center.get_w() == 0) {
 		//d = magnitude();
 	//}
-	vector<double> * sbt = subtract(point, get_center());
-	double d = magnitude(sbt);
-	delete(sbt);
+	double d = (point - *getCenter()).magnitude();
 	for	(int i = 0; i < faces.size(); i++) {
 		double T;
-		vector<double> * temp = faces[i]->intersect(point, get_center(), &T); //switched these
-		if (faces[i]->is_inside(temp)) {
-			vector<double> * sbt = subtract(temp, get_center());
-			double d1 = magnitude(sbt);
-			delete(sbt);
+		Vector3<double> temp = faces[i]->intersect(point, center, &T); //switched these
+		if (faces[i]->isInside(temp)) {
+			double d1 = (temp - *getCenter()).magnitude();
 			if ((d - d1) < 0.000001 && (d1 - d) < .000001) {
 				
 			}
 			else if (d > d1) {
-			delete(temp);
 			return true;
 			}
 		}
-		delete(temp);
 	//	temp->clear();
 	//	temp->~vector();
 	}
 	
-	for	(int i = 0; i < elipses.size(); i++) {
-		vector<double> * temp = elipses[i]->intersect(point, get_center());
+	//TODO update this code to add support for elipses
+	/*for	(int i = 0; i < elipses.size(); i++) {
+		vector<double> * temp = elipses[i]->intersect(point, getCenter());
 		if (elipses[i]->is_inside(temp)) {
-			double d1 = magnitude(subtract(temp, get_center()));
+			double d1 = magnitude(subtract(temp, getCenter()));
 			if ((d - d1) < 0.000001 && (d1 - d) < .000001) {
 				
 			}
@@ -102,6 +93,6 @@ bool Light::is_blocked(vector<double> * point, const vector<Face *> & faces, con
 			}
 		}
 		temp->~vector();
-	}
+	}*/
 	return false;
 }

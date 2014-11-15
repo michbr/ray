@@ -8,33 +8,32 @@ class Vector3 {
 	private:
 		T v[3];
 	public:	
-		Vector3();
+		//Vector3();
 		Vector3(T x, T y, T z);
 		Vector3 cross(Vector3 b);
-		void normalize();
+	//	void normalize();
 		T magnitude();
 
 		//const T& operator[](int index);
 
-		static void normalize(Vector3<T> & in, Vector3<T> &out);
-		static void cross(Vector3<T> & a, Vector3<T> & b, Vector3<T> & out);
-		static void scale (Vector3<T> & a, double, Vector3<T> & out);
+		Vector3 normalize() const;
+		Vector3 cross(const Vector3 & b) const;
+		Vector3 scale (double) const;
 
 		//static void equal(const Vector3 & a, const Vector3 & b);
-		static void findPerpendicular(Vector3<T> & a, Vector3<T> & out);
+		Vector3 findPerpendicular() const;
 
-		static T dot(Vector3<T> & a, Vector3<T> & b);
-		static T magnitude(Vector3<T> & a);
+		T dot(const Vector3 & b) const;
 		
-		Vector3 operator-(Vector3);
-		Vector3 operator+();
+		Vector3 operator-(const Vector3) const;
+		Vector3 operator+(const Vector3) const;
 		T& operator[](int index);
+		T operator[](int index) const;
 
 		friend std::ostream & operator<<(std::ostream& os, const Vector3<T> & a) {
 			os << "(" << a.v[0] << ", " << a.v[1] << ", " << a.v[2] << ")";
 			return os;
-		}
-		
+		}		
 };
 
 template <class T>
