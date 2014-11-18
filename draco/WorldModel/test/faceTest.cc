@@ -47,7 +47,6 @@ TEST_F(FaceTest, intersect) {
 	Vector3<double> viewPoint = Vector3<double>(.5, .5, .5);
 	double t;
 	Vector3<double> temp = a->intersect(focalPoint, viewPoint, &t);
-	cout << temp << endl;
 	ASSERT_EQ(.5, temp[0]);
 	ASSERT_EQ(.5, temp[1]);
 	ASSERT_EQ(0, temp[2]);

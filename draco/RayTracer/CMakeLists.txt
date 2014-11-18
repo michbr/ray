@@ -13,4 +13,4 @@ set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 #add_library (MainTestLib SHARED ${SOURCES})
 #target_link_libraries(MainTestLib RayTracerTest)
 
-add_library (RayTracer SHARED ${SOURCES})
+add_library (RayTracer ${SOURCES})

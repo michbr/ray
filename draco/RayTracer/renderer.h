@@ -5,7 +5,6 @@
 #include "wireframe.h"
 #include "face.h"
 #include "light.h"
-#include "material.h"
 #include "camera.h"
 
 #include <vector>

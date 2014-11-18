@@ -1,8 +1,6 @@
 #ifndef CAMERA_OBJECT_H
 #define CAMERA_OBJECT_H
 
-#include "wireframe.h"
-#include "light.h"
 #include "dragonmath.h"
 
 #include <string>
