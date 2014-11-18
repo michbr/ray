@@ -203,8 +203,15 @@ UpgradeLog*.htm
 # Microsoft Fakes
 FakesAssemblies/
 
+# cmake files to ignore
 CMakeCache.txt
 CMakeFiles
 Makefile
 cmake_install.cmake
 install_manifest.txt
+CTestTestfile.cmake
+Testing/
+
+#custom extras
+Draco
+*.ppm

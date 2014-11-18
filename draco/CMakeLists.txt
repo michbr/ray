@@ -25,9 +25,13 @@ add_subdirectory(WorldModel)
 add_subdirectory(DragonMath)
 add_subdirectory(Main)
 add_subdirectory(RayTracer)
+add_subdirectory(GLRenderer)
 
 add_executable (Draco driver.cc)
 
+add_executable (GL test.cc)
+target_link_libraries (GL DragonMath)
+target_link_libraries (GL GLRenderer)
 #add_library (RayTracerTestLib SHARED camera.cc renderer.cc wireframe.cc)
 
 #target_link_libraries(RayTracerTestLib TextureLoader)
@@ -48,5 +52,5 @@ target_link_libraries (Draco RayTracer)
 target_link_libraries (Draco TextureLoader WorldModel)
 target_link_libraries (Draco DragonMath)
 target_link_libraries (Draco AssetLoader)
-
+target_link_libraries (Draco GLRenderer)
 
