@@ -20,6 +20,7 @@ add_subdirectory(WorldModel)
 add_subdirectory(DragonMath)
 add_subdirectory(RayTracer)
 add_subdirectory(GLRenderer)
+add_subdirectory(GUI)
 
 add_executable (Draco dragonMain.cc)
 
