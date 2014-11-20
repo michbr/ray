@@ -12,6 +12,7 @@ include_directories("${PROJECT_SOURCE_DIR}/DragonMath")
 include_directories("${PROJECT_SOURCE_DIR}/WorldModel")
 include_directories("${PROJECT_SOURCE_DIR}/AssetLoader")
 include_directories("${PROJECT_SOURCE_DIR}/RayTracer")
+include_directories("${PROJECT_SOURCE_DIR}/GLRenderer")
 
 add_subdirectory(TextureLoader)
 add_subdirectory(AssetLoader)
@@ -20,11 +21,13 @@ add_subdirectory(DragonMath)
 add_subdirectory(RayTracer)
 add_subdirectory(GLRenderer)
 
-add_executable (Draco driver.cc)
+add_executable (Draco dragonMain.cc)
 
-add_executable (GL test.cc)
-target_link_libraries (GL DragonMath)
-target_link_libraries (GL GLRenderer)
+#add_executable (GL dragonMain.cc)
+#target_link_libraries (GL DragonMath)
+#target_link_libraries (GL GLRenderer)
+#target_link_libraries (GL WorldModel)
+#target_link_libraries (GL TextureLoader)
 
 add_executable(UnitTests main.cc)
 

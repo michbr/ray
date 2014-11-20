@@ -9,10 +9,10 @@ class DragonEngine;
 class Controls {
 	private:
 	   DragonEngine * engine;
-	   Camera<GLfloat> * cam;
+	   Camera * cam;
 	   int mouse_x, mouse_y;
 	public:
-	   Controls(DragonEngine & eng, Camera<GLfloat> &);
+	   Controls(DragonEngine & eng, Camera &);
 	   void keyPress(int keyCode);
 	   void motionEvent(int x, int y);
 	   

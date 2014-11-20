@@ -3,15 +3,15 @@
 
 #include "camera.h"
 #include "window.h"
-#include "renderer.h"
+#include "glRenderer.h"
 
 class Controls;
 
 class DragonEngine {
 	private:
-	   Camera<GLfloat> * cam;
+	   Camera * cam;
 	   GameWindow * win;
-	   Renderer * rend;
+	   GLRenderer * rend;
 	   Controls * controls;
 	public:
 	   DragonEngine();

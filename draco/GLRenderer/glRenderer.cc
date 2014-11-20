@@ -1,4 +1,4 @@
-#include "renderer.h"
+#include "glRenderer.h"
 
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -28,7 +28,7 @@ GLfloat		colors[] =
     0, 1, 1,   0, 1, 1,   0, 1, 1,   0, 1, 1
   };
 
-Renderer::Renderer(GameWindow & win, Camera<GLfloat> * camera) {
+GLRenderer::GLRenderer(GameWindow & win, Camera * camera) {
 	
 	cam = camera;
 	//cout << *camera << endl;
@@ -37,13 +37,13 @@ Renderer::Renderer(GameWindow & win, Camera<GLfloat> * camera) {
 	//window = win;	
 }
 
-void Renderer::initialize(GameWindow & win) {
-	//instance = Renderer(win);
+void GLRenderer::initialize(GameWindow & win) {
+	//instance = GLRenderer(win);
 	initGL(win);
 	//return *cam;
 }
 
-void Renderer::initGL(GameWindow & win) {
+void GLRenderer::initGL(GameWindow & win) {
 	//Initialize Projection Matrix
 	glMatrixMode( GL_PROJECTION );
 	glLoadIdentity();
@@ -77,7 +77,7 @@ void Renderer::initGL(GameWindow & win) {
 	}
 }
 
-void Renderer::render() {
+void GLRenderer::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	//glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();

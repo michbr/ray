@@ -3,7 +3,7 @@ project (GLRenderer)
 
 file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/*.cc)
 
-find_package(OpenGL)
+find_package(OpenGL REQUIRED)
 
 set(CMAKE_BUILD_TYPE Release)
 

@@ -56,12 +56,11 @@ int main (int argc, char * argv [] ) {
 //		cout << test[i] << endl;
 		m.addObject(test[i]);
 	}*/
+	Vector3<double> pos = Vector3<double>(1, 1, 1);
 	Vector3<double> normal = Vector3<double>(0, 0, 1);
 	Vector3<double> up = Vector3<double>(0, 1, 0);
 	
-	Camera * cam = new Camera("primary", 1, 1, 1, 1, &normal, &up);
-	
-	
+	Camera * cam = new Camera(string("primary"), pos, normal, up, 1.0);
 	
 	Wireframe * frame = new Wireframe("default", -256, -256, 256, 256, 1);
 	Renderer r = Renderer(cam);

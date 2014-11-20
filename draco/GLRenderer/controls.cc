@@ -5,7 +5,7 @@ using namespace std;
 
 const GLfloat LOOK_SENSITIVITY = .01f;
 
-Controls::Controls(DragonEngine & eng, Camera<GLfloat> & camera) {
+Controls::Controls(DragonEngine & eng, Camera & camera) {
 	engine = &eng;
 	cam = &camera;
 	mouse_x = -1;

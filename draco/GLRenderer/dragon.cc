@@ -16,13 +16,13 @@ void DragonEngine::placeCamera
  GLfloat v_x, GLfloat v_y, GLfloat v_z,	// look-at point
  GLfloat u_x, GLfloat u_y, GLfloat u_z) {	// up vector	
 
-	cam = new Camera<GLfloat>(c_x, c_y, c_z, v_x, v_y, v_z, u_x, u_y, u_z);
+	cam = new Camera(c_x, c_y, c_z, v_x, v_y, v_z, u_x, u_y, u_z);
 	initRenderer();
 	controls = new Controls(*this, *cam);
 }
 
 void DragonEngine::initRenderer() {
-	rend = new Renderer(*win, cam);
+	rend = new GLRenderer(*win, cam);
 }
 
 void DragonEngine::render() {

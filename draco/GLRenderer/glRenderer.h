@@ -5,21 +5,21 @@
 #include "camera.h"
 #include <GL/gl.h>
 
-class Renderer {
+class GLRenderer {
 	private:
 	  // GameWindow & window;
 	   //static bool initialized;
 	   //static Renderer & instance;
-	   Camera<GLfloat> * cam;
+	   Camera * cam;
 	   
 	   void initGL(GameWindow & win);
 	   void initialize(GameWindow & win);
 	public:
-	   Renderer(GameWindow & win, Camera<GLfloat> * cam);
+	   GLRenderer(GameWindow & win, Camera * cam);
 	   
 	   //static Renderer & getInstance();
 	   void render();
-	   Camera<GLfloat> & getCam();
+	   Camera & getCam();
 };
 
 #endif
