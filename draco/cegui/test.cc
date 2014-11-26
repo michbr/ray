@@ -13,7 +13,8 @@ int main(int argc, char **argv) {
 	
 	cout << "HI!" << endl;
 	
-	WindowManager &window = WindowManager::getSingleton();
+	WindowManager &window = Singleton<WindowManager>::getSingleton();
+//	WindowManager &window = WindowManager::getSingleton();
 	Window *root = window.createWindow("DefaultWindow", "root");
 	System::getSingleton().setGUISheet(root);
 	
