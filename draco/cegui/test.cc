@@ -5,6 +5,8 @@
 #include "CEGUI/WindowManager.h"
 #include "CEGUI/WindowFactoryManager.h"
 #include "CEGUI/widgets/FrameWindow.h"
+#include "CEGUI/Singleton.h"
+#include "CEGUI/RendererModules/OpenGL/GLRenderer.h"
 
 #include <iostream>
 
@@ -15,11 +17,11 @@ using namespace CEGUI;
 int main(int argc, char **argv) {
 	
 	cout << "HI!" << endl;
-	
-//	WindowManager *window = &Singleton<WindowManager>::getSingleton();
-//	WindowFactoryManager *factoryM = &Singleton<WindowFactoryManager>::getSingleton();
-//	WindowFactory *factory = factoryM->getFactory("DefaultWindow");
+
+	OpenGLRenderer &renderer = OpenGLRenderer::bootstrapSystem();
+	cout << "bootstrapped?" << endl;
 	WindowManager &window = WindowManager::getSingleton();
+	cout << "CONSTRUCTED!" << endl;
 	Window *root = window.createWindow("DefaultWindow", "root");
 	System::getSingleton().getDefaultGUIContext().setRootWindow(root);
 	
