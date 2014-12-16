@@ -4,7 +4,7 @@
 *.o
 *.obj
 
-# Compiled Dynamic libraries
+ Compiled Dynamic libraries
 *.so
 *.dylib
 *.dll
@@ -213,5 +213,5 @@ CTestTestfile.cmake
 Testing/
 
 #custom extras
-Draco
+#Draco
 *.ppm
