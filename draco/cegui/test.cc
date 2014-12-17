@@ -4,9 +4,16 @@
 #include "CEGUI/System.h"
 #include "CEGUI/WindowManager.h"
 #include "CEGUI/WindowFactoryManager.h"
+#include "CEGUI/SchemeManager.h"
 #include "CEGUI/widgets/FrameWindow.h"
 #include "CEGUI/Singleton.h"
+#include "CEGUI/Scheme.h"
+#include "CEGUI/Font.h"
+#include "CEGUI/ImageManager.h"
+#include "CEGUI/falagard/WidgetLookManager.h"
+#include "CEGUI/XMLParser.h"
 #include "CEGUI/RendererModules/OpenGL/GLRenderer.h"
+#include "CEGUI/DefaultResourceProvider.h"
 
 #include <X11/Xlib.h>
 #include <GL/glx.h>
@@ -73,8 +80,31 @@ int main(int argc, char **argv) {
 	CEGUI::Window *root = window.createWindow("DefaultWindow", "root");
 	CEGUI::System::getSingleton().getDefaultGUIContext().setRootWindow(root);
 	
-	//CEGUI::FrameWindow *frame = static_cast<CEGUI::FrameWindow*>(window.createWindow("TaharezLook/FrameWindow", "testWindow"));
-	CEGUI::FrameWindow *frame = static_cast<CEGUI::FrameWindow*>(window.createWindow("DefaultWindow", "testWindow"));
+	// initialize the required directories for the DefaultResourceProvider
+	CEGUI::DefaultResourceProvider *rp = static_cast<CEGUI::DefaultResourceProvider*>(CEGUI::System::getSingleton().getResourceProvider());
+	rp->setResourceGroupDirectory("schemes", "../cegui-0.8.3/datafiles/schemes/");
+	rp->setResourceGroupDirectory("imagesets", "../cegui-0.8.3/datafiles/imagesets/");
+	rp->setResourceGroupDirectory("fonts", "../cegui-0.8.3/datafiles/fonts/");
+	rp->setResourceGroupDirectory("layouts", "../cegui-0.8.3/datafiles/layouts/");
+	rp->setResourceGroupDirectory("looknfeels", "../cegui-0.8.3/datafiles/looknfeel/");
+	rp->setResourceGroupDirectory("lua_scripts", "../cegui-0.8.3/datafiles/lua_scripts/");
+
+	// set the default resource groups to be used
+	CEGUI::ImageManager::setImagesetDefaultResourceGroup("imagesets");
+	CEGUI::Font::setDefaultResourceGroup("fonts");
+	CEGUI::Scheme::setDefaultResourceGroup("schemes");
+	CEGUI::WidgetLookManager::setDefaultResourceGroup("looknfeels");
+//	CEGUI::WindowManager::setDefaultResourceGroup("layouts");
+//	CEGUI::ScriptModule::setDefaultResourceGroup("lua_scripts");
+
+	// setup default group for validation schemas
+	CEGUI::XMLParser* parser = CEGUI::System::getSingleton().getXMLParser();
+	if (parser->isPropertyPresent("SchemaDefaultResourceGroup"))
+		parser->setProperty("SchemaDefaultResourceGroup", "schemas");
+
+	CEGUI::SchemeManager::getSingleton().createFromFile("VanillaSkin.scheme");
+	CEGUI::FrameWindow *frame = static_cast<CEGUI::FrameWindow*>(window.createWindow("Vanilla/FrameWindow", "testWindow"));
+	//CEGUI::FrameWindow *frame = static_cast<CEGUI::FrameWindow*>(window.createWindow("DefaultWindow", "testWindow"));
 	root->addChild(frame);
 	
 	frame->setPosition(CEGUI::UVector2(CEGUI::UDim(0.25f, 0), CEGUI::UDim(0.25f, 0)));
