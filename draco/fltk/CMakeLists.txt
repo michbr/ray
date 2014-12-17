@@ -17,17 +17,18 @@ set (Draco_VERSION_MINOR 1)
 set (CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")# ${CUSTOM_FLAGS}")
 
 
-set(FLTK_LIBRARIES
-fltk.lib
-fltk_forms.lib
-fltk_images.lib
-fltk_z.lib)
+find_library(FLTK_LIBRARIES
+fltk
+fltk_forms
+fltk_images
+fltk_z
+PATH ${PROJECT_SOURCE_DIR}/fltk-1.3.3/lib/)
 
 set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 #set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY})
 
 include_directories("${PROJECT_SOURCE_DIR}/fltk-1.3.3/")
-link_directories("${PROJECT_SOURCE_DIR}/fltk-1.3.3/lib/")
+#link_directories("${PROJECT_SOURCE_DIR}/fltk-1.3.3/lib/")
 
 add_executable (fltkTest ${SOURCES})
 
