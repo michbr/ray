@@ -12,7 +12,7 @@ ENDIf()
 #include(CMake/macros.cmake)
 #include(CMake/setup.cmake)
 include(CMake/resources.cmake)
-include(CMake/options.cmake)
+#include(CMake/options.cmake)
 #include(CMake/export.cmake)
 
 set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
