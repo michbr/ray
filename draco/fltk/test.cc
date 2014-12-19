@@ -3,6 +3,8 @@
 #include "FL/Fl_Window.H"
 #include "FL/Fl_Box.H"
 
+#include "scale.h"
+
 #include <iostream>
 
 
@@ -20,6 +22,8 @@ int main(int argc, char **argv) {
 	window->show(argc, argv);
 
 	Fl::scheme("gtk+");
+
+	Scale thingy("thingy", "other thingy!");
 
 	int endCode = Fl::run();
 

@@ -10,7 +10,7 @@ IF (UNIX)
 ENDIf()
 
 #set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
-file(GLOB SOURCES ${PROJECT_SOURCE_DIR}/*.cc)
+file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/*.cc" "${PROJECT_SOURCE_DIR}/*.h")
 set (Draco_VERSION_MAJOR 0)
 set (Draco_VERSION_MINOR 1)
 
