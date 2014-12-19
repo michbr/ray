@@ -5,7 +5,7 @@ project (Draco)
 set (Draco_VERSION_MAJOR 0)
 set (Draco_VERSION_MINOR 1)
 
-set (EXECUTABLE_NAME fltkTest)
+set (EXECUTABLE_NAME draco)
 
 
 IF (UNIX)
