@@ -1,13 +1,18 @@
 
 #pragma once
 
+//#include "scale.h"
+
 #include <string>
 
 
-class Scale {
+class StartTab {
 public:
-	Scale(const std::string &name, const std::string &fileName);
-	~Scale();
+
+	static StartTab *load(const std::string &fileName);
+
+	StartTab(const std::string &name, const std::string &fileName);
+	~StartTab();
 
 	const std::string &getFileName() const;
 	const std::string &getName() const;

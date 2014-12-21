@@ -1,6 +1,9 @@
 
 #pragma once
 
+#include "scaleType.h"
+
+#include <vector>
 #include <string>
 
 
@@ -9,6 +12,14 @@ public:
 	ScaleManager();
 	~ScaleManager();
 
-	void loadLibrary(std::string libName);
+
+	void loadScale(const std::string &libName);
+
+	void constructScale(const std::string &scaleName);
+
+
+private:
+	std::vector<ScaleType> scales;
+
 };
 
