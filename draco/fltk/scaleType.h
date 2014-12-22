@@ -1,8 +1,8 @@
 
 #pragma once
 
-#define NAME_GETTER_NAME "scaleName";
-#define CONSTRUCTOR_NAME "constructScale";
+#define NAME_GETTER_NAME "scaleName"
+#define CONSTRUCTOR_NAME "constructScale"
 class ScaleType;
 
 #include "scale.h"
