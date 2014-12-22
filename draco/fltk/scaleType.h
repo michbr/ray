@@ -1,27 +1,44 @@
 
 #pragma once
 
+#define NAME_GETTER_NAME "scaleName";
+#define CONSTRUCTOR_NAME "constructScale";
+class ScaleType;
+
 #include "scale.h"
 
 #include <string>
 
 
+typedef Scale *(*ScaleConstructor)(ScaleType *type);
+typedef const char *(*ScaleNameGetter)();
+
+
 class ScaleType {
 public:
+	std::string name;
 	ScaleType(const std::string &name, const std::string &libName);
 	~ScaleType();
 
-	const std::string &getFileName() const;
-	const std::string &getName() const;
+	void load();
+	void unload();
+	bool loaded();
+	void *loadFunction(const std::string &funcName) const;
+
+	const std::string &getLibName() const;
+	const char *getLibExtension() const;
+	const char *getRealName() const;
 
 	Scale *construct();
 
 private:
-	std::string name;
 	std::string libName;
 
 	void *lib;
-	void *constructor;
+	ScaleConstructor scaleConstructor;
+	ScaleNameGetter nameGetter;
+
+	void *loadLibrary();
 };
 
 

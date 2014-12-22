@@ -5,35 +5,30 @@
 #include "scaleType.h"
 
 #include <windows.h>
-#include <iostream>
+
+
+const char *LIB_EXTENSION = ".dll";
 
 
 using namespace std;
 
 
-ScaleType::ScaleType(const string &name, const string &libName) {
-	this->name = name;
-	this->libName = libName;
-	lib = LoadLibrary(libName.c_str());
-
-	if (!lib)
-		throw string("Could not load DLL ") +libName;
-
-	int(__stdcall *func)();
-	string funcName = "getName";
-	func = GetProcAddress((HMODULE)lib, funcName.c_str());
-	if (!func)
-		throw string("Could not load DLL function ") + libName + ": " + funcName;
-
-
-}
-
-ScaleType::~ScaleType() {
+void ScaleType::unload() {
+	if (lib == NULL) return;
 	FreeLibrary((HMODULE)lib);
+	lib = NULL;
 }
 
-Scale *ScaleType::construct() {
-	return new Scale(name, libName);
+void *ScaleType::loadLibrary() {
+	return LoadLibrary((libName +LIB_EXTENSION).c_str());
+}
+
+void *ScaleType::loadFunction(const std::string &funcName) const {
+	return GetProcAddress((HMODULE)lib, funcName.c_str());
+}
+
+const char *ScaleType::getLibExtension() const {
+	return LIB_EXTENSION;
 }
 
 

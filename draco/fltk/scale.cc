@@ -6,10 +6,7 @@ using namespace std;
 
 
 
-Scale::Scale(const string &name, const string &fileName) {
-	this->name = name;
-	this->fileName = fileName;
-}
+Scale::Scale(ScaleType *type): type(type) {}
 
 
 Scale::~Scale() {
@@ -17,8 +14,8 @@ Scale::~Scale() {
 
 
 const string &Scale::getFileName() const {
-	return fileName;
+	return type->getLibName();
 }
 const string &Scale::getName() const {
-	return name;
+	return type->name;
 }

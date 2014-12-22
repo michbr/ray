@@ -1,7 +1,7 @@
 
 #pragma once
 
-//#include "scale.h"
+#include "scale.h"
 
 #include <string>
 
