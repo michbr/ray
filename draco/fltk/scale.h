@@ -4,6 +4,7 @@
 class Scale;
 
 #include "scaleType.h"
+#include "FL/Fl_Widget.H"
 
 #include <string>
 
@@ -16,6 +17,8 @@ public:
 
 	const std::string &getFileName() const;
 	const std::string &getName() const;
+
+	virtual Fl_Widget *thingy() = 0;
 
 private:
 	ScaleType *type;
