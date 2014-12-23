@@ -2,24 +2,20 @@
 #pragma once
 
 #include "scale.h"
+#include "FL/Fl_Group.H"
 
 #include <string>
 
 
-class StartTab {
+const char *START_TAB_NAME = "Start";
+
+
+class StartTab: public Scale {
 public:
-
-	static StartTab *load(const std::string &fileName);
-
-	StartTab(const std::string &name, const std::string &fileName);
+	StartTab(ScaleType *type, Fl_Group *pane, const std::string &startDir);
 	~StartTab();
 
-	const std::string &getFileName() const;
-	const std::string &getName() const;
-
 private:
-	std::string fileName;
-	std::string name;
 
 };
 

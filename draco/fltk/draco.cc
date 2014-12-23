@@ -1,4 +1,6 @@
 
+
+#include "scaleManager.h"
 #include "FL/Fl.H"
 #include "FL/Fl_Window.H"
 #include "FL/Fl_Box.H"
@@ -21,9 +23,11 @@ Fl_Group *addTab(Fl_Group *tabs, const char *label) {
 
 int main(int argc, char **argv) {
 
+	Fl::scheme(DEFAULT_FLTK_SCHEME);
+
 	Fl_Window *window = new Fl_Window(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
+	Fl_Tabs *tabs = new Fl_Tabs(2, 0, window->w() - 4, window->h() - 2);
 	{
-		Fl_Tabs *tabs = new Fl_Tabs(2, 0, window->w() - 4, window->h() - 2);
 		window->add_resizable(*tabs);
 		{
 			//int x, y, w, h, tabH;
@@ -46,9 +50,23 @@ int main(int argc, char **argv) {
 	}
 	window->end();
 	window->show(argc, argv);
-
-	Fl::scheme(DEFAULT_FLTK_SCHEME);
-
+	
+	ScaleManager scaleMan;
+	scaleMan.loadScaleList();
+	vector<ScaleType> &scales = scaleMan.getScales();
+	for(ScaleType &scale: scales) {
+		try {
+			scale.load();
+		} catch (string s) {
+			cerr << s << endl;
+			continue;
+		}
+		tabs->current(tabs);
+		Fl_Group *pane = addTab(tabs, scale.name.c_str());
+		tabs->add(pane);
+		scale.construct(pane, ".");
+	}
+	cout << "GOT HERE!" << endl;
 	int endCode = Fl::run();
 
 	return endCode;

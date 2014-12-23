@@ -6,15 +6,14 @@ using namespace std;
 
 
 
-Scale::Scale(ScaleType *type): type(type) {}
+Scale::Scale(ScaleType *type, Fl_Group *pane, const string &file): type(type), pane(pane), file(file) {}
 
 
-Scale::~Scale() {
-}
-
-
-const string &Scale::getFileName() const {
+const string &Scale::getLibName() const {
 	return type->getLibName();
+}
+const string &Scale::getFileName() const {
+	return file;
 }
 const string &Scale::getName() const {
 	return type->name;

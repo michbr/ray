@@ -69,3 +69,9 @@ void ScaleManager::loadScaleList() {
 	}
 	listFile.close();
 }
+
+std::vector<ScaleType> &ScaleManager::getScales() {
+	return scales;
+}
+
+

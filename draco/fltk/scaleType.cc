@@ -18,8 +18,8 @@ ScaleType::~ScaleType() {
 	unload();
 }
 
-Scale *ScaleType::construct() {
-	return scaleConstructor(this);
+Scale *ScaleType::construct(Fl_Group *pane, const string &file) {
+	return scaleConstructor(this, pane, file);
 }
 
 const string &ScaleType::getLibName() const {
@@ -35,7 +35,7 @@ void ScaleType::load() {
 
 	if (!lib)
 		throw string("Could not load shared library ") + libName + getLibExtension();
-
+	
 	nameGetter = (ScaleNameGetter)loadFunction(NAME_GETTER_NAME);
 	if (nameGetter == NULL) {
 		unload();

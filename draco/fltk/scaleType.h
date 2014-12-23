@@ -6,11 +6,12 @@
 class ScaleType;
 
 #include "scale.h"
+#include "FL/Fl_Group.H"
 
 #include <string>
 
 
-typedef Scale *(*ScaleConstructor)(ScaleType *type);
+typedef Scale *(*ScaleConstructor)(ScaleType *type, Fl_Group *pane, const std::string &file);
 typedef const char *(*ScaleNameGetter)();
 
 
@@ -29,7 +30,7 @@ public:
 	const char *getLibExtension() const;
 	const char *getRealName() const;
 
-	Scale *construct();
+	Scale *construct(Fl_Group *pane, const std::string &file);
 
 private:
 	std::string libName;

@@ -5,6 +5,7 @@
 #include "scaleManager.h"
 
 #include <dlfcn.h>
+#include <iostream>
 
 
 const char *LIB_EXTENSION = ".so";
@@ -20,11 +21,13 @@ void ScaleType::unload() {
 }
 
 void *ScaleType::loadLibrary() {
-	return dlopen((libName +LIB_EXTENSION).c_str(), RTLD_LAZY);
+	return dlopen((string("scales/") +libName +LIB_EXTENSION).c_str(), RTLD_LAZY);
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {
-	return dlsym(lib, funcName.c_str());
+	void *func = dlsym(lib, funcName.c_str());
+	if (func == NULL) cerr << dlerror() << endl;
+	return func;
 }
 
 const char *ScaleType::getLibExtension() const {

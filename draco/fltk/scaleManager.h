@@ -16,8 +16,9 @@ public:
 
 	void loadScaleList();
 	void loadScaleList(const std::string &scaleListPath);
-	void loadScale(const std::string &libName);
 	void constructScale(const std::string &scaleName) const;
+
+	std::vector<ScaleType> &getScales();
 
 private:
 	std::string scaleListPath;
