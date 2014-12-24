@@ -1,5 +1,9 @@
 
 
+// necessary to allow loading of plugins (otherwise compiles as exporter)
+#define DLL_IMPORT
+
+
 #include "scaleManager.h"
 #include "FL/Fl.H"
 #include "FL/Fl_Window.H"
@@ -7,6 +11,8 @@
 #include "FL/Fl_Tabs.H"
 
 #include <iostream>
+
+
 
 
 const unsigned int TAB_BUTTON_HEIGHT = 25;

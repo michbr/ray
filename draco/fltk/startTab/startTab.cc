@@ -9,11 +9,11 @@
 using namespace std;
 
 
-Scale *constructScale(ScaleType *type, Fl_Group *pane, const string &file) {
+SCALE_API Scale *constructScale(ScaleType *type, Fl_Group *pane, const string &file) {
 	return new StartTab(type, pane, file);
 }
 
-const char *scaleName() {
+SCALE_API const char *scaleName() {
 	return START_TAB_NAME;
 }
 

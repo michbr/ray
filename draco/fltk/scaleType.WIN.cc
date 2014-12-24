@@ -5,6 +5,7 @@
 #include "scaleType.h"
 
 #include <windows.h>
+#include <iostream>
 
 
 const char *LIB_EXTENSION = ".dll";
@@ -20,7 +21,8 @@ void ScaleType::unload() {
 }
 
 void *ScaleType::loadLibrary() {
-	return LoadLibrary((libName +LIB_EXTENSION).c_str());
+	cout << libName << endl;
+	return LoadLibrary((string("scales/") + libName + LIB_EXTENSION).c_str());
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {
