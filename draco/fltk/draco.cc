@@ -2,9 +2,11 @@
 
 // necessary to allow loading of plugins (otherwise compiles as exporter)
 #define DLL_IMPORT
+#define FL_DLL
 
-
+#include "FL/Fl_Export.H"
 #include "scaleManager.h"
+#include "FL/Fl_Widget.H"
 #include "FL/Fl.H"
 #include "FL/Fl_Window.H"
 #include "FL/Fl_Box.H"

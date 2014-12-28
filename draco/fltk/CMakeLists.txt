@@ -8,7 +8,7 @@ set (Draco_VERSION_MINOR 1)
 set (EXECUTABLE_NAME draco)
 
 
-IF (UNIX)
+if (UNIX)
 	find_package(X11)
 	set(LIBS ${LIBS} ${X11_LIBRARIES})
 	
@@ -22,18 +22,27 @@ IF (UNIX)
 	set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
 	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 	
+#	find_library(FLTK_LIBRARIES
+#	fltk
+#	fltk_forms
+#	fltk_images
+#	fltk_z
+#	PATHS ${PROJECT_SOURCE_DIR}/fltk-1.3.3/lib/)
+
+#	set(LIBS ${LIBS} ${FLTK_LIBRARIES})
+
+else(UNIX)
+	set(FLTK_LIBRARIES "")
+	find_library(FLTK_LIBRARIES
+	fltkdll
+	PATHS ${PROJECT_SOURCE_DIR}/fltk-1.3.3/lib/)
+
+	set(LIBS ${LIBS} ${FLTK_LIBRARIES})
+	
 endif(UNIX)
 
 file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/*.cc" "${PROJECT_SOURCE_DIR}/*.h")
 
-find_library(FLTK_LIBRARIES
-fltk
-fltk_forms
-fltk_images
-fltk_z
-PATHS ${PROJECT_SOURCE_DIR}/fltk-1.3.3/lib/)
-
-set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 
 include_directories("${PROJECT_SOURCE_DIR}/fltk-1.3.3/")
 #link_directories("${PROJECT_SOURCE_DIR}/fltk-1.3.3/lib/")
