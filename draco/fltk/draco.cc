@@ -4,7 +4,6 @@
 #define DLL_IMPORT
 #define FL_DLL
 
-#include "FL/Fl_Export.H"
 #include "scaleManager.h"
 #include "FL/Fl_Widget.H"
 #include "FL/Fl.H"

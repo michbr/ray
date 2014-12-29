@@ -30,18 +30,16 @@ if (UNIX)
 	fltk_z
 	PATHS ${PROJECT_SOURCE_DIR}/../fltk-1.3.3/lib/)
 
-	set(LIBS ${LIBS} ${FLTK_LIBRARIES})
-
 else(UNIX)
 	find_library(FLTK_LIBRARIES
 	fltkdll
 	PATHS ${PROJECT_SOURCE_DIR}/../fltk-1.3.3/lib/)
-
-	set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 	
 endif(UNIX)
 
 file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/*.cc" "${PROJECT_SOURCE_DIR}/*.h")
+
+set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 
 include_directories("${PROJECT_SOURCE_DIR}/../fltk-1.3.3/")
 include_directories("${PROJECT_SOURCE_DIR}/../")
