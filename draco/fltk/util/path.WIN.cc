@@ -12,7 +12,7 @@
 using namespace std;
 
 
-string getExePath() {
+string Path::getExePath() {
 	char path[MAX_EXECUTABLE_PATH_LENGTH];
 	memset(path, 0, MAX_EXECUTABLE_PATH_LENGTH);
 	int length = GetModuleFileName(NULL, path, MAX_EXECUTABLE_PATH_LENGTH);

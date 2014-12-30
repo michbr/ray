@@ -1,10 +1,10 @@
 
-#ifdef _WIN32
+#ifdef __linux__
 
 
-#include "util/fileSystem.h"
+#include "fileSystem.h"
 
-#include <windows.h>
+#include <unistd.h>
 #include <cstring>
 #include <string>
 #include <iostream>
@@ -12,10 +12,10 @@
 using namespace std;
 
 
-string getExePath() {
+string Path::getExePath() {
 	char path[MAX_EXECUTABLE_PATH_LENGTH];
-	memset(path, 0, bufSize);
-	int length = GetModuleFileName(NULL, path, bufSize);
+	memset(path, 0, MAX_EXECUTABLE_PATH_LENGTH);
+	int length = readlink("/proc/self/exe", path, MAX_EXECUTABLE_PATH_LENGTH);
 	if (length >= MAX_EXECUTABLE_PATH_LENGTH)
 		throw string("Path to executable too long: ") +path +" ...";
 	if (length < 1)
@@ -24,4 +24,4 @@ string getExePath() {
 }
 
 
-#endif // _WIN32
+#endif // __linux__

@@ -32,7 +32,7 @@ Fl_Group *addTab(Fl_Group *tabs, const char *label) {
 }
 
 int main(int argc, char **argv) {
-	cout << getExePath() << endl;
+	cout << Path::getExePath() << endl;
 	Fl::scheme(DEFAULT_FLTK_SCHEME);
 
 	Fl_Window *window = new Fl_Window(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);

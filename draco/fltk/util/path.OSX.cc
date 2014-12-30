@@ -13,7 +13,7 @@
 using namespace std;
 
 
-string getExePath() {
+string Path::getExePath() {
 	size_t bufSize = MAX_EXECUTABLE_PATH_LENGTH;
 	char path[MAX_EXECUTABLE_PATH_LENGTH];
 	memset(path, 0, MAX_EXECUTABLE_PATH_LENGTH);
