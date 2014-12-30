@@ -1,8 +1,10 @@
 
 
 // necessary to allow loading of plugins (otherwise compiles as exporter)
-#define DLL_IMPORT
-#define FL_DLL
+#ifdef _WIN32
+	#define DLL_IMPORT
+	#define FL_DLL
+#endif // _WIN32
 
 #include "scaleManager.h"
 #include "FL/Fl_Widget.H"

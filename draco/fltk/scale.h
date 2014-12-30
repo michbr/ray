@@ -1,10 +1,10 @@
 
-#pragma once
+//#pragma once
+#ifndef DRACO_SCALE_H
+#define DRACO_SCALE_H
+
 
 class Scale;
-
-#include "scale.WIN.h"
-#include "scale.UNI.h"
 
 #include "scaleType.h"
 #include "FL/Fl_Widget.H"
@@ -30,3 +30,27 @@ protected:
 
 };
 
+#ifdef _WIN32
+        #if defined DLL_IMPORT
+                #define SCALE_API __declspec(dllimport)
+        #else
+                #define SCALE_API __declspec(dllexport)
+        #endif
+#else
+        #define SCALE_API
+#endif
+
+#ifdef __cplusplus
+extern "C" {
+#endif
+
+	SCALE_API Scale *constructScale(ScaleType *type, Fl_Group *pane, const std::string &file);
+
+	SCALE_API const char *scaleName();
+
+#ifdef __cplusplus
+}
+#endif
+
+
+#endif // DRACO_SCALE_H

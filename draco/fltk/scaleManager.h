@@ -1,5 +1,8 @@
 
-#pragma once
+//#pragma once
+#ifndef DRACO_SCALE_MANAGER_H
+#define DRACO_SCALE_MANAGER_H
+
 
 #include "scaleType.h"
 
@@ -7,11 +10,12 @@
 #include <string>
 
 //const char *SCALE_LIST_PATH = "config/scales.cfg";
+#define SCALE_LIST_PATH "config/scales.cfg"
 
 
 class ScaleManager {
 public:
-	ScaleManager(const std::string &scaleListPath = "config/scales.cfg");
+	ScaleManager(const std::string &scaleListPath = SCALE_LIST_PATH);
 	~ScaleManager();
 
 	void loadScaleList();
@@ -26,3 +30,4 @@ private:
 
 };
 
+#endif // DRACO_SCALE_MANAER_H

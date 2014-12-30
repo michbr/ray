@@ -1,5 +1,8 @@
 
-#pragma once
+//#pragma once
+#ifndef DRACO_SCALE_TYPE_H
+#define DRACO_SCALE_TYPE_H
+
 
 #define NAME_GETTER_NAME "scaleName"
 #define CONSTRUCTOR_NAME "constructScale"
@@ -43,19 +46,4 @@ private:
 };
 
 
-
-//#ifdef _WIN32
-//
-//#include <windows.h>
-//
-//class ScaleType {
-//private:
-//	HINSTANCE lib;
-//
-//};
-//
-//#elif defined __linux__
-//
-//#elif defined __APPLE__
-//
-//#endif
+#endif // DRACO_SCALE_TYPE_H
