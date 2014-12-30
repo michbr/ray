@@ -49,3 +49,7 @@ add_executable (${EXECUTABLE_NAME} ${SOURCES})
 
 
 target_link_libraries(${EXECUTABLE_NAME} ${LIBS})
+
+if (MSVC)
+	set_target_properties(${EXECUTABLE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXECUTABLE_OUTPUT_PATH} )
+endif (MSVC)
