@@ -1,0 +1,10 @@
+
+#ifndef DRACO_FILE_SYSTEM_H
+#define DRACO_FILE_SYSTEM_H
+
+#define MAX_EXECUTABLE_PATH_LENGTH 512
+
+
+
+
+#endif // DRACO_FILE_SYSTEM_H

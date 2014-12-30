@@ -37,7 +37,11 @@ else(UNIX)
 	
 endif(UNIX)
 
-file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/*.cc" "${PROJECT_SOURCE_DIR}/*.h")
+file(GLOB SOURCES
+	"${PROJECT_SOURCE_DIR}/*.cc"
+	"${PROJECT_SOURCE_DIR}/*.h"
+	"${PROJECT_SOURCE_DIR}/util/*.cc"
+	"${PROJECT_SOURCE_DIR}/util/*.h")
 
 
 set(LIBS ${LIBS} ${FLTK_LIBRARIES})
