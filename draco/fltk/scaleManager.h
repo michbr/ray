@@ -10,7 +10,7 @@
 #include <string>
 
 //const char *SCALE_LIST_PATH = "config/scales.cfg";
-#define SCALE_LIST_PATH "config/scales.cfg"
+#define SCALE_LIST_PATH "../config/scales.cfg"
 
 
 class ScaleManager {

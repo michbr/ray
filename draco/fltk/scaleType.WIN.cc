@@ -22,7 +22,7 @@ void ScaleType::unload() {
 
 void *ScaleType::loadLibrary() {
 	cout << libName << endl;
-	return LoadLibrary((string("scales/") + libName + LIB_EXTENSION).c_str());
+	return LoadLibrary((string("../scales/") + libName + LIB_EXTENSION).c_str());
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {

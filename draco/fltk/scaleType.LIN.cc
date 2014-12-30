@@ -21,7 +21,7 @@ void ScaleType::unload() {
 }
 
 void *ScaleType::loadLibrary() {
-	return dlopen((string("scales/") +libName +LIB_EXTENSION).c_str(), RTLD_LAZY);
+	return dlopen((string("../scales/") +libName +LIB_EXTENSION).c_str(), RTLD_LAZY);
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {

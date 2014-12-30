@@ -6,6 +6,7 @@ set (Draco_VERSION_MAJOR 0)
 set (Draco_VERSION_MINOR 1)
 
 set (EXECUTABLE_NAME draco)
+set (EXECUTABLE_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/bin")
 
 
 if (UNIX)
