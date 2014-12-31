@@ -3,6 +3,8 @@
 
 
 #include "scaleType.h"
+#include "draco.h"
+#include "util/path.h"
 
 #include <windows.h>
 #include <iostream>
@@ -22,7 +24,7 @@ void ScaleType::unload() {
 
 void *ScaleType::loadLibrary() {
 	cout << libName << endl;
-	return LoadLibrary((string("../scales/") + libName + LIB_EXTENSION).c_str());
+	return LoadLibrary(Path::exeDir() +ROOT_DIR +SCALE_DIR + libName + LIB_EXTENSION).c_str());
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {

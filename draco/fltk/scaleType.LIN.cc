@@ -3,6 +3,8 @@
 
 
 #include "scaleManager.h"
+#include "draco.h"
+#include "util/path.h"
 
 #include <dlfcn.h>
 #include <iostream>
@@ -21,7 +23,8 @@ void ScaleType::unload() {
 }
 
 void *ScaleType::loadLibrary() {
-	return dlopen((string("../scales/") +libName +LIB_EXTENSION).c_str(), RTLD_LAZY);
+	cout << (Path::exeDir() +ROOT_PATH +SCALE_DIR +libName +LIB_EXTENSION) << endl;
+	return dlopen((Path::exeDir() +ROOT_PATH +SCALE_DIR +libName +LIB_EXTENSION).c_str(), RTLD_LAZY);
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {

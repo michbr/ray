@@ -2,7 +2,7 @@
 #ifdef __linux__
 
 
-#include "fileSystem.h"
+#include "path.h"
 
 #include <unistd.h>
 #include <cstring>
@@ -12,7 +12,7 @@
 using namespace std;
 
 
-string Path::getExePath() {
+void Path::updateNativeExePath() {
 	char path[MAX_EXECUTABLE_PATH_LENGTH];
 	memset(path, 0, MAX_EXECUTABLE_PATH_LENGTH);
 	int length = readlink("/proc/self/exe", path, MAX_EXECUTABLE_PATH_LENGTH);
@@ -20,7 +20,14 @@ string Path::getExePath() {
 		throw string("Path to executable too long: ") +path +" ...";
 	if (length < 1)
 		throw string("Could not get executable path");
-	return string(path);
+	
+	_nativeExePath = path;
+}
+
+void Path::convert() {}
+
+string Path::native() const {
+    return string(*this);
 }
 
 

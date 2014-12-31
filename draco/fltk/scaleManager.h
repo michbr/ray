@@ -5,17 +5,20 @@
 
 
 #include "scaleType.h"
+#include "draco.h"
+#include "util/path.h"
 
 #include <vector>
 #include <string>
 
 //const char *SCALE_LIST_PATH = "config/scales.cfg";
-#define SCALE_LIST_PATH "../config/scales.cfg"
+#define SCALE_LIST_PATH "config/scales.cfg"
+#define SCALE_DIR "scales/"
 
 
 class ScaleManager {
 public:
-	ScaleManager(const std::string &scaleListPath = SCALE_LIST_PATH);
+	ScaleManager(const std::string &scaleListPath = Path::exeDir() +ROOT_PATH +SCALE_LIST_PATH);
 	~ScaleManager();
 
 	void loadScaleList();

@@ -6,7 +6,7 @@
 	#define FL_DLL
 #endif // _WIN32
 
-#include "util/fileSystem.h"
+#include "util/path.h"
 #include "scaleManager.h"
 #include "FL/Fl_Widget.H"
 #include "FL/Fl.H"
@@ -32,7 +32,8 @@ Fl_Group *addTab(Fl_Group *tabs, const char *label) {
 }
 
 int main(int argc, char **argv) {
-	cout << Path::getExePath() << endl;
+	cout << Path::exePath() << endl;
+	cout << Path::exeDir() << endl;
 	Fl::scheme(DEFAULT_FLTK_SCHEME);
 
 	Fl_Window *window = new Fl_Window(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);

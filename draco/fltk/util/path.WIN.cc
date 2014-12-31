@@ -2,7 +2,7 @@
 #ifdef _WIN32
 
 
-#include "fileSystem.h"
+#include "path.h"
 
 #include <windows.h>
 #include <cstring>
@@ -12,7 +12,7 @@
 using namespace std;
 
 
-string Path::getExePath() {
+void Path::updateNativeExePath() {
 	char path[MAX_EXECUTABLE_PATH_LENGTH];
 	memset(path, 0, MAX_EXECUTABLE_PATH_LENGTH);
 	int length = GetModuleFileName(NULL, path, MAX_EXECUTABLE_PATH_LENGTH);
@@ -20,7 +20,20 @@ string Path::getExePath() {
 		throw string("Path to executable too long: ") +path +" ...";
 	if (length < 1)
 		throw string("Could not get executable path");
-	return string(path);
+	
+	_nativeExePath = path;
+}
+
+void Path::convert() {
+	for(size_t i=find('\\'); i != npos; i=find('\\'))
+		replace(i, 1, 1, '/');
+}
+
+string Path::native() const {
+	string s(this);
+	for(size_t i=s.find('/'); i != npos; i=s.find('/'))
+		s.replace(i, 1, 1, '\\');
+	return s;
 }
 
 
