@@ -2,7 +2,9 @@
 #ifndef DRACO_FILE_SYSTEM_H
 #define DRACO_FILE_SYSTEM_H
 
+#include <list>
 #include <string>
+
 
 #define MAX_EXECUTABLE_PATH_LENGTH 512
 
@@ -24,6 +26,9 @@ public:
 	Path(InputIterator first, InputIterator last);
 	
 	std::string native() const;
+	
+	std::list<std::string> dirList() const;
+	std::string fileType() const;
 
 private:
 	static Path _exePath;

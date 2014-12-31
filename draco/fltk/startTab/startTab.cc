@@ -1,5 +1,6 @@
 
 #include "startTab.h"
+#include "FL/Fl_File_Chooser.H"
 #include "FL/Fl_Box.H"
 
 #include <string>
@@ -21,11 +22,16 @@ SCALE_API const char *scaleName() {
 StartTab::StartTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir) {
 	pane->current(pane);
 	{
+		Fl_File_Chooser *chooser = new Fl_File_Chooser(startDir.c_str(), "", Fl_File_Chooser::SINGLE, "DA FILES!!");
+		chooser->ok_label("open");
+
+		/*
 		Fl_Box *box = new Fl_Box(20, 40, 360, 100, "Hello, World! This is a new tab.");
 		box->box(FL_DOWN_FRAME);
 		box->labelsize(24);
 		box->labelfont(FL_BOLD + FL_ITALIC);
 		box->labeltype(FL_SHADOW_LABEL);
+		*/
 	}
 	
 }

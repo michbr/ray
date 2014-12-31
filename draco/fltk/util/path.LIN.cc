@@ -3,7 +3,8 @@
 
 
 #include "path.h"
-
+i
+#include <dirent.h>
 #include <unistd.h>
 #include <cstring>
 #include <string>
@@ -28,6 +29,22 @@ void Path::convert() {}
 
 string Path::native() const {
     return string(*this);
+}
+
+list<string> Path::dirList() const {
+	list<string> entries;
+	DIR *dir = opendir(c_str());
+	if (dir == NULL)
+		return entries;
+	struct dirent *entry;
+	while ((entry = readdir(dir)) != NULL) {
+		entries.push_back(entry->d_name);
+	}
+	closedir(dir);
+	return entries;
+}
+string Path::fileType() const {
+	return "";
 }
 
 
