@@ -27,7 +27,7 @@ public:
 	
 	std::string native() const;
 	
-	std::list<std::string> dirList() const;
+	std::list<std::string> dirList(bool includeHidden=false) const;
 	std::string fileType() const;
 
 private:
