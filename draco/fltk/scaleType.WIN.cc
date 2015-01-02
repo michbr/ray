@@ -2,6 +2,7 @@
 #ifdef _WIN32
 
 
+#include "scaleManager.h"
 #include "scaleType.h"
 #include "draco.h"
 #include "util/path.h"
@@ -24,7 +25,7 @@ void ScaleType::unload() {
 
 void *ScaleType::loadLibrary() {
 	cout << libName << endl;
-	return LoadLibrary(Path::exeDir() +ROOT_DIR +SCALE_DIR + libName + LIB_EXTENSION).c_str());
+	return LoadLibrary((Path::exeDir() +ROOT_PATH +SCALE_DIR + libName + LIB_EXTENSION).c_str());
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {

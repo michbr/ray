@@ -1,5 +1,4 @@
 
-//#pragma once
 #ifndef DRACO_FILE_CHOOSER_H
 #define DRACO_FILE_CHOOSER_H
 

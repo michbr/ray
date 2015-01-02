@@ -34,6 +34,11 @@ Fl_Group *addTab(Fl_Group *tabs, const char *label) {
 int main(int argc, char **argv) {
 	cout << Path::exePath() << endl;
 	cout << Path::exeDir() << endl;
+	list<string> dirList = Path::exeDir().dirList();
+	cout << dirList.size() << endl;
+	for (string entry : dirList) {
+		cout << entry << endl;
+	}
 	Fl::scheme(DEFAULT_FLTK_SCHEME);
 
 	Fl_Window *window = new Fl_Window(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);

@@ -5,6 +5,8 @@
 #include "path.h"
 
 #include <windows.h>
+//#include <tchar.h>
+#include <strsafe.h>
 #include <cstring>
 #include <string>
 #include <iostream>
@@ -28,12 +30,33 @@ void Path::convert() {
 	for(size_t i=find('\\'); i != npos; i=find('\\'))
 		replace(i, 1, 1, '/');
 }
-
 string Path::native() const {
-	string s(this);
+	string s(*this);
 	for(size_t i=s.find('/'); i != npos; i=s.find('/'))
 		s.replace(i, 1, 1, '\\');
 	return s;
+}
+
+list<string> Path::dirList() const {
+	list<string> entries;
+	WIN32_FIND_DATA data;
+	cout << native().c_str() << endl;
+	TCHAR dirPath[MAX_PATH];
+	StringCchCopy(dirPath, MAX_PATH, native().c_str());
+	StringCchCat(dirPath, MAX_PATH, TEXT("*"));
+	HANDLE dir = FindFirstFile(native().c_str(), &data);
+	if (dir == INVALID_HANDLE_VALUE)
+		return entries;
+	cout << "Huh?" << endl;
+	struct dirent *entry;
+	while (FindNextFile(dir, &data) != 0 || GetLastError() != ERROR_NO_MORE_FILES) {
+		entries.push_back(data.cFileName);
+	}
+	FindClose(dir);
+	return entries;
+}
+string Path::fileType() const {
+	return "";
 }
 
 
