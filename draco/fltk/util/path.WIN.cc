@@ -37,7 +37,7 @@ string Path::native() const {
 	return s;
 }
 
-list<string> Path::dirList() const {
+list<string> Path::dirList(bool includeHidden) const {
 	list<string> entries;
 	WIN32_FIND_DATA data;
 	cout << native().c_str() << endl;
