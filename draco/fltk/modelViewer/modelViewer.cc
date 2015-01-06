@@ -112,28 +112,15 @@ int cube_box::handle(int e) {
   return Fl_Gl_Window::handle(e);
 }
 #endif
-//Fl_Window *form;
-Fl_Slider *speed, *size;
-Fl_Button *button, *wire, *flat;
 cube_box *cube, *cube2;
 
 void makeform(const char *name, Fl_Group * pane) {
-//  form = new Fl_Window(510+390,390,name);
-//  pane->set_current()
-  new Fl_Box(FL_DOWN_FRAME,20,20,350,350,"");
-  new Fl_Box(FL_DOWN_FRAME,510,20,350,350,"");
-  speed = new Fl_Slider(FL_VERT_SLIDER,390,90,40,220,"Speed");
-  size = new Fl_Slider(FL_VERT_SLIDER,450,90,40,220,"Size");
-  wire = new Fl_Radio_Light_Button(390,20,100,30,"Wire");
-  flat = new Fl_Radio_Light_Button(390,50,100,30,"Flat");
-  button = new Fl_Button(390,340,100,30,"Exit");
-  cube = new cube_box(23,23,344,344, 0);
-  cube2 = new cube_box(513,23,344,344, 0);
-  Fl_Box *b = new Fl_Box(FL_NO_BOX,cube->x(),size->y(),
-             cube->w(),size->h(),0);
+  cube = new cube_box(23,50,344,344, 0);
+  cube2 = new cube_box(375,50,344,344, 0);
+  Fl_Box *b = new Fl_Box(FL_NO_BOX,cube->x(),90,
+             cube->w(),220,0);
   pane->resizable(b);
   b->hide();
-//  form->end();
 }
 
 // added to demo printing
@@ -169,8 +156,6 @@ StartTab::StartTab(ScaleType *type, Fl_Group *pane, const string &startDir): Sca
 		Fl_File_Chooser *chooser = new Fl_File_Chooser(startDir.c_str(), "", Fl_File_Chooser::SINGLE, "DA FILES!!");
 		chooser->ok_label("open");
   makeform("test", pane);
-  // added to demo printing
-//  form->begin();
   static Fl_Menu_Item   items[] = {
     { "Print", 0, 0, 0, FL_SUBMENU },
     { "Print window", 0, print_cb, 0, 0 },
@@ -181,19 +166,11 @@ StartTab::StartTab(ScaleType *type, Fl_Group *pane, const string &startDir): Sca
   menubar_ = new Fl_Sys_Menu_Bar(0, 0, 60, 20);
   menubar_->box(FL_FLAT_BOX);
   menubar_->menu(items);
-//  form->end();
-  // end of printing demo
-  speed->bounds(4,0);
-  speed->value(cube->speed = cube2->speed = 1.0);
-  size->bounds(4,0.01);
-  size->value(cube->size = cube2->size = 1.0);
-  flat->value(1); cube->wire = 0; cube2->wire = 1;
-  //form->label("cube");
+   cube->wire = 0; cube2->wire = 1;
   char ** array = new char *[1];
   string test = "test";
   array[0] = new char[5];
   strcpy(array[0], test.c_str());
-  //form->show(1,array);
   cube->show();
   cube2->show();
 #if 0
@@ -207,26 +184,17 @@ StartTab::StartTab(ScaleType *type, Fl_Group *pane, const string &startDir): Sca
   cube2->context(cube->context()); // share the contexts
 #endif
   for (;;) {
-    if (pane->visible() && speed->value())
+    if (pane->visible())  //&& speed->value())
       {if (!Fl::check()) break;}    // returns immediately
     else
       {if (!Fl::wait()) break;} // waits until something happens
-    cube->wire = wire->value();
-    cube2->wire = !wire->value();
-    cube->size = cube2->size = size->value();
-    cube->speed = cube2->speed = speed->value();
+    cube->wire = true;//wire->value();
+    cube2->wire = false;//!wire->value();
+    cube->size = cube2->size = 1.0;//size->value();
+    cube->speed = cube2->speed = 1.0;//speed->value();
     cube->redraw();
     cube2->redraw();
-    if (Fl::readqueue() == button) break;
   }
-
-		/*
-		Fl_Box *box = new Fl_Box(20, 40, 360, 100, "Hello, World! This is a new tab.");
-		box->box(FL_DOWN_FRAME);
-		box->labelsize(24);
-		box->labelfont(FL_BOLD + FL_ITALIC);
-		box->labeltype(FL_SHADOW_LABEL);
-		*/
 	}
 	
 }
