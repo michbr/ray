@@ -44,14 +44,24 @@ list<string> Path::dirList(bool includeHidden) const {
 	TCHAR dirPath[MAX_PATH];
 	StringCchCopy(dirPath, MAX_PATH, native().c_str());
 	StringCchCat(dirPath, MAX_PATH, TEXT("*"));
-	HANDLE dir = FindFirstFile(native().c_str(), &data);
+	wcout << dirPath << endl;
+	HANDLE dir = FindFirstFile(dirPath, &data);
 	if (dir == INVALID_HANDLE_VALUE)
 		return entries;
 	cout << "Huh?" << endl;
 	struct dirent *entry;
-	while (FindNextFile(dir, &data) != 0 || GetLastError() != ERROR_NO_MORE_FILES) {
+	do {
+		if (GetLastError() == ERROR_NO_MORE_FILES)
+			break;
+		if (data.cFileName[0] == '.') {
+			size_t nameLen = strlen(data.cFileName);
+			if (nameLen < 2 || (nameLen < 3 && data.cFileName[1] == '.'))
+				continue;
+		}
+		if (!includeHidden && data.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN)
+			continue;
 		entries.push_back(data.cFileName);
-	}
+	} while (FindNextFile(dir, &data) != 0);
 	FindClose(dir);
 	return entries;
 }
