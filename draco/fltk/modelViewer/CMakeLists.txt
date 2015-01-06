@@ -35,13 +35,13 @@ if (UNIX)
 	fltk_z
 	PATHS ${PROJECT_SOURCE_DIR}/../fltk-1.3.3/lib/)
 	find_library(FLTK_GL_LIBRARY fltk_gl
-	PATHS ${PROJECT_SOURCE_DIR}/fltk-1.3.3/lib/)
+	PATHS ${PROJECT_SOURCE_DIR}/../fltk-1.3.3/lib/)
 	set(LIBS ${LIBS} ${FLTK_GL_LIBRARY})
 else(UNIX)
-	find_library(FLTK_LIBRARIES
-	fltkdll
-	PATHS ${PROJECT_SOURCE_DIR}/../fltk-1.3.3/lib/)	
+	find_library(FLTK_LIBRARIES fltkdll
+	PATHS ${PROJECT_SOURCE_DIR}/../fltk-1.3.3/lib/)
 endif(UNIX)
+
 
 file(GLOB SOURCES "${PROJECT_SOURCE_DIR}/*.cc" "${PROJECT_SOURCE_DIR}/*.h")
 
@@ -49,9 +49,10 @@ find_package(OpenGL REQUIRED)
 set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
 if(OPENGL_FOUND)
 	add_definitions(-DHAVE_GL)
-	set(LIBS ${LIBS} ${FLTK_LIBRARIES})
-	include_directories(${OPENGL_INCLUDE_DIR}) 
+	include_directories(${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
+
+set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 
 include_directories("${PROJECT_SOURCE_DIR}/../fltk-1.3.3/")
 include_directories("${PROJECT_SOURCE_DIR}/../")
