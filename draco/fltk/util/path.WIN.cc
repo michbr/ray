@@ -37,6 +37,12 @@ string Path::native() const {
 	return s;
 }
 
+bool Path::isDir() const {
+	TCHAR path[MAX_PATH];
+	StringCchCopy(path, MAX_PATH, native().c_str());
+	return GetFileAttributes(path) & FILE_ATTRIBUTE_DIRECTORY;
+}
+
 list<string> Path::dirList(bool includeHidden) const {
 	list<string> entries;
 	WIN32_FIND_DATA data;
