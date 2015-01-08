@@ -14,6 +14,8 @@
 #include "FL/Fl_Box.H"
 #include "FL/Fl_Tabs.H"
 
+#include "directoryViewer.h"
+
 #include <iostream>
 
 
@@ -28,7 +30,10 @@ const char *DEFAULT_FLTK_SCHEME = "plastic";
 using namespace std;
 
 Fl_Group *addTab(Fl_Group *tabs, const char *label) {
-	return new Fl_Group(0, TAB_BUTTON_HEIGHT, tabs->w(), tabs->h() -TAB_BUTTON_HEIGHT, label);
+	Fl_Group *g = new Fl_Group(tabs->x(), tabs->y() +TAB_BUTTON_HEIGHT, tabs->w(), tabs->h() -TAB_BUTTON_HEIGHT, label);
+	Fl_Group *group = new Fl_Group(g->x() +2, g->y() +2, g->w() -4, g->h() -4, "");
+	group->clip_children(true);
+	return group;
 }
 
 int main(int argc, char **argv) {
@@ -57,10 +62,14 @@ int main(int argc, char **argv) {
 				box->labelfont(FL_BOLD + FL_ITALIC);
 				box->labeltype(FL_SHADOW_LABEL);
 			}
-			tab1->end();
+			tabs->current(tabs);
 
 			Fl_Group *tab2 = addTab(tabs, "another tab!");
-			tab2->end();
+			{
+				Fl_Box *box = new Fl_Box(10, 0, 200, 200, "howdy!");
+				box->box(FL_DOWN_FRAME);
+			}
+			tabs->current(tabs);
 		}
 		tabs->end();
 	}
@@ -79,7 +88,7 @@ int main(int argc, char **argv) {
 		}
 		tabs->current(tabs);
 		Fl_Group *pane = addTab(tabs, scale.name.c_str());
-		tabs->add(pane);
+	//	tabs->add(pane);
 		scale.construct(pane, ".");
 	}
 	cout << "GOT HERE!" << endl;

@@ -115,8 +115,8 @@ int cube_box::handle(int e) {
 cube_box *cube, *cube2;
 
 void makeform(const char *name, Fl_Group * pane) {
-  cube = new cube_box(23,50,344,344, 0);
-  cube2 = new cube_box(375,50,344,344, 0);
+  cube = new cube_box(23,10,344,344, 0);
+  cube2 = new cube_box(375,10,344,344, 0);
   Fl_Box *b = new Fl_Box(FL_NO_BOX,cube->x(),90,
              cube->w(),220,0);
   pane->resizable(b);
