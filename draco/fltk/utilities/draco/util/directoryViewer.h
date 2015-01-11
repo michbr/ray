@@ -3,7 +3,8 @@
 #define DRACO_FILE_CHOOSER_H
 
 
-#include "util/path.h"
+#include "EXPORT.h"
+#include "path.h"
 #include "FL/Fl_Multi_Browser.H"
 #include "FL/Fl_File_Input.H"
 #include "FL/Fl_Button.H"
@@ -12,14 +13,14 @@
 #include <string>
 
 
-class DirectoryViewer: public Fl_Group {
+class DirectoryViewer : public Fl_Group{
 public:
-	DirectoryViewer(int x, int y, int w, int h, std::string path, const char *label=NULL);
-	~DirectoryViewer();
+	DRACO_UTIL_API DirectoryViewer(int x, int y, int w, int h, std::string path, const char *label = NULL);
+	DRACO_UTIL_API ~DirectoryViewer();
 
-	void showHidden(bool show);
-	bool showHidden() const;
-	void setDir(std::string path);
+	DRACO_UTIL_API void showHidden(bool show);
+	DRACO_UTIL_API bool showHidden() const;
+	DRACO_UTIL_API void setDir(std::string path);
 	
 protected:
 	bool _showHidden;

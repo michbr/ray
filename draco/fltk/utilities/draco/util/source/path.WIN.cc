@@ -2,7 +2,7 @@
 #ifdef _WIN32
 
 
-#include "path.h"
+#include "../path.h"
 
 #include <windows.h>
 //#include <tchar.h>
@@ -53,9 +53,7 @@ list<string> Path::dirList(bool includeHidden) const {
 	wcout << dirPath << endl;
 	HANDLE dir = FindFirstFile(dirPath, &data);
 	if (dir == INVALID_HANDLE_VALUE)
-		return entries;
-	cout << "Huh?" << endl;
-	struct dirent *entry;
+		return entries; 
 	do {
 		if (GetLastError() == ERROR_NO_MORE_FILES)
 			break;

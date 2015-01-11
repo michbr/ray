@@ -14,7 +14,7 @@
 #include "FL/Fl_Box.H"
 #include "FL/Fl_Tabs.H"
 
-#include "directoryViewer.h"
+#include "util/directoryViewer.h"
 
 #include <iostream>
 

@@ -31,22 +31,22 @@ protected:
 };
 
 #ifdef _WIN32
-        #if defined DLL_IMPORT
-                #define SCALE_API __declspec(dllimport)
-        #else
-                #define SCALE_API __declspec(dllexport)
-        #endif
+#	ifdef DLL_IMPORT_DRACO_SCALE
+#		define DRACO_SCALE_API __declspec(dllimport)
+#	else
+#		define DRACO_SCALE_API __declspec(dllexport)
+#	endif
 #else
-        #define SCALE_API
+#	define DRACO_SCALE_API
 #endif
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-	SCALE_API Scale *constructScale(ScaleType *type, Fl_Group *pane, const std::string &file);
+	DRACO_SCALE_API Scale *constructScale(ScaleType *type, Fl_Group *pane, const std::string &file);
 
-	SCALE_API const char *scaleName();
+	DRACO_SCALE_API const char *scaleName();
 
 #ifdef __cplusplus
 }

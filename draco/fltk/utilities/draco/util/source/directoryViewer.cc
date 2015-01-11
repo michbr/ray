@@ -1,6 +1,6 @@
 
 
-#include "directoryViewer.h"
+#include "../directoryViewer.h"
 
 using namespace std;
 
