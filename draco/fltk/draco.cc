@@ -21,6 +21,8 @@
 
 
 
+const char *UTILITY_LIB_PATH = "\\..\\utilities\\lib";
+
 const unsigned int TAB_BUTTON_HEIGHT = 25;
 const unsigned int DEFAULT_WINDOW_WIDTH = 800;
 const unsigned int DEFAULT_WINDOW_HEIGHT = 600;
@@ -28,6 +30,24 @@ const char *DEFAULT_FLTK_SCHEME = "plastic";
 
 
 using namespace std;
+
+void addLibDirectories() {
+#ifdef _WIN32
+	char path[MAX_EXECUTABLE_PATH_LENGTH];
+	memset(path, 0, MAX_EXECUTABLE_PATH_LENGTH);
+	int length = GetModuleFileName(NULL, path, MAX_EXECUTABLE_PATH_LENGTH);
+	if (length >= MAX_EXECUTABLE_PATH_LENGTH)
+		throw string("Path to executable too long: ") + path + " ...";
+	if (length < 1)
+		throw string("Could not get executable path");
+	string fullPath(path);
+	fullPath.erase(fullPath.find_last_of('\\'));
+	fullPath += UTILITY_LIB_PATH;
+	//cout << fullPath << endl;
+	if (!SetDllDirectory(fullPath.c_str()))
+		cout << "ERROR: " << GetLastError() << endl;
+#endif
+}
 
 Fl_Group *addTab(Fl_Group *tabs, const char *label) {
 	Fl_Group *g = new Fl_Group(tabs->x(), tabs->y() +TAB_BUTTON_HEIGHT, tabs->w(), tabs->h() -TAB_BUTTON_HEIGHT, label);
@@ -37,6 +57,7 @@ Fl_Group *addTab(Fl_Group *tabs, const char *label) {
 }
 
 int main(int argc, char **argv) {
+	addLibDirectories();
 	cout << Path::exePath() << endl;
 	cout << Path::exeDir() << endl;
 	list<string> dirList = Path::exeDir().dirList();
