@@ -51,9 +51,7 @@ include_directories(
 
 find_library(FLTK_LIBRARIES fltk
 PATHS ${UTILITIES_DIR}/fltk-1.3.3/)
-set(LIBS ${LIBS} ${FLTK_LIBRARIES} dracoUtil)
-
-link_directories(${UTILITIES_DIR}/draco/util)
+set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 
 
 

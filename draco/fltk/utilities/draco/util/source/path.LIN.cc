@@ -2,7 +2,7 @@
 #ifdef __linux__
 
 
-#include "path.h"
+#include "../path.h"
 
 #include <sys/stat.h>
 #include <dirent.h>

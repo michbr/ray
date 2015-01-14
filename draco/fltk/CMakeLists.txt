@@ -1,5 +1,6 @@
 
 cmake_minimum_required (VERSION 2.8)
+cmake_policy(SET CMP0015 OLD)
 
 
 
@@ -11,8 +12,6 @@ set (Draco_VERSION_MINOR 1)
 
 include(CMake/paths.cmake)
 
-#set(UTILITIES_DIR "${PROJECT_SOURCE_DIR}/utilities")
-#set(SHARED_LIBRARY_DIR "${PROJECT_SOURCE_DIR}/bin")
 add_subdirectory(${UTILITIES_DIR})
 
 set(EXECUTABLE_NAME draco)
@@ -37,11 +36,7 @@ if (UNIX)
 	find_package(X11)
 	set(LIBS ${LIBS} ${X11_LIBRARIES})
 	
-	#include(CMake/macros.cmake)
-	#include(CMake/setup.cmake)
 	include(CMake/resources.cmake)
-	#include(CMake/options.cmake)
-	#include(CMake/export.cmake)
 	set(LIBS ${LIBS} ${EXTRA_FLTK_LIBS})
 
 	set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
@@ -60,13 +55,15 @@ include_directories(
 find_library(FLTK_LIBRARIES fltk
 PATHS ${FLTK_DIR})
 set(LIBS ${LIBS} ${FLTK_LIBRARIES} dracoUtil)
-link_directories("${UTILITIES_DIR}/draco/util")
 
 
 
 ##  deliverables  ##
 add_executable(${EXECUTABLE_NAME} ${SOURCES})
 target_link_libraries(${EXECUTABLE_NAME} ${LIBS})
+
+set_target_properties(${EXECUTABLE_NAME} PROPERTIES BUILD_WITH_INSTALL_RPATH TRUE)
+set_target_properties(${EXECUTABLE_NAME} PROPERTIES INSTALL_RPATH "$ORIGIN/../utilities/lib/")
 
 if (MSVC)
 	set_target_properties(${EXECUTABLE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXECUTABLE_OUTPUT_PATH} )
