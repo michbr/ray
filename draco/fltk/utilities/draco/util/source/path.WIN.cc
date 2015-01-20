@@ -36,7 +36,7 @@ string Path::native() const {
 }
 
 bool Path::exists() const {
-	return PathFileExists(native().c_str());
+	return PathFileExists(native().c_str()) != 0;
 }
 
 bool Path::isDir() const {
@@ -46,9 +46,10 @@ bool Path::isDir() const {
 list<string> Path::dirList(bool includeHidden) const {
 	list<string> entries;
 	WIN32_FIND_DATA data;
-	HANDLE dir = FindFirstFile(native().c_str(), &data);
+	string path = Path(*this).addSlash().native() +'*';
+	HANDLE dir = FindFirstFile(path.c_str(), &data);
 	if (dir == INVALID_HANDLE_VALUE)
-		return entries; 
+		return entries;
 	do {
 		if (GetLastError() == ERROR_NO_MORE_FILES)
 			break;
@@ -57,7 +58,7 @@ list<string> Path::dirList(bool includeHidden) const {
 			if (nameLen < 2 || (nameLen < 3 && data.cFileName[1] == '.'))
 				continue;
 		}
-		if (!includeHidden && data.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN)
+		if (!includeHidden && (data.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN))
 			continue;
 		entries.push_back(data.cFileName);
 	} while (FindNextFile(dir, &data) != 0);

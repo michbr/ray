@@ -61,11 +61,18 @@ void Path::updateExePaths() {
 	_nativeExeDir = _exeDir.native();
 }
 
-void Path::clean() {
+Path &Path::clean() {
 	convert();
 	for (size_t pos = find("//"); pos != string::npos; pos = find("//")) {
 		replace(pos, 2, "/");
 	}
+	return *this;
+}
+
+Path &Path::addSlash() {
+	if (back() != '/')
+		push_back('/');
+	return *this;
 }
 
 

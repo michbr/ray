@@ -32,8 +32,10 @@ public:
 	DRACO_UTIL_API bool exists() const;
 	DRACO_UTIL_API bool isDir() const;
 	DRACO_UTIL_API std::list<std::string> dirList(bool includeHidden = false) const;
-	DRACO_UTIL_API std::string fileType() const;
-	DRACO_UTIL_API void clean();
+	DRACO_UTIL_API Path &clean();
+	DRACO_UTIL_API Path &addSlash();
+
+/* UNIMPLEMENTED */	DRACO_UTIL_API std::string fileType() const;	/* UNIMPLEMENTED */
 
 private:
 	static Path _exePath;
