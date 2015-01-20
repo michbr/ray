@@ -2,8 +2,9 @@
 
 // necessary to allow loading of plugins (otherwise compiles as exporter)
 #ifdef _WIN32
-	#define DLL_IMPORT
-	#define FL_DLL
+//	#define NTDDI_VERSION NTDDI_WINXP
+	#define _WIN32_WINNT _WIN32_WINNT_WS03
+	#include <windows.h>
 #endif // _WIN32
 
 #include "util/path.h"
@@ -43,7 +44,6 @@ void addLibDirectories() {
 	string fullPath(path);
 	fullPath.erase(fullPath.find_last_of('\\'));
 	fullPath += UTILITY_LIB_PATH;
-	//cout << fullPath << endl;
 	if (!SetDllDirectory(fullPath.c_str()))
 		cout << "ERROR: " << GetLastError() << endl;
 #endif

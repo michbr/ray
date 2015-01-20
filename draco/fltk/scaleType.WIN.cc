@@ -29,7 +29,7 @@ void *ScaleType::loadLibrary() {
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {
-	return GetProcAddress((HMODULE)lib, funcName.c_str());
+	return (void *) GetProcAddress((HMODULE)lib, funcName.c_str());
 }
 
 const char *ScaleType::getLibExtension() const {

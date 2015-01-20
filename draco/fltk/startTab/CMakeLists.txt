@@ -30,7 +30,7 @@ file(GLOB SOURCES
 
 
 
-##  UNIX directives  ##
+##  compiler directives  ##
 if (UNIX)
 	find_package(X11)
 	set(LIBS ${LIBS} ${X11_LIBRARIES})
@@ -48,10 +48,16 @@ include_directories(
 	${DRACO_UTIL_DIR}
 	${FLTK_DIR}
 )
-
-find_library(FLTK_LIBRARIES fltk
-PATHS ${UTILITIES_DIR}/fltk-1.3.3/)
-set(LIBS ${LIBS} ${FLTK_LIBRARIES})
+if (UNIX)
+	find_library(FLTK_LIBRARIES fltk
+	PATHS ${FLTK_DIR})
+else (UNIX)
+	find_library(FLTK_LIBRARIES winfltk
+    PATHS ${FLTK_DIR})
+endif (UNIX)
+find_library(DRACO_UTIL_LIB dracoUtil
+PATHS ${DRACO_UTIL_DIR}/util)
+set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${DRACO_UTIL_LIB})
 
 
 

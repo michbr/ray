@@ -212,6 +212,8 @@ install_manifest.txt
 CTestTestfile.cmake
 Testing/
 
-#custom extras
+# custom extras
 #Draco
 *.ppm
+**/.idea/
+

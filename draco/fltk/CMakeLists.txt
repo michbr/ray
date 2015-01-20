@@ -31,18 +31,24 @@ file(GLOB SOURCES
 
 
 
-##  UNIX directives  ##
+##  compiler directives  ##
 if (UNIX)
 	find_package(X11)
 	set(LIBS ${LIBS} ${X11_LIBRARIES})
-	
+
 	include(CMake/resources.cmake)
 	set(LIBS ${LIBS} ${EXTRA_FLTK_LIBS})
 
 	set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
-	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
-	
 endif(UNIX)
+if(WIN32)
+	add_definitions(-DWIN32)
+endif(WIN32)
+#if(NOT MSVC)
+#	set (CUSTOM_FLAGS "${CUSTOM_FLAGS} -static-libgcc -static-libstdc++")
+#endif(NOT MSVC)
+
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 
 
@@ -52,8 +58,13 @@ include_directories(
 	${DRACO_UTIL_DIR}
 )
 
-find_library(FLTK_LIBRARIES fltk
-PATHS ${FLTK_DIR})
+if (UNIX)
+	find_library(FLTK_LIBRARIES fltk
+	PATHS ${FLTK_DIR})
+else (UNIX)
+	find_library(FLTK_LIBRARIES winfltk
+    PATHS ${FLTK_DIR})
+endif (UNIX)
 set(LIBS ${LIBS} ${FLTK_LIBRARIES} dracoUtil)
 
 
@@ -67,10 +78,8 @@ if (UNIX)
 	set_target_properties(${EXECUTABLE_NAME} PROPERTIES INSTALL_RPATH "$ORIGIN/../utilities/lib/")
 endif (UNIX)
 
-
 if (MSVC)
 	set_target_properties(${EXECUTABLE_NAME} PROPERTIES LINK_FLAGS "/DELAYLOAD:dracoUtil.dll")
-	
 	set_target_properties(${EXECUTABLE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_RELEASE ${EXECUTABLE_OUTPUT_PATH} )
 	set_target_properties(${EXECUTABLE_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY_DEBUG ${EXECUTABLE_OUTPUT_PATH} )
 endif (MSVC)

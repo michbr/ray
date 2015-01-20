@@ -23,14 +23,17 @@ public:
 	DRACO_UTIL_API Path(const char *source);
 	DRACO_UTIL_API Path(const char *source, size_t n);
 	DRACO_UTIL_API Path(size_t n, char c);
-	template<class InputIterator>
-	DRACO_UTIL_API Path(InputIterator first, InputIterator last);
+
+	// the following constructor is deceptive when put into a shared library because the needed templates won't necessarily be provided (I think?)
+	//template<class InputIterator>
+	//DRACO_UTIL_API Path(InputIterator first, InputIterator last);
 	
 	DRACO_UTIL_API std::string native() const;
-	
+	DRACO_UTIL_API bool exists() const;
 	DRACO_UTIL_API bool isDir() const;
 	DRACO_UTIL_API std::list<std::string> dirList(bool includeHidden = false) const;
 	DRACO_UTIL_API std::string fileType() const;
+	DRACO_UTIL_API void clean();
 
 private:
 	static Path _exePath;

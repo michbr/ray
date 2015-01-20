@@ -46,7 +46,7 @@ void ScaleManager::loadScaleList(const std::string &scaleListPath) {
 	loadScaleList();
 }
 void ScaleManager::loadScaleList() {
-	ifstream listFile(scaleListPath);
+	ifstream listFile(scaleListPath.c_str());
 	string line;
 
 	while (!listFile.eof()) {

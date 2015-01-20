@@ -32,6 +32,11 @@ string Path::native() const {
     return string(*this);
 }
 
+bool Path::exists() const {
+	struct stat buffer;
+	return stat(native().c_str(), &buffer) == 0;
+}
+
 bool Path::isDir() const {
 	struct stat statBuf;
 	if (lstat(c_str(), &statBuf) == -1)

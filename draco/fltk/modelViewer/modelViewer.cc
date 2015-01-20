@@ -1,4 +1,6 @@
 
+
+
 #include "modelViewer.h"
 #include "FL/Fl_File_Chooser.H"
 #include "FL/Fl_Box.H"
@@ -141,11 +143,11 @@ void print_cb(Fl_Widget *w, void *data)
 }
 
 
-SCALE_API Scale *constructScale(ScaleType *type, Fl_Group *pane, const string &file) {
+DRACO_SCALE_API Scale *constructScale(ScaleType *type, Fl_Group *pane, const string &file) {
 	return new StartTab(type, pane, file);
 }
 
-SCALE_API const char *scaleName() {
+DRACO_SCALE_API const char *scaleName() {
 	return START_TAB_NAME;
 }
 

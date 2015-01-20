@@ -7,6 +7,7 @@
 class Scale;
 
 #include "scaleType.h"
+#include "EXPORT.h"
 #include "FL/Fl_Widget.H"
 #include "FL/Fl_Group.H"
 
@@ -30,15 +31,7 @@ protected:
 
 };
 
-#ifdef _WIN32
-#	ifdef DLL_IMPORT_DRACO_SCALE
-#		define DRACO_SCALE_API __declspec(dllimport)
-#	else
-#		define DRACO_SCALE_API __declspec(dllexport)
-#	endif
-#else
-#	define DRACO_SCALE_API
-#endif
+
 
 #ifdef __cplusplus
 extern "C" {

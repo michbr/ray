@@ -1,12 +1,10 @@
-
 #ifdef _WIN32
 
 
 #include "../path.h"
 
+#include <Shlwapi.h>
 #include <windows.h>
-//#include <tchar.h>
-#include <strsafe.h>
 #include <cstring>
 #include <string>
 #include <iostream>
@@ -27,7 +25,7 @@ void Path::updateNativeExePath() {
 }
 
 void Path::convert() {
-	for(size_t i=find('\\'); i != npos; i=find('\\'))
+	for (size_t i = find('\\'); i != npos; i = find('\\'))
 		replace(i, 1, 1, '/');
 }
 string Path::native() const {
@@ -37,21 +35,18 @@ string Path::native() const {
 	return s;
 }
 
+bool Path::exists() const {
+	return PathFileExists(native().c_str());
+}
+
 bool Path::isDir() const {
-	TCHAR path[MAX_PATH];
-	StringCchCopy(path, MAX_PATH, native().c_str());
-	return GetFileAttributes(path) & FILE_ATTRIBUTE_DIRECTORY;
+	return (GetFileAttributes(native().c_str()) & FILE_ATTRIBUTE_DIRECTORY) != 0;
 }
 
 list<string> Path::dirList(bool includeHidden) const {
 	list<string> entries;
 	WIN32_FIND_DATA data;
-	cout << native().c_str() << endl;
-	TCHAR dirPath[MAX_PATH];
-	StringCchCopy(dirPath, MAX_PATH, native().c_str());
-	StringCchCat(dirPath, MAX_PATH, TEXT("*"));
-	wcout << dirPath << endl;
-	HANDLE dir = FindFirstFile(dirPath, &data);
+	HANDLE dir = FindFirstFile(native().c_str(), &data);
 	if (dir == INVALID_HANDLE_VALUE)
 		return entries; 
 	do {
