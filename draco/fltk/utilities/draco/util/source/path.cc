@@ -51,6 +51,15 @@ Path::Path(size_t n, char c): string(n, c) {
 //}
 
 
+Path Path::super() const {
+	if (size() < 2)
+		return *this;
+	size_t pos = find_last_of('/', size() -2);
+	if (pos == string::npos)
+		return *this;
+    return substr(0, pos +1);
+}
+
 void Path::updateExePaths() {
 	if (!_exePath.empty() && !_exeDir.empty())
 		return;
@@ -75,4 +84,18 @@ Path &Path::addSlash() {
 	return *this;
 }
 
+Path &Path::cutSlash() {
+	if (back() == '/')
+		pop_back();
+	return *this;
+}
 
+std::string Path::fileName() const {
+	size_t length = (back() == '/')? size() -1: size();
+	size_t pos = find_last_of('/', length);
+	if (pos == string::npos)
+		throw string("Invalid file path for fileName() call");
+	++pos;
+	length -= pos;
+	return substr(pos, length);
+}
