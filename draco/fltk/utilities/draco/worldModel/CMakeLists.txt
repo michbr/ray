@@ -43,7 +43,7 @@ include_directories(${UTILITIES_DIR}/draco/TextureLoader/)
 
 find_package(OpenGL REQUIRED)
 
-set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY})
+set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY} DragonMath)
 
 
 
