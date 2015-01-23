@@ -11,7 +11,7 @@ set (Draco-Util_VERSION_MINOR 1)
 
 include(../../../CMake/paths.cmake)
 
-set(LIBRARY_NAME dracoUtil)
+set(LIBRARY_NAME DracoUtil)
 
 if (UNIX)
 	set(LIBRARY_OUTPUT_PATH ${LIB_DIR})
@@ -71,5 +71,4 @@ set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
 
-set_target_properties(${LIBRARY_NAME} PROPERTIES PREFIX "")
 target_link_libraries(${LIBRARY_NAME} ${LIBS})
