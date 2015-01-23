@@ -57,7 +57,11 @@ else (UNIX)
     PATHS ${FLTK_DIR})
     set(LIBS ${LIBS} Shlwapi)
 endif (UNIX)
-set(LIBS ${LIBS} ${FLTK_LIBRARIES})
+find_library(WORLD_MODEL_LIBRARY WorldModel
+PATHS ${LIB_DIR})
+find_library(ASSET_LOADER_LIBRARY AssetLoader
+PATHS ${LIB_DIR})
+set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${WORLD_MODEL_LIBRARY} ${ASSET_LOADER_LIBRARY})
 
 #find_library(FLTK_LIBRARIES
 #	fltk
