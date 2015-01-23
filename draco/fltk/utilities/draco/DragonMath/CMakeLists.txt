@@ -35,6 +35,5 @@ endif(UNIX)
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
 
-set_target_properties(${LIBRARY_NAME} PROPERTIES PREFIX "")
 target_link_libraries(${LIBRARY_NAME} ${LIBS})
 

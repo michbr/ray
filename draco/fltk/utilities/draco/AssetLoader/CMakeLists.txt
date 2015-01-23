@@ -38,5 +38,4 @@ include_directories(${UTILITIES_DIR}/draco/DragonMath/)
 
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
 target_link_libraries (AssetLoader assimp)
-set_target_properties(${LIBRARY_NAME} PROPERTIES PREFIX "")
 target_link_libraries(${LIBRARY_NAME} ${LIBS})
