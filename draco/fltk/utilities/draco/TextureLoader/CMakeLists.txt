@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 3.0)
+cmake_minimum_required (VERSION 2.8)
 
 ##  meta data  ##
 project (TextureLoader)
@@ -10,17 +10,24 @@ include("../../../CMake/paths.cmake")
 
 set(LIBRARY_NAME TextureLoader)
 set(LIBRARY_OUTPUT_PATH ${LIB_DIR})
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
-set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_PATH})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR} )
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR} )
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR} )
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${PROJECT_SOURCE_DIR} )
 
 add_definitions(-DDLL_EXPORT_DRACO_WORLD_MODEL)
+
 
 
 ##  source files  ##
 file(GLOB SOURCES
         ${PROJECT_SOURCE_DIR}/*.cc
-        ${PROJECT_SOURCE_DIR}/*.h)
+        ${PROJECT_SOURCE_DIR}/*.h
+)
+
+
 
 ##  UNIX directives  ##
 if (UNIX)
@@ -29,12 +36,23 @@ if (UNIX)
 
 endif(UNIX)
 
-##  dependencies  ##
 
-set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake_modules/")
-find_package(DevIL REQUIRED)
-include_directories(${IL_INCLUDE_DIRS})
+
+##  dependencies  ##
+if (UNIX)
+	set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake_modules/")
+	find_package(DevIL REQUIRED)
+	include_directories(${IL_INCLUDE_DIRS})
+else (UNIX)
+	set(DEVIL_DIR ${UTILITIES_DIR}/devIL-1.7.8)
+	find_library(IL_LIBRARIES DevIL
+	PATHS ${DEVIL_DIR})
+	include_directories(${DEVIL_DIR}/include)
+endif (UNIX)
+
 set(LIBS ${LIBS} ${IL_LIBRARIES})
+
+
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})

@@ -15,12 +15,14 @@
 
 class DirectoryViewer : public Fl_Group{
 public:
+	static double DOUBLE_CLICK_TIME;
+
 	DRACO_UTIL_API DirectoryViewer(int x, int y, int w, int h, std::string path, const char *label = NULL);
 	DRACO_UTIL_API ~DirectoryViewer();
 
 	DRACO_UTIL_API void showHidden(bool show);
 	DRACO_UTIL_API bool showHidden() const;
-	DRACO_UTIL_API void setDir(std::string path);
+	DRACO_UTIL_API void setPath(std::string path);
 
     DRACO_UTIL_API void update();
 	
@@ -32,6 +34,11 @@ protected:
 	Fl_File_Input *addressBar;
 	Fl_Multi_Browser *browser;
 
+private:
+	time_t lastSelection = 0;
+	std::string lastSelected;
+
+	friend void browserChange(Fl_Widget *, void *);
 };
 
 

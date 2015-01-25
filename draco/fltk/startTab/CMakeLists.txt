@@ -39,6 +39,11 @@ if (UNIX)
 	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 	
 endif(UNIX)
+if(WIN32)
+	add_definitions(-DWIN32)
+endif(WIN32)
+
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 
 
@@ -56,7 +61,7 @@ else (UNIX)
     PATHS ${FLTK_DIR})
 endif (UNIX)
 find_library(DRACO_UTIL_LIB DracoUtil
-PATHS ${LIB_DIR})
+PATHS ${DRACO_UTIL_DIR}/util)
 set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${DRACO_UTIL_LIB})
 
 
