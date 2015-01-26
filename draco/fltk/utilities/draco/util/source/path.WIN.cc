@@ -48,21 +48,17 @@ list<string> Path::dirList(bool includeHidden) const {
 	WIN32_FIND_DATA data;
 	string path = Path(*this).addSlash().native() +'*';
 	HANDLE dir = FindFirstFile(path.c_str(), &data);
-	if (dir == INVALID_HANDLE_VALUE)
-		return entries;
-	do {
-		if (GetLastError() == ERROR_NO_MORE_FILES)
-			break;
-		if (data.cFileName[0] == '.') {
-			size_t nameLen = strlen(data.cFileName);
-			if (nameLen < 2 || (nameLen < 3 && data.cFileName[1] == '.'))
-				continue;
+	while (dir != INVALID_HANDLE_VALUE) {
+		string file = data.cFileName;
+		if (file != "." && file != ".." &&
+			(includeHidden || !(data.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN))) {
+			entries.push_back(data.cFileName);
 		}
-		if (!includeHidden && (data.dwFileAttributes & FILE_ATTRIBUTE_HIDDEN))
-			continue;
-		entries.push_back(data.cFileName);
-	} while (FindNextFile(dir, &data) != 0);
-	FindClose(dir);
+		if (!FindNextFile(dir, &data)) {
+			FindClose(dir);
+			dir = INVALID_HANDLE_VALUE;
+		}
+	}
 	return entries;
 }
 string Path::fileType() const {
