@@ -19,6 +19,7 @@ set(WORLD_MODEL_DIR "${UTILITIES_DIR}/draco/worldModel")
 set(TEXTURE_LOADER_DIR "${UTILITIES_DIR}/draco/TextureLoader")
 set(DRAGONMATH_DIR "${UTILITIES_DIR}/draco/DragonMath")
 set(ASSET_LOADER_DIR "${UTILITIES_DIR}/draco/AssetLoader")
+set(RAY_TRACER_DIR "${UTILITIES_DIR}/draco/RayTracer")
 
 ##  source files  ##
 
@@ -45,6 +46,7 @@ include_directories(
 	${TEXTURE_LOADER_DIR}
 	${DRAGONMATH_DIR}
 	${ASSET_LOADER_DIR}
+	${RAY_TRACER_DIR}
         ${FLTK_DIR}
         ${BASE_DIR}
 )
@@ -59,9 +61,11 @@ else (UNIX)
 endif (UNIX)
 find_library(WORLD_MODEL_LIBRARY WorldModel
 PATHS ${LIB_DIR})
+find_library(RAY_TRACER_LIBRARY RayTracer
+PATHS ${LIB_DIR})
 find_library(ASSET_LOADER_LIBRARY AssetLoader
 PATHS ${LIB_DIR})
-set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${WORLD_MODEL_LIBRARY} ${ASSET_LOADER_LIBRARY})
+set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${WORLD_MODEL_LIBRARY} ${ASSET_LOADER_LIBRARY} ${RAY_TRACER_LIBRARY})
 
 #find_library(FLTK_LIBRARIES
 #	fltk
