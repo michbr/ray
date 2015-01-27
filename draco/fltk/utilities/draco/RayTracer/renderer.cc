@@ -96,7 +96,7 @@ vector<int> * Renderer::findClosestFace(Vector3<double> source, Vector3<double> 
 	if (*found) {
 		return colorFacePixel(source, point, face, faces, lights, depth);
 	}
-
+	return NULL;
 }
 
 /*vector<int> * Renderer::find_closest_elipse(std::vector<double> * source, std::vector<double> * destination, const std::vector<Face *> & faces, const std::vector<Elipse *> & elipses, const vector<Light *> & lights, int depth, double * distance, bool * found) {
@@ -644,8 +644,8 @@ void Renderer::prepareRaycast(const vector<Face *> & faces, const vector<Light *
 				//color->~vector();
 				// f_color->~vector();
 				//   e_color->~vector();
+				delete(f_color);
 			}
-			delete(f_color);
 		}
 	}
 	//cout << "test" << endl;
