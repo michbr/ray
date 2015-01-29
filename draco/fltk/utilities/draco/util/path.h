@@ -14,8 +14,10 @@ class Path : public std::string {
 public:
 	DRACO_UTIL_API static Path exePath();
 	DRACO_UTIL_API static Path exeDir();
+	DRACO_UTIL_API static Path homeDir();
 	DRACO_UTIL_API static std::string nativeExePath();
 	DRACO_UTIL_API static std::string nativeExeDir();
+	DRACO_UTIL_API static std::string nativeHomeDir();
 
 	DRACO_UTIL_API Path();
 	DRACO_UTIL_API Path(const std::string &source);
@@ -37,17 +39,21 @@ public:
 	DRACO_UTIL_API Path &clean();
 	DRACO_UTIL_API Path &addSlash();
 	DRACO_UTIL_API Path &cutSlash();
+	DRACO_UTIL_API Path &expand();
 
 /* UNIMPLEMENTED */	DRACO_UTIL_API std::string fileType() const;	/* UNIMPLEMENTED */
 
 private:
 	static Path _exePath;
 	static Path _exeDir;
+	static Path _homeDir;
 	static std::string _nativeExePath;
 	static std::string _nativeExeDir;
+	static std::string _nativeHomeDir;
 
-	static void updateExePaths();
+	static void initialize();
 	static void updateNativeExePath();
+	static void updateNativeHomeDir();
 
 	void convert();
 

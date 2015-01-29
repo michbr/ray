@@ -23,14 +23,15 @@ public:
 	DRACO_UTIL_API void showHidden(bool show);
 	DRACO_UTIL_API bool showHidden() const;
 	DRACO_UTIL_API void setPath(std::string path);
-
     DRACO_UTIL_API void update();
+
+	DRACO_UTIL_API std::string value() const;
 	
 protected:
 	bool _showHidden;
 	Path path;
     Path directory;
-	Fl_Button *upBut;
+	Fl_Button *homeBut;
 	Fl_File_Input *addressBar;
 	Fl_Multi_Browser *browser;
 
