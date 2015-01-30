@@ -8,26 +8,48 @@ using namespace std;
 
 Path Path::_exePath;
 Path Path::_exeDir;
+Path Path::_homeDir;
 std::string Path::_nativeExePath;
 std::string Path::_nativeExeDir;
+std::string Path::_nativeHomeDir;
 
 Path Path::exePath() {
-    updateExePaths();
+	initialize();
     return _exePath;
 }
 Path Path::exeDir() {
-    updateExePaths();
+	initialize();
     return _exeDir;
 }
 string Path::nativeExePath() {
-    updateExePaths();
+	initialize();
     return _nativeExePath;
 }
 string Path::nativeExeDir() {
-    updateExePaths();
+	initialize();
     return _nativeExeDir;
 }
+Path Path::homeDir() {
+	initialize();
+	return _homeDir;
+}
+string Path::nativeHomeDir() {
+	initialize();
+	return _nativeHomeDir;
+}
 
+void Path::initialize() {
+	if (!_exePath.empty() && !_exeDir.empty())
+		return;
+
+	updateNativeExePath();
+	_exePath = Path(_nativeExePath);
+	_exeDir = _exePath.super();
+	_nativeExeDir = _exeDir.native();
+
+	updateNativeHomeDir();
+	_homeDir = _nativeHomeDir;
+}
 
 Path::Path() {}
 Path::Path(const string &source): string(source) {
@@ -58,16 +80,6 @@ Path Path::super() const {
 	if (pos == string::npos)
 		return *this;
     return substr(0, pos +1);
-}
-
-void Path::updateExePaths() {
-	if (!_exePath.empty() && !_exeDir.empty())
-		return;
-
-	updateNativeExePath();
-	_exePath = Path(_nativeExePath);
-	_exeDir = _exePath.substr(0, _exePath.find_last_of('/') +1);
-	_nativeExeDir = _exeDir.native();
 }
 
 Path &Path::clean() {

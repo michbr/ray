@@ -24,6 +24,13 @@ void Path::updateNativeExePath() {
 	_nativeExePath = path;
 }
 
+void Path::updateNativeHomeDir() {
+	char path[MAX_PATH];
+	if (SHGetFolderPathA(NULL, CSIDL_PROFILE, NULL, 0, path) != S_OK)
+		throw "Could not get home folder path.";
+	_nativeHomeDir = path;
+}
+
 void Path::convert() {
 	for (size_t i = find('\\'); i != npos; i = find('\\'))
 		replace(i, 1, 1, '/');
@@ -63,6 +70,20 @@ list<string> Path::dirList(bool includeHidden) const {
 }
 string Path::fileType() const {
 	return "";
+}
+
+// TODO: unsafe buffer overflow possible!!
+Path &Path::expand() {
+	size_t bufSize = 512;
+	char buffer[bufSize];
+	PathCanonicalize(buffer, native().c_str());
+	cout << buffer << endl;
+	char buf2[bufSize];
+	ExpandEnvironmentStrings(buffer, buf2, bufSize);
+	cout << buf2 << endl;
+	GetLongPathNameA(buf2, buf2, bufSize);
+	cout << buf2 << endl;
+	return *this;
 }
 
 
