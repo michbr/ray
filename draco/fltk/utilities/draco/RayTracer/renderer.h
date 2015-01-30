@@ -17,7 +17,7 @@ class Renderer {
 	Wireframe * frame;
 	std::vector<std::vector<double> *> * z_buffer;
 	bool has_frame;
-
+	long renderPos;
 	//void bresenham(std::vector<Vertex> *);
 	void fill(int, int, int, int, int);
 	std::vector<int> * findClosestFace(Vector3<double>, Vector3<double>, const std::vector<Face *> &, const std::vector<Light *> &, int, double *, bool *);
@@ -27,7 +27,10 @@ class Renderer {
   public:
 	Renderer(Camera * c);
 	void set_frame(Wireframe *);
-	
+	long getCurrentPixel();
+	std::vector<int> * getPixelColor(long pixelNum);
+	size_t getImageWidth();
+	size_t getImageHeight();	
 	//void prepare_wireframe(std::vector<Group *>);
 	void prepareRaycast(const std::vector<Face *> &, const std::vector<Light * > &);
 	bool hasFrame();

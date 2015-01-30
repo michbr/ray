@@ -18,6 +18,30 @@ Renderer::Renderer(Camera * c) {
 	cam = c;
 }
 
+long Renderer::getCurrentPixel() {
+	return renderPos;
+}
+
+size_t Renderer::getImageWidth() {
+	return abs(frame->get_minx()) + abs(frame->get_maxx());	
+}
+
+size_t Renderer::getImageHeight() {
+	return abs(frame->get_miny()) + abs(frame->get_maxy());	
+}
+
+vector<int> * Renderer::getPixelColor(long pixelNum) {
+	int height = abs(frame->get_miny()) + frame->get_maxy();
+	int width = abs(frame->get_minx()) + frame->get_maxx();
+	int y = pixelNum / width;
+	int x = pixelNum % width;
+	vector<int> * color = new vector<int>();
+	color->push_back((*(*image)[y])[3*x]);
+	color->push_back((*(*image)[y])[3*x+1]);
+	color->push_back((*(*image)[y])[3*x+2]);
+	return color;
+}
+
 void Renderer::set_frame(Wireframe * new_frame) {
 	frame = new_frame;
 	vector<vector<int>*> * bitmap = new  vector<vector<int>* >();
@@ -646,6 +670,7 @@ void Renderer::prepareRaycast(const vector<Face *> & faces, const vector<Light *
 				//   e_color->~vector();
 				delete(f_color);
 			}
+			renderPos++;	
 		}
 	}
 	//cout << "test" << endl;

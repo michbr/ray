@@ -33,7 +33,7 @@ file(GLOB SOURCES
 if (UNIX)
 	find_package(X11)
 	set(LIBS ${LIBS} ${X11_LIBRARIES})
-	set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
+	set (CUSTOM_FLAGS "-Wall -Wextra -pedantic -O3")
 endif(UNIX)
 if(WIN32)
         add_definitions(-DWIN32)

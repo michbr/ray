@@ -109,6 +109,7 @@ int main(int argc, char **argv) {
 		scale.construct(pane, Path::exeDir().super());
 	}
 	cout << "GOT HERE!" << endl;
+	Fl::lock();
 	int endCode = Fl::run();
 
 	return endCode;
