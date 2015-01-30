@@ -5,9 +5,11 @@
 #include "../path.h"
 
 #include <sys/stat.h>
+#include <sys/types.h>
 #include <dirent.h>
 #include <unistd.h>
 #include <cstring>
+#include <pwd.h>
 #include <string>
 #include <iostream>
 
@@ -24,6 +26,14 @@ void Path::updateNativeExePath() {
 		throw string("Could not get executable path");
 	
 	_nativeExePath = path;
+}
+
+void Path::updateNativeHomeDir() {
+	const char *homedir;
+	if ((homedir = getenv("HOME")) == NULL) {
+	    homedir = getpwuid(getuid())->pw_dir;
+	}
+	_nativeHomeDir = homedir;
 }
 
 void Path::convert() {}
