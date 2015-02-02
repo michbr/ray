@@ -61,7 +61,7 @@ else (UNIX)
     PATHS ${FLTK_DIR})
 endif (UNIX)
 find_library(DRACO_UTIL_LIB DracoUtil
-PATHS ${DRACO_UTIL_DIR}/util)
+	PATHS ${LIB_DIR})
 set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${DRACO_UTIL_LIB})
 
 
