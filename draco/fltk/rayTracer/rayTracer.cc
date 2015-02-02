@@ -74,17 +74,6 @@ public:
 };
 
 void cube_box::draw() {
-//	short wd = w();
-  //      short ht = h();
-    //    short xoff = 0;
-     //   short yoff = 0;
-
-       // if (ih < ht) yoff = (ht - ih) / 2;
-
-       // if (iw < wd) xoff = (wd - iw) / 2;
-
-   // short xpos = x() + xoff;
-    //short ypos = y() + yoff;
   /* Ensure that the full window is redrawn */
     fl_push_no_clip();
 
@@ -96,22 +85,8 @@ void cube_box::draw() {
 cube_box * box;
 
 void doRayTrace(WorldModel * model, Renderer * renderer, vector<Light *> * lights) {
-
-        //m.getFaces()
-
-        /*cout << "what?" << endl;
-        for (int i = 0; i < m.getFaces().size(); i++) {
-                cout << i << endl;
-        }*/
         renderer->prepareRaycast(model->getFaces(), *lights);
         cout << "Finished trace." << endl;
-        cout << string(get_current_dir_name()) << endl;
-        ofstream output;
-
-        output.open("out.ppm");
-        output << (*renderer);
-        output.close();
-
 }
 
 void setText(void * update) {
@@ -121,6 +96,24 @@ void setText(void * update) {
 }
 
 long lastValue = 0;
+
+void updateImage(Renderer * render) {
+	while (true) {
+	long current = render->getCurrentPixel();
+	for (long i = lastValue; i < current; i++) {
+		vector<int> * color = render->getPixelColor(i);
+		int y = i/(render->getImageWidth());
+		int x = i % (render->getImageWidth());
+		imageData[y][x][0] = (uchar)((*color)[0]);
+		imageData[y][x][1] = (uchar)((*color)[1]);
+		imageData[y][x][2] = (uchar)((*color)[2]);
+	}
+	lastValue = current;
+	this_thread::sleep_for(chrono::milliseconds(100));
+	}
+
+}
+
 void updateUI(Fl_Output * out, Renderer * render) {
 	while(true) {
 		long current = render->getCurrentPixel();
@@ -129,27 +122,19 @@ void updateUI(Fl_Output * out, Renderer * render) {
 		s << setprecision(2) << (progress*100) << "%";
 		if ( current > lastValue) {
 			Fl::awake((Fl_Awake_Handler)setText, new TextUpdate(out, s.str()));
-
-			for (long i = lastValue; i < current; i++) {
-				vector<int> * color = render->getPixelColor(i);
-				int y = i/(render->getImageWidth()*3);
-				int x = i % (render->getImageWidth()*3);
-				imageData[y][x][0] = (uchar)((*color)[0]);
-				imageData[y][x][1] = (uchar)((*color)[1]);
-				imageData[y][x][2] = (uchar)((*color)[2]);
-			}
-			lastValue = current;
 		}
 		this_thread::sleep_for(chrono::milliseconds(500));
 	}	
 }
 
+thread * getImageData;
 void RayTracer::handleButton( Fl_Widget* obj , void* caller) {
 	RayTracer * instance = (RayTracer*)caller;
 	string path (instance->selectedFileDisplay->value());
 	instance->loadModel(path);
 	instance->runner = new thread(doRayTrace, instance->model, instance->renderer, instance->lights);
 	test = new thread(updateUI, instance->selectedFileDisplay, instance->renderer);
+	getImageData = new thread(updateImage, instance->renderer);
 }
 
 
@@ -173,7 +158,7 @@ RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): S
 		selectedFileDisplay->value("../../cube/");
 		button = new Fl_Button(165, 30, 40, 30, "Go");		
 		//fl_draw_image((const uchar*)&image, 20, 50, 1024, 1024, 3, 0);
-		box = new cube_box(20, 50, IMAGE_WIDTH, IMAGE_HEIGHT);
+		box = new cube_box(20, 70, IMAGE_WIDTH, IMAGE_HEIGHT);
 		button -> callback( ( Fl_Callback* ) handleButton, this );
 	}
 }
