@@ -1,0 +1,37 @@
+# Alias Wavefront MTL File Exported from SketchUp
+# with OBJexporter (c) 2010-2012 TIG
+# Made for 'WITH_GIVEN_COLOR.obj'
+
+newmtl Default_Material
+Ka 1.000000000000 1.000000000000 1.000000000000
+Kd  0.5 0 0.5
+Ks 0 0 0
+Ns 500
+n1 1.000000000000
+Tr 1.000000000000
+Kr 1
+Krf 1
+
+newmtl Default_Material1
+Ka 1.000000000000 1.000000000000 1.000000000000
+Kd  0.5 0.5 0
+Ks 0 0 0
+Ns 500
+n1 1.000000000000
+Tr 1.000000000000
+Kr 1
+Krf 1
+
+
+newmtl glass
+
+Ka 1.000000000000 0 0
+Kd 1 0 0
+Ks 0 0 0
+Ns 500
+n1 1.5
+Tr 0.2
+Kr 1
+Krf 1
+
+#EOF
