@@ -6,8 +6,8 @@
  * Ross Beveridge
  */
 
-#include "material.h"
-#include "math.h"
+#include "../material.h"
+#include "../math.h"
 
 using namespace std;
 

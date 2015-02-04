@@ -6,7 +6,7 @@
  * Ross Beveridge
  */
 
-#include "lightSource.h"
+#include "../lightSource.h"
 
 using namespace std;
 

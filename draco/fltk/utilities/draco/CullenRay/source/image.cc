@@ -6,7 +6,7 @@
  * Ross Beveridge
  */
 
-#include "image.h"
+#include "../image.h"
 
 #include <cstring>
 

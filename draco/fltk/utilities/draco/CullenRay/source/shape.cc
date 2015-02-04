@@ -6,7 +6,7 @@
  * Ross Beveridge
  */
 
-#include "sphere.h"
+#include "../sphere.h"
 #include <cmath>
 #include <cfloat>
 

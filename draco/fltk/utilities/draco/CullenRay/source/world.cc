@@ -6,10 +6,10 @@
  * Ross Beveridge
  */
 
-#include "world.h"
-#include "math.h"
-#include "shape.h"
-#include "image.h"
+#include "../world.h"
+#include "../math.h"
+#include "../shape.h"
+#include "../image.h"
 
 #include <iostream>
 #include <fstream>

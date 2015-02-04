@@ -7,7 +7,7 @@
  * Ross Beveridge
  */
 
-#include "world.h"
+#include "../world.h"
 #include <iostream>
 
 using namespace std;

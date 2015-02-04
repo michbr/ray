@@ -6,7 +6,7 @@
  * Ross Beveridge
  */
 
-#include "camera.h"
+#include "../camera.h"
 
 using namespace std;
 

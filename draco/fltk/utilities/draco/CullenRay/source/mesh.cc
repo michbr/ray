@@ -6,7 +6,7 @@
  * Ross Beveridge
  */
 
-#include "mesh.h"
+#include "../mesh.h"
 
 #include <cmath>
 #include <cfloat>
