@@ -1,16 +1,16 @@
 cmake_minimum_required (VERSION 2.8)
 
 ##  meta data  ##
-project (DragonMath)
+project (Image)
 
 set(CMAKE_BUILD_TYPE Release)
 
-set (DragonMath_VERSION_MAJOR 0)
-set (DragonMath_VERSION_MINOR 1)
+set (Image_VERSION_MAJOR 0)
+set (Image_VERSION_MINOR 1)
 
 include("../../../CMake/paths.cmake")
 
-set(LIBRARY_NAME DragonMath)
+set(LIBRARY_NAME Image)
 set(LIBRARY_OUTPUT_PATH ${LIB_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_PATH})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_PATH} )
@@ -20,7 +20,7 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
 
-add_definitions(-DDLL_EXPORT_DRACO_DRAGON_MATH)
+add_definitions(-DDLL_EXPORT_DRACO_IMAGE)
 
 ##  source files  ##
 file(GLOB SOURCES
