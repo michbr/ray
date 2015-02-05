@@ -4,14 +4,14 @@ cmake_minimum_required (VERSION 2.8)
 
 
 ##  meta data  ##
-project (Draco-Util)
+project (Draco-Common)
 
 set (Draco-Util_VERSION_MAJOR 0)
 set (Draco-Util_VERSION_MINOR 1)
 
 include(../../../CMake/paths.cmake)
 
-set(LIBRARY_NAME DracoUtil)
+set(LIBRARY_NAME DracoCommon)
 
 if (UNIX)
 	set(LIBRARY_OUTPUT_PATH ${LIB_DIR})
@@ -57,6 +57,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 ##  dependencies  ##
 include_directories(
 	${FLTK_DIR}
+	${PROJECT_SOURCE_DIR}
 )
 
 if (UNIX)

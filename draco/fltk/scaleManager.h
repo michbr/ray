@@ -6,7 +6,7 @@
 
 #include "scaleType.h"
 #include "draco.h"
-#include "util/path.h"
+#include "common/path.h"
 
 #include <vector>
 #include <string>

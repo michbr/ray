@@ -21,6 +21,7 @@ set(DRAGONMATH_DIR "${UTILITIES_DIR}/draco/DragonMath")
 set(ASSET_LOADER_DIR "${UTILITIES_DIR}/draco/AssetLoader")
 set(RAY_TRACER_DIR "${UTILITIES_DIR}/draco/RayTracer")
 set(IMAGE_DIR "${UTILITIES_DIR}/draco/Image")
+set(DRACO_COMMON_DIR "${UTILITIES_DIR}/draco/common")
 
 ##  source files  ##
 
@@ -49,6 +50,7 @@ include_directories(
 	${ASSET_LOADER_DIR}
 	${RAY_TRACER_DIR}
 	${IMAGE_DIR}
+	${DRACO_COMMON_DIR}
         ${FLTK_DIR}
         ${BASE_DIR}
 )
@@ -69,7 +71,9 @@ find_library(ASSET_LOADER_LIBRARY AssetLoader
 PATHS ${LIB_DIR})
 find_library(IMAGE_LIBRARY Image
 PATHS ${LIB_DIR})
-set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${WORLD_MODEL_LIBRARY} ${ASSET_LOADER_LIBRARY} ${RAY_TRACER_LIBRARY} ${IMAGE_LIBRARY})
+find_library(DRACO_COMMON_LIBRARY DracoCommon
+PATHS ${LIB_DIR})
+set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${WORLD_MODEL_LIBRARY} ${ASSET_LOADER_LIBRARY} ${RAY_TRACER_LIBRARY} ${IMAGE_LIBRARY} ${DRACO_COMMON_LIBRARY})
 
 #find_library(FLTK_LIBRARIES
 #	fltk

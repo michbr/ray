@@ -4,7 +4,7 @@
 
 #include "scaleManager.h"
 #include "draco.h"
-#include "util/path.h"
+#include "common/path.h"
 
 #include <dlfcn.h>
 #include <iostream>

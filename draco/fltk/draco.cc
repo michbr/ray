@@ -7,7 +7,7 @@
 	#include <windows.h>
 #endif // _WIN32
 
-#include "util/path.h"
+#include "common/path.h"
 #include "scaleManager.h"
 #include "FL/Fl_Widget.H"
 #include "FL/Fl.H"
@@ -15,7 +15,7 @@
 #include "FL/Fl_Box.H"
 #include "FL/Fl_Tabs.H"
 
-#include "util/directoryViewer.h"
+#include "common/directoryViewer.h"
 
 #include <iostream>
 

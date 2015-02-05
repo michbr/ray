@@ -66,7 +66,7 @@ else (UNIX)
 	find_library(FLTK_LIBRARIES winfltk
     PATHS ${FLTK_DIR})
 endif (UNIX)
-set(LIBS ${LIBS} ${FLTK_LIBRARIES} DracoUtil)
+set(LIBS ${LIBS} ${FLTK_LIBRARIES} DracoCommon)
 
 
 
