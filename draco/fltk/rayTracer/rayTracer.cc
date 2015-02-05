@@ -36,8 +36,6 @@ DRACO_SCALE_API const char *scaleName() {
 	return TAB_NAME;
 }
 
-thread *test;
-
 class GUIUpdate {
 private:	
 	string text;
@@ -63,62 +61,98 @@ public:
 	}
 };
 
-void doRayTrace(WorldModel * model, Renderer * renderer, vector<Light *> * lights) {
-        renderer->prepareRaycast(model->getFaces(), *lights);
-        cout << "Finished trace." << endl;
-}
+class ImageMonitor : public Runnable {
+private:
+	Renderer * render;
+	Image * imageData;
+	long lastValue = 0;
+public:
+	ImageMonitor(Renderer * r, Image * i) {
+		render = r;
+		imageData = i;
+	}
+	virtual void run() {
+		while (true) {
+       			 long current = render->getCurrentPixel();
+       			 for (long i = lastValue; i < current; i++) {
+        		        vector<int> * color = render->getPixelColor(i);
+        		        int y = i/(render->getImageWidth());
+        		        int x = i % (render->getImageWidth());
+	                	(*imageData)(x, y).r( (uchar)((*color)[0]));
+	                	(*imageData)(x, y).g( (uchar)((*color)[1]));
+	                	(*imageData)(x, y).b( (uchar)((*color)[2]));
+	        	}
+	        	lastValue = current;
+	        	this_thread::sleep_for(chrono::milliseconds(50));
+	        }
+	}
+};
 
-void setText(void * update) {
+class DisplayMonitor : public Runnable {
+private:
+	ImageBox * box;
+	Fl_Output * out;
+	Renderer * render;
+	string text;
+public:
+	DisplayMonitor(Renderer * r, ImageBox * b, Fl_Output * o) {
+		render = r;
+		box = b;
+		out = o;
+	}
+	virtual void run() {
+	        while(true) {
+        	        long current = render->getCurrentPixel();
+        	        double progress = (double)current/(double)(render->getImageHeight() * render->getImageWidth());
+			text = "";
+        		stringstream s;
+        		s << setprecision(2) << (progress*100) << "%";
+			s >> text;
+        		Fl::awake((Fl_Awake_Handler)setText, this);
+        		this_thread::sleep_for(chrono::milliseconds(200));
+        	}
+	}
+
+	static void setText(void * test) {
+		DisplayMonitor * instance = (DisplayMonitor*)test;
+        	//ring * update = (string *)test;
+        	instance->out->value(instance->text.c_str());
+        	instance->box->redraw();
+	}
+
+};
+
+/*public static void setText(void * update) {
 	GUIUpdate* updater = (GUIUpdate*)update;
 	updater->getField()->value(updater->getText().c_str());
 	updater->getImageBox()->redraw();
-}
+}*/
 
-long lastValue = 0;
-
-void updateImage(Renderer * render, Image * imageData) {
-	while (true) {
-	long current = render->getCurrentPixel();
-	for (long i = lastValue; i < current; i++) {
-		vector<int> * color = render->getPixelColor(i);
-		int y = i/(render->getImageWidth());
-		int x = i % (render->getImageWidth());
-	//	cout << static_cast<int>((uchar)((*color)[0])) << ", " << static_cast<int>((uchar)((*color)[1]))
-	//		<< ", " << static_cast<int>((uchar)((*color)[2])) << endl;
-		(*imageData)(x, y).r( (uchar)((*color)[0]));
-		(*imageData)(x, y).g( (uchar)((*color)[1]));
-		(*imageData)(x, y).b( (uchar)((*color)[2]));
-	}
-	lastValue = current;
-	this_thread::sleep_for(chrono::milliseconds(100));
-	}
-
-}
-
-void updateUI(ImageBox * box, Fl_Output * out, Renderer * render) {
+/*void updateUI(ImageBox * box, Fl_Output * out, Renderer * render) {
 	while(true) {
 		long current = render->getCurrentPixel();
 		double progress = (double)current/(double)(render->getImageHeight() * render->getImageWidth());
 		stringstream s;
 		s << setprecision(2) << (progress*100) << "%";
-		if ( current > lastValue) {
-			Fl::awake((Fl_Awake_Handler)setText, new GUIUpdate(box, out, s.str()));
-		}
+		Fl::awake((Fl_Awake_Handler)setText, new GUIUpdate(box, out, s.str()));
 		this_thread::sleep_for(chrono::milliseconds(500));
 	}	
-}
+}*/
 
-thread * getImageData;
 void RayTracer::handleButton( Fl_Widget* obj , void* caller) {
 	RayTracer * instance = (RayTracer*)caller;
-	string path (instance->selectedFileDisplay->value());
-	instance->loadModel(path);
+
 	cout << "Starting ray trace..." << endl;
-	instance->runner = new thread(doRayTrace, instance->model, instance->renderer, instance->lights);
+	instance->rayTracer = new Thread(instance);
+	instance->rayTracer->start();
+
 	cout << "Starting UI polling..." << endl;
-	test = new thread(updateUI, instance->imageBox, instance->selectedFileDisplay, instance->renderer);
+	instance->displayUpdater = new Thread(new DisplayMonitor(instance->renderer, instance->imageBox, instance->selectedFileDisplay));
+	instance->displayUpdater->start();
+
 	cout << "Starting image polling..." << endl;
-	getImageData = new thread(updateImage, instance->renderer, instance->imageData);
+	instance->imageUpdater = new Thread(new ImageMonitor(instance->renderer, instance->imageData));
+	instance->imageUpdater->start();
 }
 
 
@@ -149,6 +183,12 @@ RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): S
 	}
 }
 
+void RayTracer::run () {
+	string path (selectedFileDisplay->value());
+	loadModel(path);	
+	renderer->prepareRaycast(model->getFaces(), *lights);
+        cout << "Finished trace." << endl;
+}
 void RayTracer::loadModel(string location) {
         model = new WorldModel();
         AssetLoader::loadAsset(location.c_str(), *model);
