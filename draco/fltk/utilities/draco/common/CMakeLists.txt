@@ -6,8 +6,8 @@ cmake_minimum_required (VERSION 2.8)
 ##  meta data  ##
 project (Draco-Common)
 
-set (Draco-Util_VERSION_MAJOR 0)
-set (Draco-Util_VERSION_MINOR 1)
+set (Draco-Common_VERSION_MAJOR 0)
+set (Draco-Common_VERSION_MINOR 1)
 
 include(../../../CMake/paths.cmake)
 
@@ -27,7 +27,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
 set(FLTK_DIR "${UTILITIES_DIR}/fltk-1.3.3")
 
-add_definitions(-DDLL_EXPORT_DRACO_UTIL)
+add_definitions(-DDLL_EXPORT_DRACO_COMMON)
 
 
 
