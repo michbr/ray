@@ -12,36 +12,36 @@
 
 class Path : public std::string {
 public:
-	DRACO_UTIL_API static Path exePath();
-	DRACO_UTIL_API static Path exeDir();
-	DRACO_UTIL_API static Path homeDir();
-	DRACO_UTIL_API static std::string nativeExePath();
-	DRACO_UTIL_API static std::string nativeExeDir();
-	DRACO_UTIL_API static std::string nativeHomeDir();
+	DRACO_COMMON_API static Path exePath();
+	DRACO_COMMON_API static Path exeDir();
+	DRACO_COMMON_API static Path homeDir();
+	DRACO_COMMON_API static std::string nativeExePath();
+	DRACO_COMMON_API static std::string nativeExeDir();
+	DRACO_COMMON_API static std::string nativeHomeDir();
 
-	DRACO_UTIL_API Path();
-	DRACO_UTIL_API Path(const std::string &source);
-	DRACO_UTIL_API Path(const std::string &source, size_t pos, size_t len = std::string::npos);
-	DRACO_UTIL_API Path(const char *source);
-	DRACO_UTIL_API Path(const char *source, size_t n);
-	DRACO_UTIL_API Path(size_t n, char c);
+	DRACO_COMMON_API Path();
+	DRACO_COMMON_API Path(const std::string &source);
+	DRACO_COMMON_API Path(const std::string &source, size_t pos, size_t len = std::string::npos);
+	DRACO_COMMON_API Path(const char *source);
+	DRACO_COMMON_API Path(const char *source, size_t n);
+	DRACO_COMMON_API Path(size_t n, char c);
 
 	// the following constructor is deceptive when put into a shared library because the needed templates won't necessarily be provided (I think?)
 	//template<class InputIterator>
-	//DRACO_UTIL_API Path(InputIterator first, InputIterator last);
+	//DRACO_COMMON_API Path(InputIterator first, InputIterator last);
 	
-	DRACO_UTIL_API std::string native() const;
-	DRACO_UTIL_API bool exists() const;
-	DRACO_UTIL_API bool isDir() const;
-	DRACO_UTIL_API std::list<std::string> dirList(bool includeHidden = false) const;
-	DRACO_UTIL_API std::string fileName() const;
-    DRACO_UTIL_API Path super() const;
-	DRACO_UTIL_API Path &clean();
-	DRACO_UTIL_API Path &addSlash();
-	DRACO_UTIL_API Path &cutSlash();
-	DRACO_UTIL_API Path &expand();
+	DRACO_COMMON_API std::string native() const;
+	DRACO_COMMON_API bool exists() const;
+	DRACO_COMMON_API bool isDir() const;
+	DRACO_COMMON_API std::list<std::string> dirList(bool includeHidden = false) const;
+	DRACO_COMMON_API std::string fileName() const;
+    DRACO_COMMON_API Path super() const;
+	DRACO_COMMON_API Path &clean();
+	DRACO_COMMON_API Path &addSlash();
+	DRACO_COMMON_API Path &cutSlash();
+	DRACO_COMMON_API Path &expand();
 
-/* UNIMPLEMENTED */	DRACO_UTIL_API std::string fileType() const;	/* UNIMPLEMENTED */
+/* UNIMPLEMENTED */	DRACO_COMMON_API std::string fileType() const;	/* UNIMPLEMENTED */
 
 private:
 	static Path _exePath;

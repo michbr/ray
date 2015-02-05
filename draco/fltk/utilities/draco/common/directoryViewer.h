@@ -17,15 +17,15 @@ class DirectoryViewer : public Fl_Group{
 public:
 	static double DOUBLE_CLICK_TIME;
 
-	DRACO_UTIL_API DirectoryViewer(int x, int y, int w, int h, std::string path, const char *label = NULL);
-	DRACO_UTIL_API ~DirectoryViewer();
+	DRACO_COMMON_API DirectoryViewer(int x, int y, int w, int h, std::string path, const char *label = NULL);
+	DRACO_COMMON_API ~DirectoryViewer();
 
-	DRACO_UTIL_API void showHidden(bool show);
-	DRACO_UTIL_API bool showHidden() const;
-	DRACO_UTIL_API void setPath(std::string path);
-    DRACO_UTIL_API void update();
+	DRACO_COMMON_API void showHidden(bool show);
+	DRACO_COMMON_API bool showHidden() const;
+	DRACO_COMMON_API void setPath(std::string path);
+    DRACO_COMMON_API void update();
 
-	DRACO_UTIL_API std::string value() const;
+	DRACO_COMMON_API std::string value() const;
 	
 protected:
 	bool _showHidden;

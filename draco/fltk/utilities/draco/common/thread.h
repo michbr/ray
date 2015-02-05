@@ -5,7 +5,7 @@
 
 class Runnable {
 public:
-        virtual void run() = 0;
+	DRACO_COMMON_API virtual void run() = 0;
 
 };
 
@@ -15,8 +15,8 @@ private:
 	Runnable * toRun;
 	static void callRun(Runnable * runner);
 public:
-	Thread (Runnable * r);
-	void start();
+	DRACO_COMMON_API Thread (Runnable * r);
+	DRACO_COMMON_API void start();
 };
 
 #endif
