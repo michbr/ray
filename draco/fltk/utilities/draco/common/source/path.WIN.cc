@@ -4,6 +4,7 @@
 #include "../path.h"
 
 #include <Shlwapi.h>
+#include <Shlobj.h>
 #include <windows.h>
 #include <cstring>
 #include <string>

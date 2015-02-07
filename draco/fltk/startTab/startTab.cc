@@ -1,6 +1,6 @@
 
 #include "startTab.h"
-#include "util/directoryViewer.h"
+#include "common/directoryViewer.h"
 #include "FL/Fl_File_Chooser.H"
 #include "FL/Fl_Box.H"
 

@@ -3,9 +3,6 @@
 
 
 #include "scaleManager.h"
-#include "scaleType.h"
-#include "draco.h"
-#include "util/path.h"
 
 #include <windows.h>
 #include <iostream>
