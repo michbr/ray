@@ -9,6 +9,7 @@ set(UTILITIES_DIR ${PROJECT_SOURCE_DIR})
 
 add_subdirectory("draco/AssetLoader")
 add_subdirectory("draco/DragonMath")
+add_subdirectory("draco/GLRenderer")
 add_subdirectory("draco/Image")
 add_subdirectory("draco/RayTracer")
 add_subdirectory("draco/TextureLoader")

@@ -84,15 +84,14 @@ void Renderer::fill(int x, int y, int r, int g, int b) {
 vector<int> * Renderer::findClosestFace(Vector3<double> source, Vector3<double> destination, const std::vector<Face *> & faces, const vector<Light *> & lights, int depth, double * distance, bool * found) {
 	// cout << "find face" << endl;
 	double d;
-	*found = false;
 
-	Face * face;
+	int index = -1;
 	Vector3<double> point = Vector3<double>(0,0,0);
 
 	double current_distance;
 	double min_distance = 0;
 	double T;
-	for (int i = 0; i < faces.size(); i++) {
+	for (size_t i = 0; i < faces.size(); i++) {
 		
 		Vector3<double> temp = faces[i]->intersect(source, destination, &T);
 		if (faces[i]->isInside(temp)) {
@@ -101,14 +100,15 @@ vector<int> * Renderer::findClosestFace(Vector3<double> source, Vector3<double> 
 				// cout << "found face" << endl;
 				if (!(*found)) {
 					min_distance = current_distance;
-					face = faces[i];
+					index = i;
+					//face = faces[i];
 
 					point = temp;
-					*found = true;
 				}
 				else if (min_distance > current_distance) {
 					min_distance = current_distance;
-					face = faces[i];
+					index = i;
+					//face = faces[i];
 					//point->clear();
 					//point->~vector();
 					point = temp;
@@ -117,8 +117,9 @@ vector<int> * Renderer::findClosestFace(Vector3<double> source, Vector3<double> 
 		}
 	}
 	*distance = min_distance;
+	*found = (index >= 0);
 	if (*found) {
-		return colorFacePixel(source, point, face, faces, lights, depth);
+		return colorFacePixel(source, point, faces[index], faces, lights, depth);
 	}
 	return NULL;
 }
@@ -215,7 +216,7 @@ vector<int> * Renderer::colorFacePixel(Vector3<double> source, Vector3<double> d
 		//cout << "after find" << endl;
 
 		Vector3<double> dest = Vector3<double>(0,0,0);
-		Light * reflection;
+
 		//string mat;
 		/*if (found_face && found_elipse) {
 			//  cout << "found both" << endl;
@@ -247,31 +248,17 @@ vector<int> * Renderer::colorFacePixel(Vector3<double> source, Vector3<double> d
 			Vector3<double> sbt = new_dest - destination;
 			sbt = sbt.normalize();
 			dest = sbt.scale(f_dist);
-			reflection = new Light(dest[0], dest[1], dest[2], 1, (*reflective)[0], (*reflective)[1], (*reflective)[2]);
-		}
-		/*else if (found_elipse){
-			vector<double> * sbt = subtract(new_dest, destination);
-			vector<double> * norm = normalize(sbt);
-			dest = scale(norm, e_dist);
-			reflection = new Light((*dest)[0], (*dest)[1], (*dest)[2], 1, (*sphere)[0], (*sphere)[1], (*sphere)[2]);
-			sbt->clear();
-			sbt->~vector();
-			norm->clear();
-			norm->~vector();
-		}*/
-		//cout << "got light color" << endl;
-		//reflective->~vector();
-		//sphere->~vector();
+			Light * reflection = new Light(dest[0], dest[1], dest[2], 1, (*reflective)[0], (*reflective)[1], (*reflective)[2]);
 
-		if (found_face) {// || found_elipse) {
 			vector<int> * reflection_color = face->get_material()->color_specular(reflection->get_color(), 1);
 			r += (*reflection_color)[0];
 			g += (*reflection_color)[1];
 			b += (*reflection_color)[2];
 			delete(reflection_color);
+			delete(reflection);
+			delete(reflective);
 		}
-		delete(reflection);
-		delete(reflective);
+
 	}
 
 	/*
@@ -279,7 +266,7 @@ vector<int> * Renderer::colorFacePixel(Vector3<double> source, Vector3<double> d
 	*
 	*/
 	//cout << lights.size() << endl;
-	for (int j = 1; j < lights.size(); j++) {
+	for (size_t j = 1; j < lights.size(); j++) {
 		if (!lights[j]->isBlocked(destination, faces)) {
 			Vector3<double> sbt = *lights[j]->getCenter() - destination;
 			sbt = sbt.normalize();
@@ -1056,7 +1043,7 @@ bool Renderer::hasFrame() {
 ostream & Renderer::operator<<(std::ostream & out) {
 	out << "P3 " << abs(frame->get_minx()) + frame->get_maxx() << " " << abs(frame->get_miny()) + frame->get_maxy() << " " << 256 << '\n';
 	for (int i = image->size() - 1; i > -1; i--) {
-		for (int j = 0; j < (*image)[0]->size(); j++) {
+		for (size_t j = 0; j < (*image)[0]->size(); j++) {
 			out << (*(*image)[i])[j] << " ";
 			// if ((*(*image)[i])[j] == 1) {
 			//	out << 255 << " " << 255 << " " << 255 << " ";
@@ -1073,7 +1060,7 @@ ostream & Renderer::operator<<(std::ostream & out) {
 ostream & operator<<(std::ostream & out, const Renderer & c) {
 	out << "P3 " << abs(c.frame->get_minx()) + c.frame->get_maxx() << " " << abs(c.frame->get_miny()) + c.frame->get_maxy() << " " << 256 << '\n';
 	for (int i = c.image->size() - 1; i > -1; i--) {
-		for (int j = 0; j < (*c.image)[0]->size(); j++) {
+		for (size_t j = 0; j < (*c.image)[0]->size(); j++) {
 			out << (*(*c.image)[i])[j] << " ";
 		}
 		out << '\n';

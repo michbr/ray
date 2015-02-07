@@ -1,7 +1,9 @@
 #ifndef DRACO_THREADS_OBJ
 #define DRACO_THREADS_OBJ
 
+#include "EXPORT.h"
 #include <thread>
+
 
 class Runnable {
 public:
