@@ -174,7 +174,7 @@ RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): S
 	pane->current(pane);
 	{
 		selectedFileDisplay = new Fl_Output(10, 30, 150, 30, "");
-		selectedFileDisplay->value("../../cube/");
+		selectedFileDisplay->value("../../models/cube/");
 
 		//fl_draw_image((const uchar*)&image, 20, 50, 1024, 1024, 3, 0);
 		imageBox = new ImageBox(imageData->getRawImage(), 20, 70, IMAGE_WIDTH, IMAGE_HEIGHT);
