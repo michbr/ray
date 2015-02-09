@@ -22,7 +22,11 @@ void ScaleType::unload() {
 
 void *ScaleType::loadLibrary() {
 	cout << libName << endl;
-	return LoadLibrary((Path::exeDir() +ROOT_PATH +SCALE_DIR + libName + LIB_EXTENSION).c_str());
+	void * lib = LoadLibrary((Path::exeDir() +ROOT_PATH +SCALE_DIR + libName + LIB_EXTENSION).c_str());
+	if (lib == NULL) {
+		cerr << GetLastError() << endl;
+	}
+	return lib;
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {

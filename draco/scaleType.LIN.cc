@@ -24,7 +24,12 @@ void ScaleType::unload() {
 
 void *ScaleType::loadLibrary() {
 	cout << (Path::exeDir() +ROOT_PATH +SCALE_DIR +libName +LIB_EXTENSION) << endl;
-	return dlopen((Path::exeDir() +ROOT_PATH +SCALE_DIR +libName +LIB_EXTENSION).c_str(), RTLD_LAZY);
+	void * lib = dlopen((Path::exeDir() +ROOT_PATH +SCALE_DIR +libName +LIB_EXTENSION).c_str(), RTLD_LAZY);
+	char * error = dlerror();
+	if (error != NULL) {
+		cerr << error << endl;
+	}
+	return lib;
 }
 
 void *ScaleType::loadFunction(const std::string &funcName) const {

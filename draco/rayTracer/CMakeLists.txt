@@ -75,20 +75,6 @@ find_library(DRACO_COMMON_LIBRARY DracoCommon
 PATHS ${LIB_DIR})
 set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${WORLD_MODEL_LIBRARY} ${ASSET_LOADER_LIBRARY} ${RAY_TRACER_LIBRARY} ${IMAGE_LIBRARY} ${DRACO_COMMON_LIBRARY})
 
-#find_library(FLTK_LIBRARIES
-#	fltk
-#	fltk_forms
-#	fltk_images
-#	fltk_z
-#	PATHS ${PROJECT_SOURCE_DIR}/../fltk-1.3.3/lib/)
-#	find_library(FLTK_GL_LIBRARY fltk_gl
-#	PATHS ${PROJECT_SOURCE_DIR}/../fltk-1.3.3/lib/)
-#	set(LIBS ${LIBS} ${FLTK_GL_LIBRARY})
-#else(UNIX)
-#	find_library(FLTK_LIBRARIES fltkdll
-#	PATHS ${PROJECT_SOURCE_DIR}/../fltk-1.3.3/lib/)
-#endif(UNIX)
-
 find_package(OpenGL REQUIRED)
 set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
 if(OPENGL_FOUND)
