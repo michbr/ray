@@ -36,31 +36,6 @@ DRACO_SCALE_API const char *scaleName() {
 	return TAB_NAME;
 }
 
-/*class GUIUpdate {
-private:	
-	string text;
-	Fl_Output * textField;
-	ImageBox * box;
-public:
-	GUIUpdate(ImageBox * imageView, Fl_Output * view, string contents) {
-		text = contents;
-		textField = view;
-		box = imageView;
-	}
-
-	ImageBox * getImageBox() {
-		return box;
-	}
-
-	Fl_Output * getField() {
-		return textField;
-	}
-
-	string getText() {
-		return text;
-	}
-};*/
-
 class ImageMonitor : public Runnable {
 private:
 	Renderer * render;
@@ -115,7 +90,6 @@ public:
 
 	static void setText(void * test) {
 		DisplayMonitor * instance = (DisplayMonitor*)test;
-        	//ring * update = (string *)test;
         	instance->out->value(instance->text.c_str());
         	instance->box->redraw();
 	}
@@ -145,7 +119,6 @@ RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): S
 	Vector3<double> normal = Vector3<double>(0, 0, 1);
 	Vector3<double> up = Vector3<double>(0, 1, 0);
 	Camera * cam = new Camera(string("primary"), pos, normal, up, 1.0);
-//	image = new uchar[2048][2048][3];
 
         Wireframe * frame = new Wireframe("default", -IMAGE_WIDTH/2, -IMAGE_HEIGHT/2, IMAGE_WIDTH/2, IMAGE_HEIGHT/2, 1);
         renderer = new Renderer(cam);
@@ -159,7 +132,6 @@ RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): S
 		selectedFileDisplay = new Fl_Output(10, 30, 150, 30, "");
 		selectedFileDisplay->value("../../models/cube/");
 
-		//fl_draw_image((const uchar*)&image, 20, 50, 1024, 1024, 3, 0);
 		imageBox = new ImageBox(imageData->getRawImage(), 20, 70, IMAGE_WIDTH, IMAGE_HEIGHT);
 		button = new Fl_Button(165, 30, 40, 30, "Go");		
 		button -> callback( ( Fl_Callback* ) handleButton, this );

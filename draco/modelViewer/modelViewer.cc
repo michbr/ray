@@ -1,7 +1,8 @@
 #include "modelViewer.h"
+#include "glPane.h"
+#include "thread.h"
 
-#include "FL/Fl_File_Chooser.H"
-#include "FL/Fl_Box.H"
+#include <FL/Fl_File_Chooser.H>
 #include <FL/Fl_Gl_Window.H>
 #include <FL/gl.h>
 #include <FL/Fl.H>
@@ -18,8 +19,9 @@
 
 using namespace std;
 
-#if !HAVE_GL
-#else
+#if HAVE_GL
+
+#define v3f(x) glVertex3fv(x)
 
 float v0[3] = {0.0, 0.0, 0.0};
 float v1[3] = {1.0, 0.0, 0.0};
@@ -30,55 +32,79 @@ float v5[3] = {1.0, 0.0, 1.0};
 float v6[3] = {1.0, 1.0, 1.0};
 float v7[3] = {0.0, 1.0, 1.0};
 
-#define v3f(x) glVertex3fv(x)
+class Cube : public GLDrawable {
+private:
+	int wire;
+	double lasttime;
+	double size;
+	double speed;	
 
-void drawcube(int wire) {
-// Draw a colored cube 
-  glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-  glColor3ub(0,0,255);
-  v3f(v0); v3f(v1); v3f(v2); v3f(v3);
-  glEnd();
-  glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-  glColor3ub(0,255,255); v3f(v4); v3f(v5); v3f(v6); v3f(v7);
-  glEnd();
-  glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-  glColor3ub(255,0,255); v3f(v0); v3f(v1); v3f(v5); v3f(v4);
-  glEnd();
-  glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-  glColor3ub(255,255,0); v3f(v2); v3f(v3); v3f(v7); v3f(v6);
-  glEnd();
-  glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-  glColor3ub(0,255,0); v3f(v0); v3f(v4); v3f(v7); v3f(v3);
-  glEnd();
-  glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-  glColor3ub(255,0,0); v3f(v1); v3f(v2); v3f(v6); v3f(v5);
-  glEnd();
-}
-
-void StartTab::draw() {
-  lasttime = lasttime+speed;
-  glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  glPushMatrix();
-  glRotatef(float(lasttime*1.6),0,0,1);
-  glRotatef(float(lasttime*4.2),1,0,0);
-  glRotatef(float(lasttime*2.3),0,1,0);
-  glTranslatef(-1.0, 1.2f, -1.5);
-  glScalef(float(size),float(size),float(size));
-  drawcube(wire);
-  glPopMatrix();
-  gl_color(FL_GRAY);
-  glDisable(GL_DEPTH_TEST);
-  gl_draw(wire ? "Cube: wire" : "Cube: flat", -4.5f, -4.5f );
-  glEnable(GL_DEPTH_TEST);
-}
+	void drawCube() {
+		// Draw a colored cube 
+		glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
+		glColor3ub(0,0,255);
+		v3f(v0); v3f(v1); v3f(v2); v3f(v3);
+		glEnd();
+		glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
+		glColor3ub(0,255,255); v3f(v4); v3f(v5); v3f(v6); v3f(v7);
+		glEnd();
+		glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
+		glColor3ub(255,0,255); v3f(v0); v3f(v1); v3f(v5); v3f(v4);
+		glEnd();
+		glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
+		glColor3ub(255,255,0); v3f(v2); v3f(v3); v3f(v7); v3f(v6);
+		glEnd();
+		glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
+		glColor3ub(0,255,0); v3f(v0); v3f(v4); v3f(v7); v3f(v3);
+		glEnd();
+		glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
+		glColor3ub(255,0,0); v3f(v1); v3f(v2); v3f(v6); v3f(v5);
+		glEnd();
+	}
+public:
+	Cube (int w) {
+		wire = w;
+		lasttime = 0.0;
+		size = 1.0;
+		speed = 1.0;
+	}
+	void draw() {
+		lasttime = lasttime+speed;
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		glPushMatrix();
+		glRotatef(float(lasttime*1.6),0,0,1);
+		glRotatef(float(lasttime*4.2),1,0,0);
+		glRotatef(float(lasttime*2.3),0,1,0);
+		glTranslatef(-1.0, 1.2f, -1.5);
+		glScalef(float(size),float(size),float(size));
+		drawCube();
+		glPopMatrix();
+		gl_color(FL_GRAY);
+		glDisable(GL_DEPTH_TEST);
+		gl_draw(wire ? "Cube: wire" : "Cube: flat", -4.5f, -4.5f );
+		glEnable(GL_DEPTH_TEST);
+	}
+};
 
 #endif
 
 cube_box *cube, *cube2;
 
-void makeform(GLDrawable * drawable, Fl_Group * pane) {
-  cube = new cube_box(drawable, 23,50,344,344, 0);
-  cube2 = new cube_box(drawable, 375,50,344,344, 0);
+class DisplayUpdater : public Runnable {
+public:
+	void run() {
+		while (true) {
+			Fl::awake((Fl_Awake_Handler)update, this);
+		}
+	}
+	static void update(void * context) {
+		cube->redraw();
+		cube2->redraw();
+	}
+};
+
+void makeform(Fl_Group * pane) {
+
   Fl_Box *b = new Fl_Box(FL_NO_BOX,cube->x(),90,
              cube->w(),220,0);
   pane->resizable(b);
@@ -111,24 +137,18 @@ DRACO_SCALE_API const char *scaleName() {
 	return START_TAB_NAME;
 }
 
-
+Thread * updater;
 StartTab::StartTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir) {
 	pane->current(pane);
-	lasttime = 0.0;
 	{
 		Fl_File_Chooser *chooser = new Fl_File_Chooser(startDir.c_str(), "", Fl_File_Chooser::SINGLE, "DA FILES!!");
 		chooser->ok_label("open");
-		makeform(this, pane);
+		Cube * c1 = new Cube(0);
+		Cube * c2 = new Cube(1);
+		cube = new cube_box(c1, 23,50,344,344, 0);
+		cube2 = new cube_box(c2, 375,50,344,344, 0);
+		makeform(pane);
 
-		wire = 0;
-		size = 1.0;
-		speed = 1.0;
-		
-		cube->wire = 0; cube2->wire = 1;
-		char ** array = new char *[1];
-		string test = "test";
-		array[0] = new char[5];
-		strcpy(array[0], test.c_str());
 		cube->show();
 		cube2->show();
 		#if 0
@@ -141,21 +161,10 @@ StartTab::StartTab(ScaleType *type, Fl_Group *pane, const string &startDir): Sca
 		  cube->make_current(); // causes context to be created
 		  cube2->context(cube->context()); // share the contexts
 		#endif
-	//	for (int i = 0; i < 1000; i++) {
-		for(;;) {
-			if (pane->visible()) {
-				if (!Fl::check()) break;
-			}    // returns immediately
-			else {
-				if (!Fl::wait()) break;
-			} // waits until something happens
-		    cube->wire = true;//wire->value();
-		    cube2->wire = false;//!wire->value();
-		    cube->size = cube2->size = 1.0;//size->value();
-		    cube->speed = cube2->speed = 1.0;//speed->value();
-		    cube->redraw();
-		    cube2->redraw();
-  		}
+		if (pane->visible()) {
+			updater = new Thread(new DisplayUpdater());
+			updater->start();
+		}
 	}
 }
 StartTab::~StartTab() {
