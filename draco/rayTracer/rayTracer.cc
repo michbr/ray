@@ -36,7 +36,7 @@ DRACO_SCALE_API const char *scaleName() {
 	return TAB_NAME;
 }
 
-class GUIUpdate {
+/*class GUIUpdate {
 private:	
 	string text;
 	Fl_Output * textField;
@@ -59,7 +59,7 @@ public:
 	string getText() {
 		return text;
 	}
-};
+};*/
 
 class ImageMonitor : public Runnable {
 private:
@@ -121,23 +121,6 @@ public:
 	}
 
 };
-
-/*public static void setText(void * update) {
-	GUIUpdate* updater = (GUIUpdate*)update;
-	updater->getField()->value(updater->getText().c_str());
-	updater->getImageBox()->redraw();
-}*/
-
-/*void updateUI(ImageBox * box, Fl_Output * out, Renderer * render) {
-	while(true) {
-		long current = render->getCurrentPixel();
-		double progress = (double)current/(double)(render->getImageHeight() * render->getImageWidth());
-		stringstream s;
-		s << setprecision(2) << (progress*100) << "%";
-		Fl::awake((Fl_Awake_Handler)setText, new GUIUpdate(box, out, s.str()));
-		this_thread::sleep_for(chrono::milliseconds(500));
-	}	
-}*/
 
 void RayTracer::handleButton( Fl_Widget* obj , void* caller) {
 	RayTracer * instance = (RayTracer*)caller;

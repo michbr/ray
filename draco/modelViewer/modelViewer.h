@@ -3,6 +3,8 @@
 
 
 #include "scale.h"
+#include "glPane.h"
+
 #include "FL/Fl_Group.H"
 
 #include <string>
@@ -16,12 +18,15 @@
 const char *START_TAB_NAME = "Start";
 
 
-class StartTab: public Scale {
+class StartTab: public Scale, public GLDrawable {
 public:
 	StartTab(ScaleType *type, Fl_Group *pane, const std::string &startDir);
+	void draw();
 	~StartTab();
 
 private:
-
+	double lasttime;
+	double speed;
+	double size;
+	int wire;
 };
-

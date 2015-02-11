@@ -14,11 +14,14 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
+set(DRACO_COMMON_DIR "${UTILITIES_DIR}/draco/common")
+
 ##  source files  ##
 file(GLOB SOURCES
 	"${PROJECT_SOURCE_DIR}/*.cc"
 	"${PROJECT_SOURCE_DIR}/*.h"
 )
+
 
 ##  compiler directives  ##
 if (UNIX)
@@ -31,8 +34,10 @@ if(WIN32)
 endif(WIN32)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
+
 ##  dependencies  ##
 include_directories(
+	${DRACO_COMMON_DIR}
 	${FLTK_DIR}
 	${BASE_DIR}
 )
@@ -47,12 +52,20 @@ else (UNIX)
 endif (UNIX)
 set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 
+find_library(FLTK_GL_LIBRARY fltk_gl
+PATHS ${FLTK_DIR})
+set(LIBS ${LIBS} ${FLTK_GL_LIBRARY})
+
 find_package(OpenGL REQUIRED)
 set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
 if(OPENGL_FOUND)
 	add_definitions(-DHAVE_GL)
 	include_directories(${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
+
+find_library(DRACO_COMMON_LIBRARY DracoCommon
+PATHS ${LIB_DIR})
+set(LIBS ${LIBS} ${DRACO_COMMON_LIBRARY})
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})

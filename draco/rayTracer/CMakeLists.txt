@@ -63,6 +63,7 @@ else (UNIX)
     PATHS ${FLTK_DIR})
     set(LIBS ${LIBS} Shlwapi)
 endif (UNIX)
+
 find_library(WORLD_MODEL_LIBRARY WorldModel
 PATHS ${LIB_DIR})
 find_library(RAY_TRACER_LIBRARY RayTracer
