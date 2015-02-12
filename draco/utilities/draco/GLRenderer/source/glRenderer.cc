@@ -1,7 +1,6 @@
 #include "glRenderer.h"
 
-#include <GL/gl.h>
-#include <GL/glu.h>
+#include <FL/gl.h>
 
 #include <iostream>
 

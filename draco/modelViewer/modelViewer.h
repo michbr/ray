@@ -1,6 +1,5 @@
-
-#pragma once
-
+#ifndef MODEL_VIEWER_TAB
+#define MODEL_VIEWER_TAB
 
 #include "scale.h"
 
@@ -14,11 +13,13 @@
 	typedef _off64_t off64_t;
 #endif
 
-const char *START_TAB_NAME = "Start";
+const char *START_TAB_NAME = "Model Viewer";
 
-class StartTab: public Scale  {
+class ModelViewerTab: public Scale  {
 public:
-	StartTab(ScaleType *type, Fl_Group *pane, const std::string &startDir);
+	ModelViewerTab(ScaleType *type, Fl_Group *pane, const std::string &startDir);
 	void draw();
-	~StartTab();
+	~ModelViewerTab();
 };
+
+#endif

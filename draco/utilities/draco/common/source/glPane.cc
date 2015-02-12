@@ -6,12 +6,13 @@
 
 void cube_box::draw() {
 	if (!valid()) {
-		glLoadIdentity();
-		glViewport(0,0,w(),h());
-		glEnable(GL_DEPTH_TEST);
-		glFrustum(-1,1,-1,1,2,10000);
-		glTranslatef(0,0,-10);
-		gl_font(FL_HELVETICA_BOLD, 16 );
+		drawable->initialize();
+//		glLoadIdentity();
+//		glViewport(0,0,w(),h());
+//		glEnable(GL_DEPTH_TEST);
+//		glFrustum(-1,1,-1,1,2,10000);
+//		glTranslatef(0,0,-10);
+//		gl_font(FL_HELVETICA_BOLD, 16 );
 	}
 	drawable->draw();
 }

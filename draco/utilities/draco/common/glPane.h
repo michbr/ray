@@ -1,11 +1,13 @@
 #ifndef GL_PANE_WIDGET
 #define GL_PANE_WIDGET
 
+#include <FL/Fl_Box.H>
 #include <FL/Fl_Gl_Window.H>
 
 class GLDrawable { 
 public:
 	virtual void draw() = 0;
+	virtual void initialize() = 0;
 }; 
 
 

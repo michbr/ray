@@ -68,6 +68,15 @@ public:
 		size = 1.0;
 		speed = 1.0;
 	}
+	void initialize() {
+              glLoadIdentity();
+              glViewport(0,0,344,344);
+              glEnable(GL_DEPTH_TEST);
+              glFrustum(-1,1,-1,1,2,10000);
+              glTranslatef(0,0,-10);
+              gl_font(FL_HELVETICA_BOLD, 16 );
+	
+	}
 	void draw() {
 		lasttime = lasttime+speed;
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -130,7 +139,7 @@ void print_cb(Fl_Widget *w, void *data)
 
 
 DRACO_SCALE_API Scale *constructScale(ScaleType *type, Fl_Group *pane, const string &file) {
-	return new StartTab(type, pane, file);
+	return new ModelViewerTab(type, pane, file);
 }
 
 DRACO_SCALE_API const char *scaleName() {
@@ -138,7 +147,7 @@ DRACO_SCALE_API const char *scaleName() {
 }
 
 Thread * updater;
-StartTab::StartTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir) {
+ModelViewerTab::ModelViewerTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir) {
 	pane->current(pane);
 	{
 		Fl_File_Chooser *chooser = new Fl_File_Chooser(startDir.c_str(), "", Fl_File_Chooser::SINGLE, "DA FILES!!");
@@ -167,6 +176,6 @@ StartTab::StartTab(ScaleType *type, Fl_Group *pane, const string &startDir): Sca
 		}
 	}
 }
-StartTab::~StartTab() {
+ModelViewerTab::~ModelViewerTab() {
 	free(pane);
 }

@@ -71,6 +71,16 @@ else (UNIX)
 endif (UNIX)
 set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 
+find_library(FLTK_GL_LIBRARY fltk_gl
+PATHS ${FLTK_DIR})
+set(LIBS ${LIBS} ${FLTK_GL_LIBRARY})
+
+find_package(OpenGL REQUIRED)
+set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
+if(OPENGL_FOUND)
+        add_definitions(-DHAVE_GL)
+        include_directories(${OPENGL_INCLUDE_DIR})
+endif(OPENGL_FOUND)
 
 
 ##  deliverables  ##

@@ -17,7 +17,6 @@ void DragonEngine::placeCamera
  GLfloat u_x, GLfloat u_y, GLfloat u_z) {	// up vector	
 
 	cam = new Camera(c_x, c_y, c_z, v_x, v_y, v_z, u_x, u_y, u_z);
-	initRenderer();
 	controls = new Controls(*this, *cam);
 }
 

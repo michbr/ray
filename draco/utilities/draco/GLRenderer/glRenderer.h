@@ -12,10 +12,14 @@ class GLRenderer {
 	   //static Renderer & instance;
 	   Camera * cam;
 	   
+
 	   void initGL(GameWindow & win);
 	   void initialize(GameWindow & win);
+
 	public:
 	   GLRenderer(GameWindow & win, Camera * cam);
+
+
 	   
 	   //static Renderer & getInstance();
 	   void render();

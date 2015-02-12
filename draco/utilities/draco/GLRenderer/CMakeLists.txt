@@ -41,12 +41,7 @@ include_directories(${PROJECT_SOURCE_DIR})
 
 find_package(OpenGL REQUIRED)
 
-set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY})
-
-#IF (UNIX)
-#	find_package(X11)
-#	set(LIBS ${LIBS} ${X11_LIBRARIES})
-#ENDIf()
+set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY} DragonMath WorldModel)
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
