@@ -6,6 +6,7 @@ cmake_policy(SET CMP0015 OLD)
 
 ##  meta data  ##
 project (Draco)
+enable_testing()
 
 set (Draco_VERSION_MAJOR 0)
 set (Draco_VERSION_MINOR 1)

@@ -33,10 +33,18 @@ if (UNIX)
         set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 endif(UNIX)
+enable_testing()
+
 
 ##  dependencies  ##
+include_directories(${PROJECT_SOURCE_DIR})
+add_subdirectory(test)
+
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
+add_executable(${LIBRARY_NAME}Test ${SOURCES})
+
 
 target_link_libraries(${LIBRARY_NAME} ${LIBS})
-
+target_link_libraries(${LIBRARY_NAME}Test UnitTests gtest gtest_main)
+add_test(${LIBRARY_NAME}TestBlah ${LIBRARY_NAME}Test)
