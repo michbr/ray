@@ -47,4 +47,4 @@ add_executable(${LIBRARY_NAME}Test ${SOURCES})
 
 target_link_libraries(${LIBRARY_NAME} ${LIBS})
 target_link_libraries(${LIBRARY_NAME}Test UnitTests)
-add_test(${LIBRARY_NAME}Test ${LIBRARY_NAME}Test)
+add_test(${LIBRARY_NAME}Test ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${LIBRARY_NAME}Test)
