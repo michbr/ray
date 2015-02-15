@@ -3,20 +3,26 @@
 
 #include <iostream>
 
+/*********
+	Items missing from Vector3
+		-Default constructor (do we really need one?)
+		-Copy constructor with Vector4
+		-Static pre-initialized versions?
+		-magnitude renamed to length?
+		-lengthSquared???
+*********/
 template <class T>
 class Vector3 {
-        private:
-                T x;
-                T y;
-                T z;
         public:
-                //Vector3();
-                Vector3(T x, T y, T z);
-                Vector3 cross(Vector3 b);
-        //      void normalize();
-                T magnitude();
+		// member variables
+                T x, y, z;
 
-                //const T& operator[](int index);
+		// constructors
+                Vector3(T x, T y, T z);
+
+		// methods
+                Vector3 cross(Vector3 b);
+                T magnitude();
 
                 Vector3 normalize() const;
                 Vector3 cross(const Vector3 & b) const;
@@ -27,8 +33,20 @@ class Vector3 {
 
                 T dot(const Vector3 & b) const;
 
-                Vector3 operator-(const Vector3) const;
+                Vector3 operator/(double scalar) const;
+                Vector3 operator/(const Vector3 &other) const;
+                Vector3 operator*(const Vector3 &other) const;
                 Vector3 operator+(const Vector3) const;
+                Vector3 operator-(const Vector3) const;
+                Vector3 operator-() const;
+                Vector3 &operator+=(const Vector3 &other);
+                Vector3 &operator-=(const Vector3 &other);
+                Vector3 &operator*=(double scalar);
+                Vector3 &operator/=(double scalar);
+                bool operator==(const Vector3 &other) const;
+                bool operator!=(const Vector3 &other) const;
+
+
                 T& operator[](int index);
                 T operator[](int index) const;
 
@@ -37,6 +55,17 @@ class Vector3 {
                         return os;
                 }
 };
+
+
+template <class T>
+Vector3<T> operator*(const Vector3<T> &vec, double scalar);
+template <class T>
+Vector3<T> operator*(double scalar, const Vector3<T> &vec);
+template <class T>
+std::ostream &operator<<(std::ostream &out, const Vector3<T> &vec);
+template <class T>
+std::istream &operator>>(std::istream &in, Vector3<T> &vec);
+
 
 template <class T>
 class Vector4 {

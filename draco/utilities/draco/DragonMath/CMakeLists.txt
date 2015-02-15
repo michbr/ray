@@ -44,7 +44,12 @@ add_subdirectory(test)
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
 add_executable(${LIBRARY_NAME}Test ${SOURCES})
 
+#set_target_properties(${LIBRARY_NAME}Test PROPERTIES COMPILE_FLAGS "-g -O0 -Wall -W -Wshadow -Wunused-variable \
+# -Wunused-parameter -Wunused-function -Wunused -Wno-system-headers \
+# -Wno-deprecated -Woverloaded-virtual -Wwrite-strings -fprofile-arcs -ftest-coverage"
+#CFLAGS="-g -O0 -Wall -W -fprofile-arcs -ftest-coverage"
+#LDFLAGS="-fprofile-arcs -ftest-coverage")
 
 target_link_libraries(${LIBRARY_NAME} ${LIBS})
 target_link_libraries(${LIBRARY_NAME}Test UnitTests)
-add_test(${LIBRARY_NAME}Test ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${LIBRARY_NAME}Test)
+add_test(${LIBRARY_NAME}Test ${LIBRARY_NAME}Test)
