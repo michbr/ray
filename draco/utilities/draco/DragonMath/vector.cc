@@ -33,6 +33,16 @@ template <class T> Vector3<T> Vector3<T>::cross(const Vector3<T> b) {
         return Vector3<T>(i, j, k);
 }
 
+template <class T> Vector3<T> Vector3<T>::operator/(double scalar) const {
+        return Vector3<T>(x /scalar, y /scalar, z /scalar);
+}
+template <class T> Vector3<T> Vector3<T>::operator/(const Vector3<T> &other) const {
+        return Vector3<T>(x /other.x, y /other.y, z /other.z);
+}
+template <class T> Vector3<T> Vector3<T>::operator*(const Vector3<T> &other) const {
+        return Vector3<T>(x *other.x, y *other.y, z *other.z);
+}
+
 template <class T> Vector3<T> Vector3<T>::operator-(const Vector3<T> b) const {
         T i = x - b.x;
         T j = y - b.y;
@@ -47,6 +57,38 @@ template <class T> Vector3<T> Vector3<T>::operator+(const Vector3<T> b) const {
         T k = z + b.z;
 
         return Vector3<T>(i, j, k);
+}
+
+template <class T> Vector3<T> Vector3<T>::operator-() const {
+        return Vector3<T>(-x, -y, -z);
+}
+template <class T> bool Vector3<T>::operator==(const Vector3<T> &other) const {
+        return x == other.x && y == other.y && z == other.z;
+}
+template <class T> bool Vector3<T>::operator!=(const Vector3<T> &other) const {
+        return !(*this == other);
+}
+template <class T> Vector3<T> operator*(const Vector3<T> &vec, double scalar) {
+        return Vector3<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar);
+}
+template <class T> Vector3<T> operator*(double scalar, const Vector3<T> &vec) {
+        return Vector3<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar);
+}
+template <class T> Vector3<T> &Vector3<T>::operator+=(const Vector3<T> &other) {
+        x += other.x; y += other.y; z += other.z;
+        return *this;
+}
+template <class T> Vector3<T> &Vector3<T>::operator-=(const Vector3<T> &other) {
+        x -= other.x; y -= other.y; z -= other.z;
+        return *this;
+}
+template <class T> Vector3<T> &Vector3<T>::operator*=(double scalar) {
+        x *= scalar; y *= scalar; z *= scalar;
+        return *this;
+}
+template <class T> Vector3<T> &Vector3<T>::operator/=(double scalar) {
+        x /= scalar; y /= scalar; z /= scalar;
+        return *this;
 }
 
 template <class T> T& Vector3<T>::operator[](int index) {
