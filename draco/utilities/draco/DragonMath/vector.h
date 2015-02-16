@@ -3,28 +3,90 @@
 
 #include <iostream>
 
+template <class T> class Vector4;
+template <class T> class Vector3;
+
+template <class T>
+class Vector2 {
+        public:
+
+                // constants
+                static const Vector2<T> zero;
+                static const Vector2<T> one;
+                static const Vector2<T> right;
+                static const Vector2<T> up;
+
+                // memebers
+                T x, y;
+
+                // constructors
+                Vector2();
+                Vector2(double x, double y);
+                Vector2(const Vector2<T> &source);
+                Vector2(const Vector3<T> &source);
+                Vector2(const Vector4<T> &source);
+
+                // methods
+                double length() const;
+                double lengthSquared() const;
+                double distance(const Vector2<T> &other) const;
+                double dot(const Vector2<T> &other) const;
+                Vector2<T> normal() const;
+                void normalize();
+                Vector2<T> operator/(double scalar) const;
+                Vector2<T> operator/(const Vector2<T> &other) const;
+                Vector2<T> operator*(const Vector2<T> &other) const;
+                Vector2<T> operator+(const Vector2<T> &other) const;
+                Vector2<T> operator-(const Vector2<T> &other) const;
+                Vector2<T> operator-() const;
+                Vector2<T> &operator+=(const Vector2<T> &other);
+                Vector2<T> &operator-=(const Vector2<T> &other);
+                Vector2<T> &operator*=(double scalar);
+                Vector2<T> &operator/=(double scalar);
+                bool operator==(const Vector2<T> &other) const;
+                bool operator!=(const Vector2<T> &other) const;
+};
+
+template <class T>
+Vector2<T> operator*(const Vector2<T> &vec, double scalar);
+template <class T>
+Vector2<T> operator*(double scalar, const Vector2<T> &vec);
+template <class T>
+std::ostream &operator<<(std::ostream &out, const Vector2<T> &vec);
+template <class T>
+std::istream &operator>>(std::istream &in, Vector2<T> &vec);
+
 /*********
 	Items missing from Vector3
 		-Default constructor (do we really need one?)
-		-Copy constructor with Vector4
 		-Static pre-initialized versions?
 		-magnitude renamed to length?
 		-lengthSquared???
 *********/
+
 template <class T>
 class Vector3 {
         public:
+		// constants
+		static const Vector3<T> zero;
+	
 		// member variables
                 T x, y, z;
 
 		// constructors
+		Vector3();
                 Vector3(T x, T y, T z);
+		Vector3(const Vector3<T> &source);
+		Vector3(const Vector4<T> &source);
 
 		// methods
                 Vector3 cross(Vector3 b);
                 T magnitude();
 
-                Vector3 normalize() const;
+		Vector3 normal() const;
+                void normalize();
+		
+		
                 Vector3 cross(const Vector3 & b) const;
                 Vector3 scale (T scalar) const;
 

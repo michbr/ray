@@ -213,7 +213,7 @@ bool Face::calculate_normal() {
 		//exit(1);
 	}
 	
-	normal = n.normalize();
+	normal = n.normal();
 	return true;
 }
 
@@ -273,8 +273,8 @@ vector<int> * Face::colorDiffuse(const Vector3<double> point, const vector<int> 
 
                 Vector3<double> pointVector = point - second;
 
-                double dotOne = one.normalize().dot(pointVector);
-                double dotTwo = two.normalize().dot(pointVector);
+                double dotOne = one.normal().dot(pointVector);
+                double dotTwo = two.normal().dot(pointVector);
 
  /*               Vector3<double> texOne = Vector3<double> (
 					(*textureVertices[0])[0],

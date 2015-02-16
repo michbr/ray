@@ -246,7 +246,7 @@ vector<int> * Renderer::colorFacePixel(Vector3<double> source, Vector3<double> d
 		if (found_face) {
 			//  cout << found_face << endl;
 			Vector3<double> sbt = new_dest - destination;
-			sbt = sbt.normalize();
+			sbt.normalize();
 			dest = sbt.scale(f_dist);
 			Light * reflection = new Light(dest[0], dest[1], dest[2], 1, (*reflective)[0], (*reflective)[1], (*reflective)[2]);
 
@@ -269,11 +269,11 @@ vector<int> * Renderer::colorFacePixel(Vector3<double> source, Vector3<double> d
 	for (size_t j = 1; j < lights.size(); j++) {
 		if (!lights[j]->isBlocked(destination, faces)) {
 			Vector3<double> sbt = *lights[j]->getCenter() - destination;
-			sbt = sbt.normalize();
+			sbt = sbt.normal();
 			double c = face->getNormal()->dot(sbt); //switched these
 
 			sbt = source - destination;
-			sbt = sbt.normalize();
+			sbt = sbt.normal();
 			double awesome = face->getNormal()->dot(sbt);
 			//  cout << "into loop" << endl;
 			if (((c < 0) && (awesome < 0)) || ((c > 0) && (awesome > 0))) {
@@ -285,12 +285,12 @@ vector<int> * Renderer::colorFacePixel(Vector3<double> source, Vector3<double> d
 				delete(color);
 			}
 			sbt = *lights[j]->getCenter() -  destination;
-			Vector3<double> L = sbt.normalize();
+			Vector3<double> L = sbt.normal();
 
 			const Vector3<double> N = *face->getNormal();
 
 			sbt = source - destination;
-			Vector3<double> V = sbt.normalize();
+			Vector3<double> V = sbt.normal();
 
 			Vector3<double> scl = N.scale(2 * L.dot(N));
 			sbt = scl - L;

@@ -193,15 +193,15 @@ const Vector3<double> & Camera::getFocalPoint() {
 }
 
 Vector3<double> Camera::getHorizontalAxis() {
-        Vector3<double> n = vpn.normalize();
-        Vector3<double> u = up.normalize().cross(n).normalize();
+        Vector3<double> n = vpn.normal();
+        Vector3<double> u = up.normal().cross(n).normal();
         return u;
 }
 
 Vector3<double> Camera::getVerticalAxis() {
-        Vector3<double> n = vpn.normalize();
-        Vector3<double> u = up.normalize().cross(n).normalize();
-        Vector3<double> v = n.cross(u).normalize();
+        Vector3<double> n = vpn.normal();
+        Vector3<double> u = up.normal().cross(n).normal();
+        Vector3<double> v = n.cross(u).normal();
 
         return v;	
 }

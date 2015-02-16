@@ -2,6 +2,7 @@
 #define GL_DRAGON_MATH_OBJ_H
 
 #include "matrix.h"
+#include "ray.h"
 #include "vector.h"
 
 #include <GL/gl.h>

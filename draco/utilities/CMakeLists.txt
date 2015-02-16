@@ -1,8 +1,6 @@
 
 cmake_minimum_required (VERSION 2.8)
 
-
-
 project (Draco-Utilities)
 
 set(UTILITIES_DIR ${PROJECT_SOURCE_DIR})
@@ -16,3 +14,4 @@ add_subdirectory("draco/TextureLoader")
 add_subdirectory("draco/common")
 add_subdirectory("draco/worldModel")
 add_subdirectory("draco/CullenRay")
+add_subdirectory("draco/CullenRay2")
