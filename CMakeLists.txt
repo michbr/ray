@@ -14,7 +14,7 @@ set (Draco_VERSION_MINOR 1)
 include(CMake/paths.cmake)
 
 add_subdirectory(${UTILITIES_DIR})
-#add_subdirectory(${SCALES_DIR})
+add_subdirectory(${SCALES_DIR})
 
 set(EXECUTABLE_NAME draco)
 set(EXECUTABLE_OUTPUT_PATH ${BIN_DIR})

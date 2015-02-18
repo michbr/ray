@@ -7,10 +7,10 @@ project (Draco-rayTracer)
 set (Draco-rayTracer_VERSION_MAJOR 0)
 set (Draco-rayTracer_VERSION_MINOR 1)
 
-include(../CMake/paths.cmake)
+include(../../CMake/paths.cmake)
 
 set (LIBRARY_NAME rayTracer.ds)
-set (LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/../scales")
+set (LIBRARY_OUTPUT_PATH ${TARGET_SCALES_DIR})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
@@ -51,8 +51,8 @@ include_directories(
 	${RAY_TRACER_DIR}
 	${IMAGE_DIR}
 	${DRACO_COMMON_DIR}
-        ${FLTK_DIR}
-        ${BASE_DIR}
+	${FLTK_DIR}
+	${DRACO_SOURCE_DIR}
 )
 
 if (UNIX)

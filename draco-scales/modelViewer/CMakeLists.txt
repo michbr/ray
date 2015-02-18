@@ -6,10 +6,10 @@ project (Draco-modelViewer)
 set (Draco-modelViewer_VERSION_MAJOR 0)
 set (Draco-modelViewer_VERSION_MINOR 1)
 
-include(../CMake/paths.cmake)
+include(../../CMake/paths.cmake)
 
 set (LIBRARY_NAME modelViewer.ds)
-set (LIBRARY_OUTPUT_PATH "${PROJECT_SOURCE_DIR}/../scales")
+set (LIBRARY_OUTPUT_PATH ${TARGET_SCALES_DIR})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
@@ -39,7 +39,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 include_directories(
 	${DRACO_COMMON_DIR}
 	${FLTK_DIR}
-	${BASE_DIR}
+	${DRACO_SOURCE_DIR}
 )
 
 if (UNIX)

@@ -9,10 +9,10 @@ project (Draco-startTab)
 set (Draco-startTab_VERSION_MAJOR 0)
 set (Draco-startTab_VERSION_MINOR 1)
 
-include("../CMake/paths.cmake")
+include("../../CMake/paths.cmake")
 
 set (LIBRARY_NAME startTab.ds)
-set (LIBRARY_OUTPUT_PATH ${SCALES_DIR})
+set (LIBRARY_OUTPUT_PATH ${TARGET_SCALES_DIR})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIBRARY_OUTPUT_PATH} )
 #set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
@@ -49,7 +49,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 ##  dependencies  ##
 include_directories(
-	${BASE_DIR}
+	${DRACO_SOURCE_DIR}
 	${DRACO_UTILITIES_DIR}
 	${FLTK_DIR}
 )
