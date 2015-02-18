@@ -1,0 +1,51 @@
+cmake_minimum_required (VERSION 2.8)
+
+##  meta data  ##
+project (RayTracer)
+
+set (RayTracer_VERSION_MAJOR 0)
+set (RayTracer_VERSION_MINOR 1)
+
+
+include("../../../CMake/paths.cmake")
+
+set(LIBRARY_NAME RayTracer)
+set(LIBRARY_OUTPUT_PATH ${LIB_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
+
+add_definitions(-DDLL_EXPORT_DRACO_RayTracer)
+
+
+##  source files  ##
+file(GLOB SOURCES
+        ${PROJECT_SOURCE_DIR}/*.cc
+        ${PROJECT_SOURCE_DIR}/*.h)
+
+
+##  compiler directives  ##
+if (UNIX)
+        set (CUSTOM_FLAGS "-Wfatal-errors -Wextra -pedantic -O3")
+
+
+endif(UNIX)
+
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
+
+##  dependencies  ##
+include_directories(${UTILITIES_DIR}/draco/DragonMath/)
+include_directories(${UTILITIES_DIR}/draco/worldModel/)
+include_directories(${UTILITIES_DIR}/draco/TextureLoader/)
+
+set(LIBS ${LIBS} DragonMath WorldModel TextureLoader)
+
+##  deliverables  ##
+add_library (${LIBRARY_NAME} SHARED ${SOURCES})
+
+target_link_libraries(${LIBRARY_NAME} ${LIBS})
+
+#if (MSVC)
+#    set_target_properties(${EXECUTABLE_NAME} PROPERTIES LINK_FLAGS "/DELAYLOAD:dracoUtil.dll")
+#endif (MSVC)
+
