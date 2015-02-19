@@ -1,11 +1,6 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
-
+﻿
 namespace Vox {
 
-	[ExecuteInEditMode]
 	public class VoxelBlock : VoxelHolder {
 
 		public static int totalConsolidations = 0;
