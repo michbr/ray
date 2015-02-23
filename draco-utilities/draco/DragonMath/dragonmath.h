@@ -9,8 +9,13 @@
 
 template class Matrix<GLfloat>;
 template class Matrix<GLdouble>;
-template class Vector3<GLfloat>;
-template class Vector3<GLdouble>;
+//template class Vector3<GLfloat>;
+//template class Vector3<GLdouble>;
+template class Vector3<double>;
+template class Vector3<float>;
+template class Vector3<long>;
 template class Vector3<int>;
+template class Vector3<short>;
+template class Vector3<unsigned char>;
 
 #endif

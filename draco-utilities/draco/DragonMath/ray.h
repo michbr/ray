@@ -2,24 +2,22 @@
 #define RAY_OBJECT_H
 
 #include "vector.h"
+#include "dragonMath.h"
 
 /***********
 Proposed changes:
-	-position and vector become private
+-position and vector become private
 
 ***********/
 
 class Ray3 {
-	private:
-                Vector3<double> position, vector;
-        public:
+public:
+	Vector3<double> position, direction;
 
-
-                Ray3();
-                Ray3(const Vector3<double> &position, const Vector3<double> &vector);
-                Ray3(const Ray3 &source);
-		const Vector3<double> & getPosition() const;
-		const Vector3<double> & getDirection() const;
+	Ray3(const Vector3<double> &position, const Vector3<double> &direction);
+	Ray3(const Ray3 &source);
+	const Vector3<double> &getPosition() const;
+	const Vector3<double> &getDirection() const;
 };
 
 #endif

@@ -136,10 +136,12 @@ public:
 	// constants
 	static const Vector4<T> zeroAbsolute;
 	static const Vector4<T> zero;
-	static const Vector4<T> one;
 	static const Vector4<T> right;
+	static const Vector4<T> left;
 	static const Vector4<T> up;
+	static const Vector4<T> down;
 	static const Vector4<T> forward;
+	static const Vector4<T> bacl;
 
 	// members
 	T x, y, z, w;

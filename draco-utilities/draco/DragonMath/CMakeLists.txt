@@ -30,9 +30,8 @@ file(GLOB SOURCES
 ##  compiler directives ##
 if (UNIX)
         set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
-        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
-
 endif(UNIX)
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 enable_testing()
 
 
