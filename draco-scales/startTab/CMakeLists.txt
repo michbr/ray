@@ -60,9 +60,7 @@ else (UNIX)
 	find_library(FLTK_LIBRARIES winfltk
     PATHS ${FLTK_DIR})
 endif (UNIX)
-find_library(DRACO_COMMON_LIB DracoCommon
-	PATHS ${LIB_DIR})
-set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${DRACO_COMMON_LIB})
+set(LIBS ${LIBS} ${FLTK_LIBRARIES} DracoCommon)
 
 
 

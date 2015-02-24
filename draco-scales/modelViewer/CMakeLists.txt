@@ -63,9 +63,7 @@ if(OPENGL_FOUND)
 	include_directories(${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
 
-find_library(DRACO_COMMON_LIBRARY DracoCommon
-PATHS ${LIB_DIR})
-set(LIBS ${LIBS} ${DRACO_COMMON_LIBRARY})
+set(LIBS ${LIBS} DracoCommon)
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
