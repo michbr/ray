@@ -3,13 +3,13 @@
 
 #include <iostream>
 
-template<class T>
+template<typename T>
 class Vector4;
 
-template<class T>
+template<typename T>
 class Vector3;
 
-template<class T>
+template<typename T>
 class Vector2 {
 public:
 
@@ -54,13 +54,13 @@ public:
 	T operator[](int index) const;
 };
 
-template<class T>
+template<typename T>
 Vector2<T> operator*(const Vector2<T> &vec, T scalar);
 
-template<class T>
+template<typename T>
 Vector2<T> operator*(T scalar, const Vector2<T> &vec);
 
-template<class T>
+template<typename T>
 std::ostream &operator<<(std::ostream &out, const Vector2<T> &vec);
 
 /*********
@@ -71,9 +71,10 @@ Items missing from Vector3
 -lengthSquared???
 *********/
 
-template<class T>
+template<typename T>
 class Vector3 {
 public:
+//	typedef Vector3<T> Vector3_t;
 	// constants
 	static const Vector3<T> zero;
 	static const Vector3<T> right;
@@ -118,18 +119,17 @@ public:
 	T operator[](int index) const;
 };
 
-
-template<class T>
+template<typename T>
 Vector3<T> operator*(const Vector3<T> &vec, T scalar);
 
-template<class T>
+template<typename T>
 Vector3<T> operator*(T scalar, const Vector3<T> &vec);
 
-template<class T>
+template<typename T>
 std::ostream &operator<<(std::ostream &out, const Vector3<T> &vec);
 
 
-template<class T>
+template<typename T>
 class Vector4 {
 public:
 
@@ -176,13 +176,13 @@ public:
 	T operator[](int index) const;
 };
 
-template<class T>
+template<typename T>
 Vector4<T> operator*(const Vector4<T> &vec, T scalar);
 
-template<class T>
+template<typename T>
 Vector4<T> operator*(T scalar, const Vector4<T> &vec);
 
-template<class T>
+template<typename T>
 std::ostream &operator<<(std::ostream &out, const Vector4<T> &vec);
 
 

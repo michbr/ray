@@ -1,5 +1,6 @@
+
+#include "vector.h"
 #include "dragonmath.h"
-#include "../CullenRay/math.h"
 
 #include <cmath>
 
@@ -12,11 +13,10 @@ using namespace std;
 //////////////
 
 // constructors
-Vec2::Vec2(): Vec2(0, 0) {}
-Vec2::Vec2(T x, T y): x(x), y(y) {}
-Vec2::Vec2(const Vec2 &source): Vec2(source.x, source.y) {}
-Vec2::Vec2(const Vec3 &source): Vec2(source.x, source.y) {}
-Vec2::Vec2(const Vec4 &source): Vec2(source.x, source.y) {}
+template<typename T> Vector2<T>::Vector2(T x, T y): x(x), y(y) {}
+template<typename T> Vector2<T>::Vector2(const Vector2<T> &source): Vector2<T>(source.x, source.y) {}
+template<typename T> Vector2<T>::Vector2(const Vector3<T> &source): Vector2<T>(source.x, source.y) {}
+template<typename T> Vector2<T>::Vector2(const Vector4<T> &source): Vector2<T>(source.x, source.y) {}
 
 
 // methods
@@ -29,32 +29,30 @@ Vec2::Vec2(const Vec4 &source): Vec2(source.x, source.y) {}
 //////////////
 
 // constructors
-template <class T> Vector3<T>::Vector3(T x, T y, T z): x(x), y(y), z(z) {}
-template <class T> Vector3<T>::Vector3(const Vector3<T> &source): x(source.x), y(source.y), z(source.z) {}
-template <class T> Vector3<T>::Vector3(const Vector4<T> &source): x(source.x), y(source.y), z(source.z) {}
-template <class T> Vector3<T>::Vector3(const Vector3<T> &source): x(source.x), y(source.y), z(source.z) {}
-template <class T> Vector3<T>::Vector3(const Vector4<T> &source): x(source.x), y(source.y), z(source.z) {}
+template <typename T> Vector3<T>::Vector3(T x, T y, T z): x(x), y(y), z(z) {}
+template <typename T> Vector3<T>::Vector3(const Vector3<T> &source): x(source.x), y(source.y), z(source.z) {}
+template <typename T> Vector3<T>::Vector3(const Vector4<T> &source): x(source.x), y(source.y), z(source.z) {}
 
 
 // methods
-template <class T> T Vector3<T>::magnitude() const {
+template <typename T> T Vector3<T>::magnitude() const {
 	return sqrt(x*x + y*y + z*z);
 }
-template<class T> T Vector3<T>::magnitudeSquared() const {
+template<typename T> T Vector3<T>::magnitudeSquared() const {
 	return x*x + y*y + z*z;
 }
-template <class T> Vector3<T> Vector3<T>::normal() const {
+template <typename T> Vector3<T> Vector3<T>::normal() const {
 	T magnitude = sqrt((x*x) + (y*y) + (z*z));
 	return Vector3<T>(x /magnitude, y /magnitude, z /magnitude);
 }
-template <class T> void Vector3<T>::normalize() {
+template <typename T> void Vector3<T>::normalize() {
 	T m = sqrt((x*x) + (y*y) + (z*z));
 	x /= m; y /= m; z /= m;
 }
-template <class T> Vector3<T> Vector3<T>::scale(T s) const {
+template <typename T> Vector3<T> Vector3<T>::scale(T s) const {
 	return Vector3<T> (x*s, y*s, z*s);
 }
-//template <class T> Vector3<T> Vector3<T>::findPerpendicular() const {
+//template <typename T> Vector3<T> Vector3<T>::findPerpendicular() const {
 //	int index = 0;
 //	Vector3<T> axis = Vector3<T>(x, y, z);
 //	T min = axis[0];
@@ -70,77 +68,77 @@ template <class T> Vector3<T> Vector3<T>::scale(T s) const {
 //	axis.normalize();
 //	return axis;
 //}
-template <class T> T Vector3<T>::dot(const Vector3<T> & b) const {
+template <typename T> T Vector3<T>::dot(const Vector3<T> & b) const {
 	return (x * b.x) + (y * b.y) + (z * b.z);
 }
-template <class T> Vector3<T> Vector3<T>::cross(const Vector3<T> & b) const {
+template <typename T> Vector3<T> Vector3<T>::cross(const Vector3<T> & b) const {
 	return Vector3<T>((y*b.z)- (z*b.y), (z*b.x)- (x*b.z), (x*b.y)- (y*b.x));
 }
 
 
 // operators
-template <class T> Vector3<T> Vector3<T>::operator/(T scalar) const {
+template <typename T> Vector3<T> Vector3<T>::operator/(T scalar) const {
 	return Vector3<T>(x /scalar, y /scalar, z /scalar);
 }
-template <class T> Vector3<T> Vector3<T>::operator/(const Vector3<T> &other) const {
+template <typename T> Vector3<T> Vector3<T>::operator/(const Vector3<T> &other) const {
 	return Vector3<T>(x /other.x, y /other.y, z /other.z);
 }
-template <class T> Vector3<T> Vector3<T>::operator*(const Vector3<T> &other) const {
+template <typename T> Vector3<T> Vector3<T>::operator*(const Vector3<T> &other) const {
 	return Vector3<T>(x *other.x, y *other.y, z *other.z);
 }
-template <class T> Vector3<T> Vector3<T>::operator+(const Vector3<T> b) const {
+template <typename T> Vector3<T> Vector3<T>::operator+(const Vector3<T> b) const {
 	return Vector3<T>(x -b.x, y -b.y, z -b.z);
 }
-template <class T> Vector3<T> Vector3<T>::operator-(const Vector3<T> b) const {
+template <typename T> Vector3<T> Vector3<T>::operator-(const Vector3<T> b) const {
 	return Vector3<T>(x +b.x, y +b.y, z +b.z);
 }
-template <class T> Vector3<T> Vector3<T>::operator-() const {
+template <typename T> Vector3<T> Vector3<T>::operator-() const {
 	return Vector3<T>(-x, -y, -z);
 }
-template <class T> Vector3<T> &Vector3<T>::operator+=(const Vector3<T> &other) {
+template <typename T> Vector3<T> &Vector3<T>::operator+=(const Vector3<T> &other) {
 	x += other.x; y += other.y; z += other.z;
 	return *this;
 }
-template <class T> Vector3<T> &Vector3<T>::operator-=(const Vector3<T> &other) {
+template <typename T> Vector3<T> &Vector3<T>::operator-=(const Vector3<T> &other) {
 	x -= other.x; y -= other.y; z -= other.z;
 	return *this;
 }
-template <class T> Vector3<T> &Vector3<T>::operator*=(T scalar) {
+template <typename T> Vector3<T> &Vector3<T>::operator*=(T scalar) {
 	x *= scalar; y *= scalar; z *= scalar;
 	return *this;
 }
-template <class T> Vector3<T> &Vector3<T>::operator/=(T scalar) {
+template <typename T> Vector3<T> &Vector3<T>::operator/=(T scalar) {
 	x /= scalar; y /= scalar; z /= scalar;
 	return *this;
 }
-template <class T> bool Vector3<T>::operator==(const Vector3<T> &other) const {
+template <typename T> bool Vector3<T>::operator==(const Vector3<T> &other) const {
 	return x == other.x && y == other.y && z == other.z;
 }
-template <class T> bool Vector3<T>::operator!=(const Vector3<T> &other) const {
+template <typename T> bool Vector3<T>::operator!=(const Vector3<T> &other) const {
 	return !(*this == other);
 }
-template <class T> T& Vector3<T>::operator[](int index) {
+template <typename T> T& Vector3<T>::operator[](int index) {
 	return ((T *)this)[index];
 }
-template <class T> T Vector3<T>::operator[](int index) const {
+template <typename T> T Vector3<T>::operator[](int index) const {
 	return ((T *)this)[index];
 }
-template <class T> Vector3<T> operator*(const Vector3<T> &vec, T scalar) {
+template <typename T> Vector3<T> operator*(const Vector3<T> &vec, T scalar) {
 	return Vector3<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar);
 }
-template <class T> Vector3<T> operator*(T scalar, const Vector3<T> &vec) {
+template <typename T> Vector3<T> operator*(T scalar, const Vector3<T> &vec) {
 	return Vector3<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar);
 }
 
 
 // constants
-const Vec3 Vec3::zero(0, 0, 0);
-const Vec3 Vec3::right(1, 0, 0);
-const Vec3 Vec3::left(-1, 0, 0);
-const Vec3 Vec3::up(0, 1, 0);
-const Vec3 Vec3::down(0, -1, 0);
-const Vec3 Vec3::forward(0, 0, 1);
-const Vec3 Vec3::back(0, 0, -1);
+template<typename T> const Vector3<T> Vector3<T>::zero(0, 0, 0);
+template<typename T> const Vector3<T> Vector3<T>::right(1, 0, 0);
+template<typename T> const Vector3<T> Vector3<T>::left(-1, 0, 0);
+template<typename T> const Vector3<T> Vector3<T>::up(0, 1, 0);
+template<typename T> const Vector3<T> Vector3<T>::down(0, -1, 0);
+template<typename T> const Vector3<T> Vector3<T>::forward(0, 0, 1);
+template<typename T> const Vector3<T> Vector3<T>::back(0, 0, -1);
 
 
 
@@ -149,10 +147,9 @@ const Vec3 Vec3::back(0, 0, -1);
 //////////////
 
 // constructors
-Vec4::Vec4(): Vec4(0, 0, 0) {}
-Vec4::Vec4(double x, double y, double z): Vec4(x, y, z, 1) {}
-Vec4::Vec4(double x, double y, double z, double w): x(x), y(y), z(z), w(w) {}
-Vec4::Vec4(const Vec3 &source): Vec4(source.x, source.y, source.z) {}
-Vec4::Vec4(const Vec4 &source): Vec4(source.x, source.y, source.z, source.w) {}
+template<typename T> Vector4<T>::Vector4(T x, T y, T z): Vector4<T>(x, y, z, 1) {}
+template<typename T> Vector4<T>::Vector4(T x, T y, T z, T w): x(x), y(y), z(z), w(w) {}
+template<typename T> Vector4<T>::Vector4(const Vector3<T> &source): Vector4<T>(source.x, source.y, source.z) {}
+template<typename T> Vector4<T>::Vector4(const Vector4<T> &source): Vector4<T>(source.x, source.y, source.z, source.w) {}
 
 // methods
