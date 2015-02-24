@@ -152,4 +152,6 @@ template<typename T> Vector4<T>::Vector4(T x, T y, T z, T w): x(x), y(y), z(z), 
 template<typename T> Vector4<T>::Vector4(const Vector3<T> &source): Vector4<T>(source.x, source.y, source.z) {}
 template<typename T> Vector4<T>::Vector4(const Vector4<T> &source): Vector4<T>(source.x, source.y, source.z, source.w) {}
 
+
 // methods
+
