@@ -64,17 +64,8 @@ else (UNIX)
     set(LIBS ${LIBS} Shlwapi)
 endif (UNIX)
 
-find_library(WORLD_MODEL_LIBRARY WorldModel
-PATHS ${LIB_DIR})
-find_library(RAY_TRACER_LIBRARY RayTracer
-PATHS ${LIB_DIR})
-find_library(ASSET_LOADER_LIBRARY AssetLoader
-PATHS ${LIB_DIR})
-find_library(IMAGE_LIBRARY Image
-PATHS ${LIB_DIR})
-find_library(DRACO_COMMON_LIBRARY DracoCommon
-PATHS ${LIB_DIR})
-set(LIBS ${LIBS} ${FLTK_LIBRARIES} ${WORLD_MODEL_LIBRARY} ${ASSET_LOADER_LIBRARY} ${RAY_TRACER_LIBRARY} ${IMAGE_LIBRARY} ${DRACO_COMMON_LIBRARY})
+
+set(LIBS ${LIBS} ${FLTK_LIBRARIES} WorldModel AssetLoader RayTracer Image DracoCommon)
 
 find_package(OpenGL REQUIRED)
 set(LIBS ${LIBS} ${OPENGL_LIBRARIES})

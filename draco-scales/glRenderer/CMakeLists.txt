@@ -76,9 +76,7 @@ find_library(DRACO_COMMON_LIBRARY DracoCommon
 PATHS ${LIB_DIR})
 set(LIBS ${LIBS} ${DRACO_COMMON_LIBRARY})
 
-find_library(GL_RENDERER_LIBRARY GLRenderer
-PATHS ${LIB_DIR})
-set(LIBS ${LIBS} ${GL_RENDERER_LIBRARY})
+set(LIBS ${LIBS} GLRenderer)
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
