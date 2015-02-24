@@ -20,7 +20,7 @@ public:
 	static const Vector2<T> up;
 	static const Vector2<T> down;
 
-	// memebers
+	// members
 	T x, y;
 
 	// constructors
@@ -83,7 +83,7 @@ public:
 	static const Vector3<T> forward;
 	static const Vector3<T> back;
 	
-	// member variables
+	// members
 	T x, y, z;
 
 	// constructors
@@ -97,7 +97,7 @@ public:
 	Vector3<T> normal() const;
 	void normalize();
 	Vector3<T> scale(T scalar) const;
-	Vector3<T> findPerpendicular() const;
+//	Vector3<T> findPerpendicular() const;
 	T dot(const Vector3<T> &b) const;
 	Vector3<T> cross(const Vector3<T> &b) const;
 

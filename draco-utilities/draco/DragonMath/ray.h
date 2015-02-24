@@ -17,8 +17,6 @@ public:
 
 	Ray3(const Vector3<T> &position, const Vector3<T> &direction);
 	Ray3(const Ray3<T> &source);
-	const Vector3<T> &getPosition() const;
-	const Vector3<T> &getDirection() const;
 };
 
 #endif
