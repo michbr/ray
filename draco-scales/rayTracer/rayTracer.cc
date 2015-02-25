@@ -98,22 +98,25 @@ public:
 
 void RayTracer::handleButton( Fl_Widget* obj , void* caller) {
 	RayTracer * instance = (RayTracer*)caller;
-
-	cout << "Starting ray trace..." << endl;
-	instance->rayTracer = new Thread(instance);
-	instance->rayTracer->start();
-
-	cout << "Starting UI polling..." << endl;
-	instance->displayUpdater = new Thread(new DisplayMonitor(instance->renderer, instance->imageBox, instance->selectedFileDisplay));
-	instance->displayUpdater->start();
-
-	cout << "Starting image polling..." << endl;
-	instance->imageUpdater = new Thread(new ImageMonitor(instance->renderer, instance->imageData));
-	instance->imageUpdater->start();
+	if(!instance->started) {
+		cout << "Starting ray trace..." << endl;
+		instance->rayTracer = new Thread(instance);
+		instance->rayTracer->start();
+	/*	cout << "Starting UI polling..." << endl;
+		instance->displayUpdater = new Thread(new DisplayMonitor(instance->renderer, instance->imageBox, instance->selectedFileDisplay));
+		instance->displayUpdater->start();
+	
+		cout << "Starting image polling..." << endl;
+		instance->imageUpdater = new Thread(new ImageMonitor(instance->renderer, instance->imageData));
+		instance->imageUpdater->start();
+*/
+		instance->started = true;
+	}
 }
 
 
 RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir) {
+	started = false;
 	imageData = new Image(IMAGE_HEIGHT, IMAGE_WIDTH);
 	Vector3<double> pos = Vector3<double>(1, 1, 1);
 	Vector3<double> normal = Vector3<double>(0, 0, 1);
@@ -130,7 +133,7 @@ RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): S
 	pane->current(pane);
 	{
 		selectedFileDisplay = new Fl_Output(10, 30, 150, 30, "");
-		selectedFileDisplay->value("../../models/cube/");
+		selectedFileDisplay->value("../../old/models/cube/");
 
 		imageBox = new ImageBox(imageData->getRawImage(), 20, 70, IMAGE_WIDTH, IMAGE_HEIGHT);
 		button = new Fl_Button(165, 30, 40, 30, "Go");		
@@ -141,9 +144,19 @@ RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): S
 void RayTracer::run () {
 	string path (selectedFileDisplay->value());
 	loadModel(path);	
+
+        cout << "Starting UI polling..." << endl;
+        displayUpdater = new Thread(new DisplayMonitor(renderer, imageBox, selectedFileDisplay));
+        displayUpdater->start();
+
+        cout << "Starting image polling..." << endl;
+        imageUpdater = new Thread(new ImageMonitor(renderer, imageData));
+        imageUpdater->start();
+
 	renderer->prepareRaycast(model->getFaces(), *lights);
-        cout << "Finished trace." << endl;
+	cout << "Finished trace." << endl;
 }
+
 void RayTracer::loadModel(string location) {
         model = new WorldModel();
         AssetLoader::loadAsset(location.c_str(), *model);

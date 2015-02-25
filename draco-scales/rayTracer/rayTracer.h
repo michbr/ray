@@ -21,6 +21,7 @@ const char *TAB_NAME = "Ray Tracer";
 
 class RayTracer: public Scale, public Runnable {
 private:
+	bool started;
 	//widgets
 	Fl_Output * selectedFileDisplay;
 	Fl_Button * button;

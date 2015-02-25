@@ -1,6 +1,7 @@
 #include "dragonmath.h"
 #include "gtest/gtest.h"
 
+#include <cmath>
 #include <iostream>
 
 using namespace std;
@@ -49,5 +50,32 @@ TEST(DragonMath, Assignment) {
         ASSERT_EQ(1, x);
         ASSERT_EQ(2, y);
         ASSERT_EQ(3, z);
+}
+
+TEST(DragonMath, Cross) { 
+	Vector3<double> a(1, 2, 3);
+	Vector3<double> b(3, 4, 5);
+	Vector3<double> result = a.cross(b);
+        double x = result[0];
+        double y = result[1];
+        double z = result[2];
+        ASSERT_EQ(-2, x);
+        ASSERT_EQ(4, y);
+        ASSERT_EQ(-2, z);
+}
+
+TEST(DragonMath, Normal) {
+	Vector3<double> a(2, 5, 7);
+	double l = a.normal().magnitude();
+	double epsilon = .0000001;
+	ASSERT_TRUE(abs(1.0 - l) < epsilon);
+	
+	Vector3<double> b(.6, 0, 0);
+	Vector3<double> normal = b.normal();
+	l = normal.magnitude();
+	ASSERT_TRUE(abs(1.0 - l) < epsilon);
+        ASSERT_EQ(1.0, normal.x);
+        ASSERT_EQ(0, normal.y);
+        ASSERT_EQ(0, normal.z);
 }
 

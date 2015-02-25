@@ -2,7 +2,7 @@
 #define RAY_OBJECT_H
 
 #include "vector.h"
-#include "dragonMath.h"
+#include "dragonmath.h"
 
 /***********
 Proposed changes:
