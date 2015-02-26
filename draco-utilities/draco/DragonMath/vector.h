@@ -30,7 +30,7 @@ public:
 	Vector2(const Vector4<T> &source);
 
 	// methods
-	T megnitude() const;
+	T magnitude() const;
 	T magnitudeSquared() const;
 	Vector2<T> normal() const;
 	void normalize();
@@ -63,18 +63,11 @@ Vector2<T> operator*(T scalar, const Vector2<T> &vec);
 template<typename T>
 std::ostream &operator<<(std::ostream &out, const Vector2<T> &vec);
 
-/*********
-Items missing from Vector3
--Default constructor (do we really need one?)
--Static pre-initialized versions?
--magnitude renamed to length?
--lengthSquared???
-*********/
 
 template<typename T>
 class Vector3 {
 public:
-//	typedef Vector3<T> Vector3_t;
+
 	// constants
 	static const Vector3<T> zero;
 	static const Vector3<T> right;
@@ -92,13 +85,13 @@ public:
 	Vector3(const Vector3<T> &source);
 	Vector3(const Vector4<T> &source);
 
+
 	// methods
 	T magnitude() const;
 	T magnitudeSquared() const;
 	Vector3<T> normal() const;
 	void normalize();
 	Vector3<T> scale(T scalar) const;
-//	Vector3<T> findPerpendicular() const;
 	T dot(const Vector3<T> &b) const;
 	Vector3<T> cross(const Vector3<T> &b) const;
 
@@ -134,14 +127,13 @@ class Vector4 {
 public:
 
 	// constants
-	static const Vector4<T> zeroAbsolute;
 	static const Vector4<T> zero;
 	static const Vector4<T> right;
 	static const Vector4<T> left;
 	static const Vector4<T> up;
 	static const Vector4<T> down;
 	static const Vector4<T> forward;
-	static const Vector4<T> bacl;
+	static const Vector4<T> back;
 
 	// members
 	T x, y, z, w;
@@ -157,9 +149,11 @@ public:
 	T magnitudeSquared() const;
 	Vector4<T> normal() const;
 	void normalize();
+	Vector4<T> scale(T scalar) const;
 	T dot(const Vector4<T> &other) const;
 	Vector4<T> cross(const Vector4<T> &other) const;
 
+	// operators
 	Vector4<T> operator/(T scalar) const;
 	Vector4<T> operator/(const Vector4<T> &other) const;
 	Vector4<T> operator*(const Vector4<T> &other) const;

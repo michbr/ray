@@ -95,7 +95,7 @@ Vector3<double> Face::intersect(const Vector3<double> focal_point, const Vector3
 		view_point[2] - focal_point[2]);
 	
 
-	//cout << "VP length: " << view_point->size() << endl;
+	//cout << "VP magnitude: " << view_point->size() << endl;
 	//cout << "view point: " << (*view_point)[0] << ", " << (*view_point)[1] << ", " << (*view_point)[2] << endl;
 
 	
