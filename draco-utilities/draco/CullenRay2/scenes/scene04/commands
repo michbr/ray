@@ -1,0 +1,12 @@
+#l 0 0 -8 1 255 255 255
+#l -2 2 2.5 1 255 0 255
+#l -2 -2 3 1 0 0 255
+#t cube  0 0 2
+#Camera specifications
+c cam02 0 0 15 0 0 1 0 1 0 5 50
+#light sources
+l 10 0 10 1 255 0 0
+l 3 0 -3 1 255 0 255
+l 0 0 -2.5 1 0 0 255
+#ray cast command
+r scene_04 512 512 2
