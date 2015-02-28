@@ -29,15 +29,11 @@ set(FLTK_DIR "${UTILITIES_DIR}/fltk-1.3.3")
 
 add_definitions(-DDLL_EXPORT_DRACO_COMMON)
 
-
-
 ##  source files  ##
 file(GLOB SOURCES
 	"${PROJECT_SOURCE_DIR}/source/*.cc"
 	"${PROJECT_SOURCE_DIR}/*.h"
 )
-
-
 
 ##  compiler directives  ##
 if (UNIX)

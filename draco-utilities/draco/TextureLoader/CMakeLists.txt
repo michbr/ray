@@ -17,6 +17,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
+set(DEVIL_DIR "${UTILITIES_DIR}/DevIL")
+
 add_definitions(-DDLL_EXPORT_DRACO_WORLD_MODEL)
 
 
@@ -39,17 +41,24 @@ endif(UNIX)
 
 
 ##  dependencies  ##
-if (UNIX)
-	set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake_modules/")
-	find_package(DevIL REQUIRED)
-	include_directories(${IL_INCLUDE_DIRS})
-	set(LIBS ${LIBS} ${IL_LIBRARIES})
-else (UNIX)
-	set(DEVIL_DIR ${UTILITIES_DIR}/devIL-1.7.8)
-	find_library(IL_LIBRARIES DevIL
-	PATHS ${DEVIL_DIR})
-	include_directories(${DEVIL_DIR}/include)
-endif (UNIX)
+include_directories(
+	${DEVIL_DIR}/include
+)
+message(------------------)
+message( ${DEVIL_DIR}/lib)
+message(------------------)
+set(LIBS ${LIBS} DevIL)
+#if (UNIX)
+	#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake_modules/")
+	#find_package(DevIL REQUIRED)
+	#include_directories(${IL_INCLUDE_DIRS})
+	#set(LIBS ${LIBS} ${IL_LIBRARIES})
+#else (UNIX)
+#	set(DEVIL_DIR ${UTILITIES_DIR}/devIL-1.7.8)
+#	find_library(IL_LIBRARIES DevIL
+#	PATHS ${DEVIL_DIR})
+#	include_directories(${DEVIL_DIR}/include)
+#endif (UNIX)
 
 
 
