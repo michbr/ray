@@ -18,6 +18,10 @@ GLTab::GLTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(typ
 	main = new Thread(this);
         {
 		display = new cube_box(this, 5, 30, 500, 500, 0);
+//                  cube->make_current(); // causes context to be created
+  //                cube2->context(cube->context()); // share the contexts
+
+
 	        engine.initWindow(500, 500);
         	engine.placeCamera (
                                                 0, 0, 8.,
@@ -25,6 +29,7 @@ GLTab::GLTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(typ
                                                 0., 1., 0.
                                                 );
 		main->start();
+		display->show();
         }
 
 }

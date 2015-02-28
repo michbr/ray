@@ -15,7 +15,7 @@ set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
 set(DRACO_COMMON_DIR "${UTILITIES_DIR}/draco/common")
-set(DRACO_GLRENDERER_DIR "${UTILITIES_DIR}/draco/GLRenderer")
+set(DRACO_GLRENDERER_DIR "${UTILITIES_DIR}/draco/NewGLRenderer")
 #set(DRACO_GLRENDERER_DIR "${UTILITIES_DIR}/draco/worldModel")
 #set(DRACO_GLRENDERER_DIR "${UTILITIES_DIR}/draco/DragonMath")
 
@@ -74,7 +74,7 @@ endif(OPENGL_FOUND)
 
 set(LIBS ${LIBS} DracoCommon)
 
-set(LIBS ${LIBS} GLRenderer)
+set(LIBS ${LIBS} NewGLRenderer)
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})

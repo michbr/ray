@@ -158,8 +158,8 @@ ModelViewerTab::ModelViewerTab(ScaleType *type, Fl_Group *pane, const string &st
 		cube2 = new cube_box(c2, 375,50,344,344, 0);
 		makeform(pane);
 
-		cube->show();
-		cube2->show();
+//		cube->show();
+//		cube2->show();
 		#if 0
 		  // This demonstrates how to manipulate OpenGL contexts.
 		  // In this case the same context is used by multiple windows (I'm not
