@@ -7,6 +7,8 @@ project (Draco-Utilities)
 
 set(UTILITIES_DIR ${PROJECT_SOURCE_DIR})
 
+add_subdirectory("DevIL")
+
 add_subdirectory("draco/AssetLoader")
 add_subdirectory("draco/DragonMath")
 add_subdirectory("draco/GLRenderer")
