@@ -19,6 +19,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
+set(DEVIL_DIR "${UTILITIES_DIR}/DevIL")
+
 add_definitions(-DDLL_EXPORT_DRACO_WORLD_MODEL)
 
 
@@ -34,23 +36,18 @@ file(GLOB SOURCES
 ##  compiler directives  ##
 if (UNIX)
 	set (CUSTOM_FLAGS "-Wfatal-errors -Wextra -pedantic -O3")
-	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 	
 endif(UNIX)
-
-
-
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 ##  dependencies  ##
 include_directories(${UTILITIES_DIR}/draco/DragonMath/)
 include_directories(${UTILITIES_DIR}/draco/TextureLoader/)
+include_directories(${DEVIL_DIR}/include)
 
 find_package(OpenGL REQUIRED)
 
 set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY} DragonMath TextureLoader)
-
-
-
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})

@@ -14,7 +14,7 @@ class Face {
 		//std::vector<int> vertex_numbers;
 		//std::vector<int> texVertNumbers;		
 
-		std::vector<Vector3<double>> vertices;
+		std::vector<Vector3<double> > vertices;
 		//std::vector<Vertex> textureVertices;
 
 		std::unordered_map<int, Vector3<double> *> textureVertices;
