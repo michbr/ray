@@ -39,10 +39,25 @@ include_directories(${UTILITIES_DIR}/draco/)
 include_directories(${PROJECT_SOURCE_DIR})
 
 find_package(OpenGL REQUIRED)
+message("--------------------------------")
+message("--------------------------------")
+message("--------------------------------")
+message(---------------------------------)
+message(before)
+if (NOT OPENGL_FOUND)
+	message(ERROR " OPENGL not found!!")
+endif (NOT OPENGL_FOUND)
+
 if (OPENGL_FOUND)
 	include_directories(${OPENGL_INCLUDE_DIR})
-	set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY})
+	message(OpenGL found, linking...)
 endif(OPENGL_FOUND)
+message(after)
+message(--------------------------------)
+
+include_directories(${OPENGL_INCLUDE_DIR})
+set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
+set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY})
 set(LIBS ${LIBS} DragonMath WorldModel)
 
 ##  deliverables  ##

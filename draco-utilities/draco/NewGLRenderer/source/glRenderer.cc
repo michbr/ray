@@ -1,5 +1,5 @@
 #include "glRenderer.h"
-#include "loadShader.h"
+//#include "loadShader.h"
 
 #define GL_GLEXT_PROTOTYPES
 

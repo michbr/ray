@@ -46,5 +46,4 @@ message("${CMAKE_SOURCE_DIR}/include")
 include_directories("${CMAKE_SOURCE_DIR}/include")
 include_directories("${CMAKE_SOURCE_DIR}/include/IL")
 
-
 EXPORT_LIBRARY_DEPENDENCIES(CMakeDepends.txt)
