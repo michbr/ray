@@ -39,5 +39,7 @@ include_directories(${UTILITIES_DIR}/draco/)
 # TODO improve this...
 include_directories(${UTILITIES_DIR}/assimp-3.1.1)
 
+set(LIBS ${LIBS} assimp WorldModel DragonMath TextureLoader)
+
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
 target_link_libraries(${LIBRARY_NAME} ${LIBS})
