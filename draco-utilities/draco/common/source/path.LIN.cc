@@ -76,5 +76,12 @@ string Path::fileType() const {
 	return "";
 }
 
+// TODO: buffer overflow possible?
+Path &Path::expand() {
+	char buffer[PATH_MAX];
+	realpath(c_str(), buffer);
+	return Path(buffer);
+}
+
 
 #endif // __linux__

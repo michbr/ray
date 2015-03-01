@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include <dirent.h>
 #include <limits.h>
+#include <common/path.h>
 
 using namespace std;
 
@@ -270,12 +271,8 @@ void AssetLoader::loadAsset ( string filename, WorldModel & out) {
 			//return false;
 		}
 		// Now we can access the file's contents.
-		//SceneObject s;
-		char * outstring = new char[PATH_MAX];
-		realpath(filename.c_str(), outstring);
-		//	cout << "." << outstring << "." << endl;	
 	
-		folder = string(outstring);
+		folder = Path(filename).expand();
 		cout << folder << endl;
 		traverseScene(*(currentScene->mRootNode), *head,  currentScene->mRootNode->mTransformation);
 		out.addObject(head);

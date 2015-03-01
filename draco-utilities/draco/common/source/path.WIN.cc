@@ -78,12 +78,12 @@ Path &Path::expand() {
 	size_t bufSize = 512;
 	char buffer[bufSize];
 	PathCanonicalize(buffer, native().c_str());
-	cout << buffer << endl;
+//	cout << buffer << endl;
 	char buf2[bufSize];
 	ExpandEnvironmentStrings(buffer, buf2, bufSize);
-	cout << buf2 << endl;
+//	cout << buf2 << endl;
 	GetLongPathNameA(buf2, buf2, bufSize);
-	cout << buf2 << endl;
+//	cout << buf2 << endl;
 	return *this;
 }
 
