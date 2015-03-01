@@ -1,5 +1,5 @@
 
-#include "ray.h"
+#include "dragonmath.h"
 
 
 template<class T> Ray3<T>::Ray3(const Vector3<T> &position, const Vector3<T> &direction): position(position), direction(direction) {}

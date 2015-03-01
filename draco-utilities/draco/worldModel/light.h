@@ -1,7 +1,7 @@
 #ifndef LIGHT_OBJECT_H
 #define LIGHT_OBJECT_H
 
-#include "dragonmath.h"
+#include "DragonMath/dragonmath.h"
 #include "face.h"
 
 #include <vector>

@@ -1,7 +1,7 @@
 #ifndef ASSET_LOADER_H
 #define ASSET_LOADER_H
 
-#include "worldModel.h"
+#include "worldModel/worldModel.h"
 
 #include <string>
 

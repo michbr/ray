@@ -1,11 +1,11 @@
 #ifndef RENDERER_OBJ_H
 #define RENDERER_OBJ_H
 
-#include "dragonmath.h"
+#include "DragonMath/dragonmath.h"
 #include "wireframe.h"
-#include "face.h"
-#include "light.h"
-#include "camera.h"
+#include "worldModel/face.h"
+#include "worldModel/light.h"
+#include "worldModel/camera.h"
 
 #include <vector>
 

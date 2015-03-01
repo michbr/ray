@@ -1,5 +1,6 @@
-#if defined(_WIN32)
-
+//#if defined(_WIN32)
+//TODO make this die?
+#ifdef NEVER_DEFINED_ANYWHERE_EVER
 #define WIN32_LEAN_AND_MEAN 
 #include "glew.h"
 #include "wglew.h"

@@ -1,8 +1,8 @@
 #ifndef MATERIAL_OBJECT_H
 #define MATERIAL_OBJECT_H
 
-#include "dragonmath.h"
-#include "texture.h"
+#include "DragonMath/dragonmath.h"
+#include "TextureLoader/texture.h"
 
 #include <fstream>
 #include <vector>

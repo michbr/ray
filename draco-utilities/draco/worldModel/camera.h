@@ -1,7 +1,7 @@
 #ifndef GL_CAMERA_OBJ_H
 #define GL_CAMERA_OBJ_H
 
-#include "dragonmath.h"
+#include "DragonMath/dragonmath.h"
 
 class Camera {
     private:
@@ -39,7 +39,8 @@ class Camera {
 	Vector3<double> getVerticalAxis();
 
 	friend std::ostream & operator<<(std::ostream& os, const Camera & a) {
-		os << a.pos << "-" << a.look << "-" << a.up;
+		//TODO fix this!!!
+//		os << a.pos << "-" << a.look << "-" << a.up;
 		return os;
 	}
 };

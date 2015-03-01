@@ -1,12 +1,13 @@
 #include "loader.h"
-#include "face.h"
+#include "worldModel/face.h"
 
-#include <assimp/Importer.hpp> // C++ importer interface
-#include <assimp/scene.h> // Output data structure
-#include <assimp/postprocess.h> // Post processing flags
+#include <include/assimp/Importer.hpp> // C++ importer interface
+#include <include/assimp/scene.h> // Output data structure
+#include <include/assimp/postprocess.h> // Post processing flags
 #include <iostream>
 #include <unistd.h>
 #include <dirent.h>
+#include <limits.h>
 
 using namespace std;
 

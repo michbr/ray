@@ -35,10 +35,9 @@ set(CMAKE_CXX_FLAGS "-std=c++11 ${CMAKE_CXX_FLAGS}")
 
 
 ##  dependencies  ##
-include_directories(${UTILITIES_DIR}/draco/worldModel/)
-include_directories(${UTILITIES_DIR}/draco/TextureLoader/)
-include_directories(${UTILITIES_DIR}/draco/DragonMath/)
+include_directories(${UTILITIES_DIR}/draco/)
+# TODO improve this...
+include_directories(${UTILITIES_DIR}/assimp-3.1.1)
 
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
-target_link_libraries (AssetLoader assimp)
 target_link_libraries(${LIBRARY_NAME} ${LIBS})

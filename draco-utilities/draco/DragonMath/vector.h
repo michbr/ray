@@ -1,13 +1,15 @@
 #ifndef DRAGON_MATH_VECTOR
 #define DRAGON_MATH_VECTOR
 
+#include "EXPORT.h"
+
 #include <iostream>
 
 template<typename T>
 class Vector4;
 
 template<typename T>
-class Vector3;
+class DRACO_DRAGON_MATH_API Vector3;
 
 template<typename T>
 class Vector2 {
@@ -55,16 +57,16 @@ public:
 };
 
 template<typename T>
-Vector2<T> operator*(const Vector2<T> &vec, T scalar);
+DRACO_DRAGON_MATH_API Vector2<T> operator*(const Vector2<T> &vec, T scalar);
 
 template<typename T>
-Vector2<T> operator*(T scalar, const Vector2<T> &vec);
+DRACO_DRAGON_MATH_API Vector2<T> operator*(T scalar, const Vector2<T> &vec);
 
 template<typename T>
-std::ostream &operator<<(std::ostream &out, const Vector2<T> &vec);
+DRACO_DRAGON_MATH_API std::ostream &operator<<(std::ostream &out, const Vector2<T> &vec);
 
 
-template<typename T>
+template<class T>
 class Vector3 {
 public:
 
@@ -110,17 +112,20 @@ public:
 	bool operator!=(const Vector3<T> &other) const;
 	T &operator[](int index);
 	T operator[](int index) const;
+	// TODO fix this - may involve deleting this line
+	//friend std::ostream &operator<<(std::ostream &out, const Vector3<T> &vec);
+
 };
 
 template<typename T>
-Vector3<T> operator*(const Vector3<T> &vec, T scalar);
+DRACO_DRAGON_MATH_API Vector3<T> operator*(const Vector3<T> &vec, T scalar);
 
 template<typename T>
-Vector3<T> operator*(T scalar, const Vector3<T> &vec);
+DRACO_DRAGON_MATH_API Vector3<T> operator*(T scalar, const Vector3<T> &vec);
 
-template<typename T>
-std::ostream &operator<<(std::ostream &out, const Vector3<T> &vec);
-
+//TODO BRING THIS BACK!!
+/*template<typename T>
+std::ostream &operator<<(std::ostream &out, const Vector3<T> &vec);*/
 
 template<typename T>
 class Vector4 {
@@ -171,13 +176,13 @@ public:
 };
 
 template<typename T>
-Vector4<T> operator*(const Vector4<T> &vec, T scalar);
+DRACO_DRAGON_MATH_API Vector4<T> operator*(const Vector4<T> &vec, T scalar);
 
 template<typename T>
-Vector4<T> operator*(T scalar, const Vector4<T> &vec);
+DRACO_DRAGON_MATH_API Vector4<T> operator*(T scalar, const Vector4<T> &vec);
 
 template<typename T>
-std::ostream &operator<<(std::ostream &out, const Vector4<T> &vec);
+DRACO_DRAGON_MATH_API std::ostream &operator<<(std::ostream &out, const Vector4<T> &vec);
 
 
 #endif

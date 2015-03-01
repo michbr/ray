@@ -2,7 +2,7 @@
 #define RAY_OBJECT_H
 
 #include "vector.h"
-#include "dragonmath.h"
+#include "EXPORT.h"
 
 /***********
 Proposed changes:
@@ -15,8 +15,8 @@ class Ray3 {
 public:
 	Vector3<T> position, direction;
 
-	Ray3(const Vector3<T> &position, const Vector3<T> &direction);
-	Ray3(const Ray3<T> &source);
+	DRACO_DRAGON_MATH_API Ray3(const Vector3<T> &position, const Vector3<T> &direction);
+	DRACO_DRAGON_MATH_API Ray3(const Ray3<T> &source);
 };
 
 #endif

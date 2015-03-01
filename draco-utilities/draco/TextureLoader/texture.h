@@ -1,9 +1,9 @@
 #ifndef TEXTURE_OBJ_H
 #define TEXTURE_OBJ_H
 
-#include "IL/il.h"
-
 #include <vector>
+//TODO fix this
+#include "../../DevIL/include/IL/il.h"
 
 class TextureLoader;
 

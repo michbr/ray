@@ -1,7 +1,7 @@
 #ifndef WORLD_MODEL_OBJ_H
 #define WORLD_MODEL_OBJ_H
 
-#include "texture.h"
+#include "TextureLoader/texture.h"
 
 #include "sceneObject.h"
 

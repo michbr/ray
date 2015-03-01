@@ -41,8 +41,7 @@ endif(UNIX)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 ##  dependencies  ##
-include_directories(${UTILITIES_DIR}/draco/DragonMath/)
-include_directories(${UTILITIES_DIR}/draco/TextureLoader/)
+include_directories(${UTILITIES_DIR}/draco/)
 include_directories(${DEVIL_DIR}/include)
 
 find_package(OpenGL REQUIRED)

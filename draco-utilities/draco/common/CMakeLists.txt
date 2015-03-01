@@ -55,6 +55,7 @@ include_directories(
 	${FLTK_DIR}
 	${PROJECT_SOURCE_DIR}
 	${DRACO_SOURCE_DIR}
+	${UTILITIES_DIR}/draco/
 )
 
 if (UNIX)
@@ -66,7 +67,7 @@ else (UNIX)
     set(LIBS ${LIBS} Shlwapi)
 	add_definitions(-DFL_DLL)
 endif (UNIX)
-set(LIBS ${LIBS} ${FLTK_LIBRARIES})
+set(LIBS ${LIBS} ${FLTK_LIBRARIES} DragonMath)
 
 find_library(FLTK_GL_LIBRARY fltk_gl
 PATHS ${FLTK_DIR})

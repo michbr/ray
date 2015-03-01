@@ -1,7 +1,6 @@
 //#include <il>
 #include "textureLoader.h"
 
-#include "IL/il.h"
 
 #include <iostream>
 #include <cstdlib>

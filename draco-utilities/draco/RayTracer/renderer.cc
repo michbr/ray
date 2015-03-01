@@ -1,6 +1,6 @@
 #include "renderer.h"
 
-#include "dragonmath.h"
+#include "DragonMath/dragonmath.h"
 #include <cmath>
 
 //#include <iostream>

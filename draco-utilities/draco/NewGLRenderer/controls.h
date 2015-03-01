@@ -1,7 +1,7 @@
 #ifndef GL_CONTROL_OBJ_H
 #define GL_CONTROL_OBJ_H
 
-#include "camera.h"
+#include "worldModel/camera.h"
 #include <GL/gl.h>
 
 class DragonEngine;

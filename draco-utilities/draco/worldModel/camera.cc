@@ -156,7 +156,8 @@ void Camera::rotate(float delta, int axis) {
 	//look[2 - (axis + 1)] = lookDir[2 - (axis + 1)] + pos[2 - (axis + 1)];
 	Vector3<float> test = look - posf;
 	test.normalize();
-	cout << test << endl;
+	//TODO removed because the operator<< implementation doesn't work
+	//cout << test << endl;
 }
 
 /*

@@ -19,7 +19,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
 set(DEVIL_DIR "${UTILITIES_DIR}/DevIL")
 
-add_definitions(-DDLL_EXPORT_DRACO_WORLD_MODEL)
+add_definitions(-DDLL_EXPORT_DRACO_TEXTURE_LOADER)
 
 
 
@@ -28,8 +28,6 @@ file(GLOB SOURCES
         ${PROJECT_SOURCE_DIR}/*.cc
         ${PROJECT_SOURCE_DIR}/*.h
 )
-
-
 
 ##  UNIX directives  ##
 if (UNIX)
@@ -42,11 +40,9 @@ endif(UNIX)
 
 ##  dependencies  ##
 include_directories(
-	${DEVIL_DIR}/include
+	${UTILITIES_DIR}
 )
-message(------------------)
-message( ${DEVIL_DIR}/lib)
-message(------------------)
+
 set(LIBS ${LIBS} DevIL)
 #if (UNIX)
 	#set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${PROJECT_SOURCE_DIR}/cmake_modules/")

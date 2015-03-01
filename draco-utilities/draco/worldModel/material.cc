@@ -1,7 +1,7 @@
 
 #include "material.h"
 
-#include "textureLoader.h"
+#include "TextureLoader/textureLoader.h"
 
 #include <sstream>
 #include <iostream>

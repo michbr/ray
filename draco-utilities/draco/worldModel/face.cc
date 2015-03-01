@@ -336,7 +336,8 @@ ostream & Face::operator<<(ostream & out) {
 std::ostream & operator<<(std::ostream & out, const Face & face) {
 	out << "f ";
 	for (size_t i = 0; i < face.vertices.size(); i++) {
-		out << (face.vertices[i]) << " ";
+		// TODO fix operator<< for Vector3
+		//out << (face.vertices[i]) << " ";
 	}
 	return out << "\n";
 }

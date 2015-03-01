@@ -2,7 +2,7 @@
 #define FACE_OBJECT_H
 
 #include "material.h"
-#include "dragonmath.h"
+#include "DragonMath/dragonmath.h"
 
 #include <string>
 #include <vector>

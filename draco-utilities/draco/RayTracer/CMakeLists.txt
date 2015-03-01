@@ -15,7 +15,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
-add_definitions(-DDLL_EXPORT_DRACO_RayTracer)
+add_definitions(-DDLL_EXPORT_DRACO_RAY_TRACER)
 
 
 ##  source files  ##
@@ -34,9 +34,8 @@ endif(UNIX)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 ##  dependencies  ##
-include_directories(${UTILITIES_DIR}/draco/DragonMath/)
-include_directories(${UTILITIES_DIR}/draco/worldModel/)
-include_directories(${UTILITIES_DIR}/draco/TextureLoader/)
+include_directories(${UTILITIES_DIR}/draco/)
+include_directories(${UTILITIES_DIR})
 
 set(LIBS ${LIBS} DragonMath WorldModel TextureLoader)
 
