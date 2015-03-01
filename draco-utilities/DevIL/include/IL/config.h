@@ -72,8 +72,10 @@
 #define ILUT_USE_DIRECTX9
 #define ILUT_USE_DIRECTX10
 #define ILUT_USE_OPENGL
-#define ILUT_USE_SDL
-#define ILUT_USE_WIN32
+#if (defined(_WIN32) || defined(_WIN64))
+	#define ILUT_USE_SDL
+	#define ILUT_USE_WIN32
+#endif
 
 
 #endif /* __CONFIG_H__ */

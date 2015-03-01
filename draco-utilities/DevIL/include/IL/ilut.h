@@ -188,15 +188,15 @@
 //	#include <SDL.h>
 #endif
 
-#ifdef ILUT_USE_DIRECTX8
+#if defined(ILUT_USE_DIRECTX8) && defined(ILUT_USE_WIN32)
 	#include <d3d8.h>
 #endif//ILUT_USE_DIRECTX9
 
-#ifdef ILUT_USE_DIRECTX9
+#if defined(ILUT_USE_DIRECTX9) && defined(ILUT_USE_WIN32)
 	#include <d3d9.h>
 #endif//ILUT_USE_DIRECTX9
 
-#ifdef ILUT_USE_DIRECTX10
+#if defined(ILUT_USE_DIRECTX10) && defined(ILUT_USE_WIN32)
 	#pragma warning(push)
 	#pragma warning(disable : 4201)  // Disables 'nonstandard extension used : nameless struct/union' warning
 	#include <rpcsal.h>
@@ -204,6 +204,14 @@
 	#include <d3d10.h>
 	#pragma warning(pop)
 #endif//ILUT_USE_DIRECTX10
+
+
+#if defined(__linux) || defined(__unix)
+	#define ILUT_USE_X11
+	#undef ILUT_USE_DIRECTX8
+	#undef ILUT_USE_DIRECTX9
+	#undef ILUT_USE_DIRECTX10
+#endif
 
 #ifdef ILUT_USE_X11
 	#include <X11/Xlib.h>
