@@ -7,12 +7,8 @@
 #include "ray.h"
 #include "vector.h"
 
-//#include <GL/gl.h>
-
 template class Matrix<double>;
 template class Matrix<float>;
-//template class Vector3<GLfloat>;
-//template class Vector3<GLdouble>;
 template class Vector3<double>;
 template class Vector3<float>;
 template class Vector3<long>;
