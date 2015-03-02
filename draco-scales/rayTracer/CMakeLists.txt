@@ -17,11 +17,12 @@ set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
 set(WORLD_MODEL_DIR "${UTILITIES_DIR}/draco/worldModel")
 set(TEXTURE_LOADER_DIR "${UTILITIES_DIR}/draco/TextureLoader")
-set(DRAGONMATH_DIR "${UTILITIES_DIR}/draco/DragonMath")
+set(DRAGONMATH_DIR "${UTILITIES_DIR}/draco")
 set(ASSET_LOADER_DIR "${UTILITIES_DIR}/draco/AssetLoader")
 set(RAY_TRACER_DIR "${UTILITIES_DIR}/draco/RayTracer")
 set(IMAGE_DIR "${UTILITIES_DIR}/draco/Image")
 set(DRACO_COMMON_DIR "${UTILITIES_DIR}/draco/common")
+set(FLTK_DIR "${UTILITIES_DIR}/fltk-1.3.3")
 
 ##  source files  ##
 

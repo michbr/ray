@@ -22,7 +22,7 @@
 
 
 
-const char *UTILITY_LIB_PATH = "\\..\\utilities\\lib";
+const char *UTILITY_LIB_PATH = "\\..\\utilities";
 
 const unsigned int TAB_BUTTON_HEIGHT = 25;
 const unsigned int DEFAULT_WINDOW_WIDTH = 800;
