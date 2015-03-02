@@ -2,9 +2,9 @@
 #define GLRENDERER_TAB_OBJ
 
 #include "scale.h"
-#include "dragon.h"
-#include "glPane.h"
-#include "thread.h"
+#include "NewGLRenderer/dragon.h"
+#include "common/glPane.h"
+#include "common/thread.h"
 
 #include "FL/Fl_Group.H"
 

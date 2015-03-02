@@ -1,7 +1,7 @@
 #ifndef GL_DRAGON_OBJ_H
 #define GL_DRAGON_OBJ_H
 
-#include "camera.h"
+#include "worldModel/camera.h"
 #include "window.h"
 #include "glRenderer.h"
 

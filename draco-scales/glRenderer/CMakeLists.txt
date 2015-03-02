@@ -14,15 +14,6 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
-set(DRACO_COMMON_DIR "${UTILITIES_DIR}/draco/common")
-set(DRACO_GLRENDERER_DIR "${UTILITIES_DIR}/draco/NewGLRenderer")
-#set(DRACO_GLRENDERER_DIR "${UTILITIES_DIR}/draco/worldModel")
-#set(DRACO_GLRENDERER_DIR "${UTILITIES_DIR}/draco/DragonMath")
-
-include_directories(${UTILITIES_DIR}/draco/worldModel/)
-include_directories(${UTILITIES_DIR}/draco/DragonMath/)
-
-
 ##  source files  ##
 file(GLOB SOURCES
 	"${PROJECT_SOURCE_DIR}/*.cc"
@@ -43,9 +34,8 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 
 ##  dependencies  ##
+include_directories(${UTILITIES_DIR}/draco/)
 include_directories(
-	${DRACO_COMMON_DIR}
-	${DRACO_GLRENDERER_DIR}
 	${FLTK_DIR}
 	${DRACO_SOURCE_DIR}
 )

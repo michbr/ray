@@ -2,7 +2,7 @@
 #define GL_RENDERER_OBJ_H
 
 #include "window.h"
-#include "worldModel\camera.h"
+#include "worldModel/camera.h"
 
 class GLRenderer {
 	private:
