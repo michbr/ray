@@ -80,7 +80,7 @@ string Path::fileType() const {
 Path &Path::expand() {
 	char buffer[PATH_MAX];
 	realpath(c_str(), buffer);
-	return Path(buffer);
+	return *this = buffer;
 }
 
 
