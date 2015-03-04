@@ -159,10 +159,11 @@ template <typename T> Vector3<T> Vector3<T>::operator*(const Vector3<T> &other) 
 	return Vector3<T>(x *other.x, y *other.y, z *other.z);
 }
 template <typename T> Vector3<T> Vector3<T>::operator+(const Vector3<T> b) const {
-	return Vector3<T>(x -b.x, y -b.y, z -b.z);
+	return Vector3<T>(x +b.x, y +b.y, z +b.z);
+
 }
 template <typename T> Vector3<T> Vector3<T>::operator-(const Vector3<T> b) const {
-	return Vector3<T>(x +b.x, y +b.y, z +b.z);
+	return Vector3<T>(x -b.x, y -b.y, z -b.z);
 }
 template <typename T> Vector3<T> Vector3<T>::operator-() const {
 	return Vector3<T>(-x, -y, -z);
