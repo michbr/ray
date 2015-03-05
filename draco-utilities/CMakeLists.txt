@@ -7,6 +7,7 @@ project (Draco-Utilities)
 
 set(UTILITIES_DIR ${PROJECT_SOURCE_DIR})
 
+add_subdirectory("glew")
 add_subdirectory("DevIL")
 add_subdirectory("assimp-3.1.1")
 
