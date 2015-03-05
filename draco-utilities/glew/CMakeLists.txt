@@ -34,40 +34,12 @@ add_definitions (-DGLEW_BUILD -DGLEW_NO_GLU)
 
 include_directories (${GLEW_DIR}/include)
 
-add_library (glew SHARED ${GLEW_DIR}/src/glew.c)
-add_library (glew_s STATIC ${GLEW_DIR}/src/glew.c)
+add_library (glew SHARED ${GLEW_DIR}/auto/src/glew.rc)
+SET_TARGET_PROPERTIES(glew PROPERTIES LINKER_LANGUAGE C)
 target_link_libraries (glew ${GLEW_LIBRARIES})
-target_link_libraries (glew_s ${GLEW_LIBRARIES})
 set_target_properties (glew PROPERTIES OUTPUT_NAME ${GLEW_LIB_NAME})
-set_target_properties (glew_s PROPERTIES OUTPUT_NAME ${GLEW_LIB_NAME})
-set_target_properties (glew PROPERTIES PREFIX "${DLL_PREFIX}")
-set_target_properties (glew_s PROPERTIES PREFIX lib)
+#set_target_properties (glew PROPERTIES PREFIX "${DLL_PREFIX}")
 
-add_library(glewmx SHARED ${GLEW_DIR}/src/glew.c )
-add_library(glewmx_s STATIC ${GLEW_DIR}/src/glew.c )
-target_link_libraries (glewmx ${GLEW_LIBRARIES})
-target_link_libraries (glewmx_s ${GLEW_LIBRARIES})
-set_target_properties (glewmx PROPERTIES COMPILE_FLAGS "-DGLEW_MX" OUTPUT_NAME ${GLEW_LIB_NAME}mx)
-set_target_properties (glewmx_s PROPERTIES COMPILE_FLAGS "-DGLEW_MX" OUTPUT_NAME ${GLEW_LIB_NAME}mx)
-set_target_properties (glewmx PROPERTIES PREFIX "${DLL_PREFIX}")
-set_target_properties (glewmx_s PROPERTIES PREFIX lib)
-
-install ( TARGETS glew glew_s glewmx glewmx_s
-          RUNTIME DESTINATION bin
-          LIBRARY DESTINATION lib${LIB_SUFFIX}
-          ARCHIVE DESTINATION lib${LIB_SUFFIX}
-)
-
-if (BUILD_UTILS)
-  add_executable (glewinfo ${GLEW_DIR}/src/glewinfo.c)
-  target_link_libraries (glewinfo glew)
-
-  add_executable (visualinfo ${GLEW_DIR}/src/visualinfo.c)
-  target_link_libraries (visualinfo glew)
-
-  install ( TARGETS glewinfo visualinfo
-            DESTINATION bin)
-endif ()
 
 set (prefix ${CMAKE_INSTALL_PREFIX})
 set (exec_prefix \${prefix})
