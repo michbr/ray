@@ -31,12 +31,7 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIB_DIR})
 
 set (GLEW_DIR ${CMAKE_CURRENT_LIST_DIR}/glew)
 
-if (WIN32)
-  set (GLEW_LIB_NAME glew32)
-else ()
-  set (GLEW_LIB_NAME GLEW)
-  set (DLL_PREFIX lib)
-endif ()
+set (GLEW_LIB_NAME glew)
 
 find_package (OpenGL REQUIRED)
 set (GLEW_LIBRARIES ${OPENGL_LIBRARIES})
