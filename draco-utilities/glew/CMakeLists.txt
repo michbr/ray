@@ -61,7 +61,7 @@ set (version ${GLEW_VERSION})
 set (libname ${GLEW_LIB_NAME})
 set (cflags)
 set (requireslib glu)
-configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glew.pc @ONLY)  
+configure_file (${GLEW_DIR}/glew.pc.in ${GLEW_DIR}/glew.pc @ONLY)
 
 #install(FILES ${GLEW_DIR}/glew.pc ${GLEW_DIR}/glewmx.pc
 #        DESTINATION lib/pkgconfig
