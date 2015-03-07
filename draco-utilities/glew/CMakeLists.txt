@@ -40,7 +40,7 @@ add_definitions (-DGLEW_BUILD -DGLEW_NO_GLU)
 
 include_directories (${GLEW_DIR}/include)
 
-add_library (glew SHARED ${GLEW_DIR}/auto/src/glew.rc)
+add_library (glew SHARED ${GLEW_DIR}/src/glew.c)
 SET_TARGET_PROPERTIES(glew PROPERTIES LINKER_LANGUAGE C)
 target_link_libraries (glew ${GLEW_LIBRARIES})
 set_target_properties (glew PROPERTIES OUTPUT_NAME ${GLEW_LIB_NAME})
