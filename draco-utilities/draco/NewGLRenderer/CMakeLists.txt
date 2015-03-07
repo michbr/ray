@@ -19,6 +19,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
+set(GLEW_DIR "${UTILITIES_DIR}/glew/glew/include")
+
 add_definitions(-DDLL_EXPORT_NEW_GL_RENDERER)
 
 ##  source files  ##
@@ -35,15 +37,11 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 ##  dependencies  ##
 include_directories(${UTILITIES_DIR}/draco/)
+include_directories(${GLEW_DIR})
 
 include_directories(${PROJECT_SOURCE_DIR})
 
 find_package(OpenGL REQUIRED)
-message("--------------------------------")
-message("--------------------------------")
-message("--------------------------------")
-message(---------------------------------)
-message(before)
 if (NOT OPENGL_FOUND)
 	message(ERROR " OPENGL not found!!")
 endif (NOT OPENGL_FOUND)
@@ -52,13 +50,11 @@ if (OPENGL_FOUND)
 	include_directories(${OPENGL_INCLUDE_DIR})
 	message(OpenGL found, linking...)
 endif(OPENGL_FOUND)
-message(after)
-message(--------------------------------)
 
 include_directories(${OPENGL_INCLUDE_DIR})
 set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
 set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY})
-set(LIBS ${LIBS} DragonMath WorldModel)
+set(LIBS ${LIBS} DragonMath WorldModel glew)
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
