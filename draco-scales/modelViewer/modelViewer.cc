@@ -177,6 +177,7 @@ ModelViewerTab::ModelViewerTab(ScaleType *type, Fl_Group *pane, const string &st
 		}
 	}
 }
+
 ModelViewerTab::~ModelViewerTab() {
 	free(pane);
 }

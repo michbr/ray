@@ -63,24 +63,26 @@ GLfloat cube[] = {
 };
 
 // This will identify our vertex buffer
-GLuint vertexbuffer;
+GLuint vertexbuffer = 0;
 
 void GLRenderer::initGL(GameWindow & win) {
 	glLoadIdentity();
 	glViewport(0,0,win.getWidth(),win.getHeight());
-	glEnable(GL_DEPTH_TEST);
-	glFrustum(-1,1,-1,1,2,10000);
-	glTranslatef(0,0,-10);
+	glewInit();
+
+	//glEnable(GL_DEPTH_TEST);
+	//glFrustum(-1,1,-1,1,2,10000);
+	//glTranslatef(0,0,-10);
 //	gl_font(FL_HELVETICA_BOLD, 16 );
 
 
- 
+
 // Generate 1 buffer, put the resulting identifier in vertexbuffer
-glGenBuffers(1, &vertexbuffer);
- 
+	glGenBuffers(1, &vertexbuffer);
+
 // The following commands will talk about our 'vertexbuffer' buffer
 glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
- 
+
 // Give our vertices to OpenGL.
 glBufferData(GL_ARRAY_BUFFER, sizeof(cube), cube, GL_STATIC_DRAW);
 }
@@ -154,7 +156,7 @@ void GLRenderer::render() {
 //	glScalef(float(size),float(size),float(size));
 	drawCube();
 	glPopMatrix();
-	glColor3f(.5, .5, .5);
+	glColor3f(1, .07, .57);
 /*	glDisable(GL_DEPTH_TEST);
 	// 1rst attribute buffer : vertices
 	glEnableVertexAttribArray(0);
