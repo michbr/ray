@@ -103,6 +103,7 @@ class DisplayUpdater : public Runnable {
 public:
 	void run() {
 		while (true) {
+			this_thread::sleep_for(chrono::milliseconds(100));
 			Fl::awake((Fl_Awake_Handler)update, this);
 		}
 	}

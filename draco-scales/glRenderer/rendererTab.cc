@@ -28,15 +28,17 @@ GLTab::GLTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(typ
                                                 0, 0, 0,
                                                 0., 1., 0.
                                                 );
-		main->start();
-		display->show();
+       // display->show();
+        main->start();
         }
 
 }
 
 void GLTab::run() {
 	while(true) {
-		Fl::awake((Fl_Awake_Handler)update, this);
+       this_thread::sleep_for(chrono::milliseconds(1000));
+        Fl::awake((Fl_Awake_Handler)update, this);
+        //this_thread::sleep_for(chrono::milliseconds(100));
 	}
 }
 
