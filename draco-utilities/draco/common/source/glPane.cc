@@ -1,8 +1,14 @@
+
 #include "glPane.h"
 
 #include <FL/Fl_Box.H>
 #include <FL/gl.h>
 
+
+cube_box::cube_box(GLDrawable * toDraw,  int x,int y,int w,int h,const char *l)
+: Fl_Gl_Window(x,y,w,h,l) {
+	drawable = toDraw;
+}
 
 void cube_box::draw() {
 	if (!valid()) {

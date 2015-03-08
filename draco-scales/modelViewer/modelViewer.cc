@@ -1,6 +1,6 @@
 #include "modelViewer.h"
-#include "glPane.h"
-#include "thread.h"
+#include "common/glPane.h"
+#include "common/thread.h"
 
 #include <FL/Fl_File_Chooser.H>
 #include <FL/Fl_Gl_Window.H>
@@ -40,7 +40,7 @@ private:
 	double speed;	
 
 	void drawCube() {
-		// Draw a colored cube 
+		// Draw a colored cube
 		glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
 		glColor3ub(0,0,255);
 		v3f(v0); v3f(v1); v3f(v2); v3f(v3);
