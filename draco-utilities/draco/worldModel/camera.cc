@@ -11,32 +11,30 @@
 
 using namespace std;
 
-Camera::Camera(float x, float y, float z, float vrp_x, float vrp_y, float vrp_z, float upx, float upy, float upz) 
-	: pos(x, y, z), look(vrp_x, vrp_y, vrp_z), up(upx, upy, upz), vpn(0,0,0), fp(0,0,0) {
+Camera::Camera(float x, float y, float z, float vrp_x, float vrp_y, float vrp_z, float upx, float upy, float upz) :
+	position(x, y, z),
+	up(upx, upy, upz),
+	direction((position +Vector3<double>(vrp_x, vrp_y, vrp_z)).normal()) {}
+
+Camera::Camera(string camName, Vector3<double> startPos, Vector3<double> vp_normal, Vector3<double> v_up, double d) :
+	name(camName),
+	position(startPos),
+	direction(vp_normal),
+	up(v_up),
+	near(d) {}
+
+void Camera::LookAt(Vector3<double> target) {
+	direction = (target -position).normal();
 }
 
-Camera::Camera(string camName, Vector3<double> startPos, Vector3<double> vp_normal, Vector3<double> v_up, double d)
-	: name(camName), pos(startPos), vpn(vp_normal), up(v_up), fp(startPos[0] + vp_normal[0]*d, startPos[1] + vp_normal[1]*d, startPos[2] + vp_normal[2]*d), look(0,0,0) {
-	focalLength = d;
-}
-
-void Camera::LookAt(float vrp_x, float vrp_y, float vrp_z) {
-	
-	look[0] = vrp_x;
-	look[1] = vrp_y;
-	look[2] = vrp_z;
-	Look();
-
-}
-
-void Camera::Look() {
+void Camera::Look(Vector3<float> look) {
 	//gluLookAt(pos[0], pos[1], pos[2], look[0], look[1], look[2], up[0], up[1], up[2]);
 	//cout << "here " << *this << endl;
 	//cout << look << endl;
 	Matrix<float> M = Matrix<float>(4, 4);
 	//cout << "pos: " << pos << endl;
-	Vector3<float> posf = Vector3<float>(pos[0], pos[1], pos[2]);
-	Vector3<float> upf =  Vector3<float>(up[0], up[1], up[2]);
+	Vector3<float> posf = Vector3<float>((float)position.x, (float)position.y, (float)position.z);
+	Vector3<float> upf =  Vector3<float>((float)up.x, (float)up.y, (float)up.z);
 
 	Vector3<float> F = look - posf;
 	//cout << "F: " << F << endl;
@@ -77,7 +75,7 @@ void Camera::Look() {
 	//cout << M << endl;
 	//glTranslated(-pos[0], -pos[1], -pos[2]);
 	glMultMatrixf(M.toArray());
-	glTranslated(-pos[0], -pos[1], -pos[2]);
+	glTranslated(-position[0], -position[1], -position[2]);
 }
 
 void Camera::setPerspective(float fovy, float aspect, float zNear, float zFar) {
@@ -126,7 +124,7 @@ void Camera::rotate(float delta, int axis) {
 	//cout << axis << endl;
 	//cout << look << endl;
 	
-	Vector3<float> posf = Vector3<float>(pos[0], pos[1], pos[2]); 
+	Vector3<float> posf = Vector3<float>(position[0], position[1], position[2]);
 	//Vector3<GLfloat> lookDir = look - pos;
 	//lookDir.normalize();
 	int axis2 = 2;
@@ -185,22 +183,18 @@ string Camera::getName() {
 	return name;
 }
 
-const Vector3<double> & Camera::getPos() {
-	return pos;
-}
-
 const Vector3<double> & Camera::getFocalPoint() {
-	return fp;
+	return position +near *direction;
 }
 
 Vector3<double> Camera::getHorizontalAxis() {
-        Vector3<double> n = vpn.normal();
+        Vector3<double> n = direction.normal();
         Vector3<double> u = up.normal().cross(n).normal();
         return u;
 }
 
 Vector3<double> Camera::getVerticalAxis() {
-        Vector3<double> n = vpn.normal();
+        Vector3<double> n = direction.normal();
         Vector3<double> u = up.normal().cross(n).normal();
         Vector3<double> v = n.cross(u).normal();
 
