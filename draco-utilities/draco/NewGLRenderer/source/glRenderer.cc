@@ -1,5 +1,5 @@
 #include "glRenderer.h"
-//#include "loadShader.h"
+#include "loadShader.h"
 
 #include <GL/glew.h>
 #include <GL/gl.h>
@@ -7,6 +7,7 @@
 #include <GL/glext.h>
 
 #include <iostream>
+#include <AssetLoader/loader.h>
 
 using namespace std;
 
@@ -21,8 +22,7 @@ GLfloat		vertices[] =
     1, 1,  1,   -1,  1,  1,    -1,  -1,  1,    1, -1,  1
   };
 
-GLfloat		colors[] =
-  {
+GLfloat		colors[] =  {
     1, 0, 0,   1, 0, 0,   1, 0, 0,   1, 0, 0,
     0, 1, 0,   0, 1, 0,   0, 1, 0,   0, 1, 0,
     0, 0, 1,   0, 0, 1,   0, 0, 1,   0, 0, 1,
@@ -32,47 +32,45 @@ GLfloat		colors[] =
   };
 
 GLRenderer::GLRenderer(GameWindow & win, Camera * camera) {
-	
 	cam = camera;
-	//cout << *camera << endl;
-	//cout << *cam << endl;
 	initialize(win);
-	//window = win;	
 }
+
+GLfloat * triangle;
+GLfloat cube [] = {
+		-1.0f, -1.0f, 0.0f,
+		1.0f, -1.0f, 0.0f,
+		0.0f,  1.0f, 0.0f,
+};
+int vertexCount;
 
 void GLRenderer::initialize(GameWindow & win) {
-	//instance = GLRenderer(win);
+	world = new WorldModel();
+	AssetLoader::loadAsset("../../old/models/cube/", *world);
+	vector<Vector3<double>> vertices = world->getVertices();
+	vertexCount = vertices.size();
+	triangle = new GLfloat[vertexCount*3];
+	for (int i = 0; i < vertexCount; i++) {
+		triangle[3*i] = (float)vertices[i].x;
+		triangle[3*i+1] = (float)vertices[i].y;
+		triangle[3*i+2] = (float)vertices[i].z;
+	}
+
 	initGL(win);
-	//return *cam;
 }
 
-/*float cube[8][3] = {
-	0.0, 0.0, 0.0,
-	1.0, 0.0, 0.0, 
-	1.0, 1.0, 0.0,
-	0.0, 1.0, 0.0,
-	0.0, 0.0, 1.0,
-	1.0, 0.0, 1.0,
-	1.0, 1.0, 1.0,
-	0.0, 1.0, 1.0};*/
-
-GLfloat cube[] = {
-   -1.0f, -1.0f, 0.0f,
-   1.0f, -1.0f, 0.0f,
-   0.0f,  1.0f, 0.0f,
-};
-
-// This will identify our vertex buffer
 GLuint vertexbuffer = 0;
+GLuint programID;
 
 void GLRenderer::initGL(GameWindow & win) {
 	glLoadIdentity();
 	glViewport(0,0,win.getWidth(),win.getHeight());
 	glewInit();
+	//programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
 
-	//glEnable(GL_DEPTH_TEST);
-	//glFrustum(-1,1,-1,1,2,10000);
-	//glTranslatef(0,0,-10);
+	glEnable(GL_DEPTH_TEST);
+	glFrustum(-1,1,-1,1,2,10000);
+	glTranslatef(0,0,-10);
 //	gl_font(FL_HELVETICA_BOLD, 16 );
 
 
@@ -84,7 +82,8 @@ void GLRenderer::initGL(GameWindow & win) {
 glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
 
 // Give our vertices to OpenGL.
-glBufferData(GL_ARRAY_BUFFER, sizeof(cube), cube, GL_STATIC_DRAW);
+glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertexCount*3, triangle, GL_STATIC_DRAW);
+
 }
 
 int                wire = 0;
@@ -118,63 +117,18 @@ void drawCube() {
         );
 
         // Draw the triangle !
-        glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
+        glDrawArrays(GL_TRIANGLES, 0, vertexCount); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
         glDisableVertexAttribArray(0);
-
-	// Draw a colored cube 
-/*	glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-	glColor3ub(0,0,255);
-	v3f(v0); v3f(v1); v3f(v2); v3f(v3);
-	glEnd();
-	glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-	glColor3ub(0,255,255); v3f(v4); v3f(v5); v3f(v6); v3f(v7);
-	glEnd();
-	glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-	glColor3ub(255,0,255); v3f(v0); v3f(v1); v3f(v5); v3f(v4);
-	glEnd();
-	glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-	glColor3ub(255,255,0); v3f(v2); v3f(v3); v3f(v7); v3f(v6);
-	glEnd();
-	glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-	glColor3ub(0,255,0); v3f(v0); v3f(v4); v3f(v7); v3f(v3);
-	glEnd();
-	glBegin(wire ? GL_LINE_LOOP : GL_POLYGON);
-	glColor3ub(255,0,0); v3f(v1); v3f(v2); v3f(v6); v3f(v5);
-	glEnd();*/
 }
 
 
 void GLRenderer::render() {
-//	lasttime = lasttime+speed;
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	//glUseProgram(programID);
+	glColor3f(1, .07, .57);
 	glPushMatrix();
-//	glRotatef(float(lasttime*1.6),0,0,1);
-//	glRotatef(float(lasttime*4.2),1,0,0);
-//	glRotatef(float(lasttime*2.3),0,1,0);
-//	glTranslatef(-1.0, 1.2f, -1.5);
-//	glScalef(float(size),float(size),float(size));
 	drawCube();
 	glPopMatrix();
-	glColor3f(1, .07, .57);
-/*	glDisable(GL_DEPTH_TEST);
-	// 1rst attribute buffer : vertices
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-	glVertexAttribPointer(
-	   0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
-	   3,                  // size
-	   GL_FLOAT,           // type
-	   GL_FALSE,           // normalized?
-	   0,                  // stride
-	   (void*)0            // array buffer offset
-	);
- 
-	// Draw the triangle !
-	glDrawArrays(GL_TRIANGLES, 0, 3); // Starting from vertex 0; 3 vertices total -> 1 triangle
-	 
-	glDisableVertexAttribArray(0);*/
-	//gl_draw(wire ? "Cube: wire" : "Cube: flat", -4.5f, -4.5f );
-//	glEnable(GL_DEPTH_TEST);
 
 }
