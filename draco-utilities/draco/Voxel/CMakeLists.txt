@@ -19,22 +19,31 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
-
 add_definitions(-DDLL_EXPORT_DRACO_VOXEL)
+
 
 ##  source files  ##
 file(GLOB SOURCES
-        ${PROJECT_SOURCE_DIR}/*.cc
-        ${PROJECT_SOURCE_DIR}/*.h)
+	${PROJECT_SOURCE_DIR}/*.cc
+	${PROJECT_SOURCE_DIR}/*.h
+)
+
 
 ##  compiler directives ##
 if (UNIX)
-        set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
-        set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
-
+	set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
+	set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 endif(UNIX)
 
+
 ##  dependencies  ##
+include_directories(
+	${PROJECT_SOURCE_DIR}
+	${UTILITIES_DIR}/draco/
+)
+set(LIBS ${LIBS} DragonMath)
+
+
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
 
