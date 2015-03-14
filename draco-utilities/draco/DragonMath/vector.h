@@ -113,8 +113,8 @@ public:
 	T &operator[](int index);
 	T operator[](int index) const;
 
-	template<T> friend DRACO_DRAGON_MATH_API Vector3<T> operator*(const Vector3<T> &vec, T scalar);
-	template<T> friend DRACO_DRAGON_MATH_API Vector3<T> operator*(T scalar, const Vector3<T> &vec);
+//	template<T> friend DRACO_DRAGON_MATH_API Vector3<T> operator*(const Vector3<T> &vec, T scalar);
+//	template<T> friend DRACO_DRAGON_MATH_API Vector3<T> operator*(T scalar, const Vector3<T> &vec);
 };
 
 #ifdef DLL_EXPORT_DRACO_DRAGON_MATH
