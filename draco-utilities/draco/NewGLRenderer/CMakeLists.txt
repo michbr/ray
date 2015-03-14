@@ -54,7 +54,7 @@ endif(OPENGL_FOUND)
 include_directories(${OPENGL_INCLUDE_DIR})
 set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
 set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY})
-set(LIBS ${LIBS} DragonMath WorldModel glew)
+set(LIBS ${LIBS} DragonMath WorldModel AssetLoader glew)
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
