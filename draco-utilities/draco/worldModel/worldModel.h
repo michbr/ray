@@ -23,6 +23,8 @@ public:
 	void addObject(SceneObject *);//std::string filename);
 	std::vector<Face *> & getFaces();
 	std::vector<Light *> getLights();
+
+	std::vector<Vector3<double>> getVertices();
 };
 
 #endif

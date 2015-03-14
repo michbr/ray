@@ -43,6 +43,17 @@ vector<Face *> & WorldModel::getFaces() {
 	return assets[0]->getFaces();
 }
 
+vector<Vector3<double>> WorldModel::getVertices() {
+	vector<Vector3<double>> result;
+	for (int i = 0; i < assets[0]->getFaces().size(); i++) {
+		vector<Vector3<double>> vertices = assets[0]->getFaces()[i]->getVertices();
+		for (int j = 0; j < vertices.size(); j++) {
+			result.push_back(vertices[j]);
+		}
+	}
+	return result;
+}
+
 /*vector<Light *> WorldModel::getLights() {
 	return assets[0].getFaces();
 }*/
