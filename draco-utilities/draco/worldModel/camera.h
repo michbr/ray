@@ -9,7 +9,7 @@ public:
 	// members
 	std::string name;
 	Vector3<double> position, direction, up;
-	double near, far;
+	double nearPlane, far;
 
 	Camera(
 		float start_x, float start_y, float start_z,
@@ -23,11 +23,11 @@ public:
 
 	void LookAt(Vector3<double> target);
 	void Look(Vector3<float> look);
-	void rotate(float angle, int axis);
-	std::string getName();
-	const Vector3<double> &getFocalPoint();
-	Vector3<double> getHorizontalAxis();
-	Vector3<double> getVerticalAxis();
+	void rotate(float angle, int axis, Vector3<float> look);
+	std::string getName() const;
+	Vector3<double> getFocalPoint() const;
+	Vector3<double> getHorizontalAxis() const;
+	Vector3<double> getVerticalAxis() const;
 	friend std::ostream &operator<<(std::ostream &os, const Camera &a) {
 		//TODO fix this!!!
 //		os << a.pos << "-" << a.look << "-" << a.up;

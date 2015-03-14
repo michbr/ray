@@ -596,6 +596,8 @@ void Renderer::prepareRaycast(const vector<Face *> & faces, const vector<Light *
 	Vector3<double> u = cam->getHorizontalAxis();
 	Vector3<double> v = cam->getVerticalAxis();
 
+	cout << "HEY!!!! " << u << endl;
+
 	double min_y = frame->get_miny();
 	double min_x = frame->get_minx();
 
