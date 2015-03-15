@@ -113,16 +113,35 @@ public:
 	T &operator[](int index);
 	T operator[](int index) const;
 
+//	template<T> friend DRACO_DRAGON_MATH_API Vector3<T> operator*(const Vector3<T> &vec, T scalar);
+//	template<T> friend DRACO_DRAGON_MATH_API Vector3<T> operator*(T scalar, const Vector3<T> &vec);
 };
 
-template<typename T>
-DRACO_DRAGON_MATH_API Vector3<T> operator*(const Vector3<T> &vec, T scalar);
+#ifdef DLL_EXPORT_DRACO_DRAGON_MATH
+	template<typename T>
+	Vector3<T> operator*(const Vector3<T> &vec, T scalar) {
+		return Vector3<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar);
+	}
 
-template<typename T>
-DRACO_DRAGON_MATH_API Vector3<T> operator*(T scalar, const Vector3<T> &vec);
+	template<typename T>
+	Vector3<T> operator*(T scalar, const Vector3<T> &vec) {
+		return Vector3<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar);
+	}
 
-template<typename T>
-DRACO_DRAGON_MATH_API std::ostream &operator<<(std::ostream &out, const Vector3<T> &vec);
+	template<typename T>
+	std::ostream &operator<<(std::ostream &out, const Vector3<T> &vec) {
+		return out << '(' << vec.x << ", " << vec.y << ", " << vec.z << ")";
+	}
+#else
+	template<typename T>
+	DRACO_DRAGON_MATH_API Vector3<T> operator*(const Vector3<T> &vec, T scalar);
+
+	template<typename T>
+	DRACO_DRAGON_MATH_API Vector3<T> operator*(T scalar, const Vector3<T> &vec);
+
+	template<typename T>
+	DRACO_DRAGON_MATH_API std::ostream &operator<<(std::ostream &out, const Vector3<T> &vec);
+#endif // DLL_EXPORT_DRACO_DRAGON_MATH
 
 template<typename T>
 class Vector4 {

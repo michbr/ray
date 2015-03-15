@@ -24,13 +24,11 @@ set(DEVIL_DIR "${UTILITIES_DIR}/DevIL")
 add_definitions(-DDLL_EXPORT_DRACO_WORLD_MODEL)
 
 
-
 ##  source files  ##
 file(GLOB SOURCES
 	${PROJECT_SOURCE_DIR}/*.cc
 	${PROJECT_SOURCE_DIR}/*.h
 )
-
 
 
 ##  compiler directives  ##
@@ -40,6 +38,7 @@ if (UNIX)
 endif(UNIX)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
+
 ##  dependencies  ##
 include_directories(${UTILITIES_DIR}/draco/)
 include_directories(${DEVIL_DIR}/include)
@@ -48,11 +47,9 @@ find_package(OpenGL REQUIRED)
 
 set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY} DragonMath TextureLoader)
 
+
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
 
 target_link_libraries(${LIBRARY_NAME} ${LIBS})
 
-#if (MSVC)
-#    set_target_properties(${EXECUTABLE_NAME} PROPERTIES LINK_FLAGS "/DELAYLOAD:dracoUtil.dll")
-#endif (MSVC)

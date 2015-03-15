@@ -105,8 +105,8 @@ void Controls::motionEvent(int x, int y) {
 	
 	
 	//cout << *cam << endl;
-	cam->rotate(-move_y * LOOK_SENSITIVITY, 1 );
-	cam->rotate(move_x * LOOK_SENSITIVITY, 0 );
+	cam->rotate(-move_y * LOOK_SENSITIVITY, 1, Vector3<float>::zero );
+	cam->rotate(move_x * LOOK_SENSITIVITY, 0, Vector3<float>::zero );
 	
 	//calc_angle(move_x, RWindow::cam_x, RWindow::cam_z, &RWindow::vrp_x, &RWindow::vrp_z);
 	//calc_angle(move_y, RWindow::cam_y, RWindow::cam_z, &RWindow::vrp_y, &RWindow::vrp_z);
