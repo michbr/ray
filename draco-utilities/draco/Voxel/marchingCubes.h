@@ -3,24 +3,32 @@
 #define DRACO_VOX_MARCHING_CUBES_H
 
 #include "polygonizer.h"
-#include "dragonmath.h"
+#include "voxel.h"
+#include "DragonMath/dragonmath.h"
 
 
-class MarchingCubes: public Polygonizer {
-public:
+namespace Vox {
 
-	MarchingCubes(float voxelSize,
-		byte isolevel,
-		ref Dictionary<int, object> vertices,
-		ref Dictionary<int, byte> materials,
-		ref Voxel[, ,] voxels,
-		Vector3 offset,
-		Vector3[] meshVerts);
+	template<typename T>
+	class MarchingCubes : public Polygonizer {
+	public:
 
-private:
-	static const unsigned short *edgeTable;
-	static const byte *triTable;
+		MarchingCubes(float voxelSize,
+			byte isolevel,
+//			ref Dictionary<int, object> vertices,
+//			ref Dictionary<int, byte> materials,
+//			ref Voxel[, ,] voxels,
+			Vector3<T> offset,
+			Vector3<T> *meshVerts);
 
-};
+
+
+	private:
+		static const unsigned short *edgeTable;
+		static const byte *triTableLengths;
+		static const byte **triTable;
+
+	};
+}
 
 #endif // DRACO_VOX_MARCHING_CUBES_H

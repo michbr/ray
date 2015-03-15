@@ -12,15 +12,18 @@ namespace Vox {
 
 	class Block;
 
-	class Atom: Block {
+    typedef unsigned char byte;
+    std::ostream &operator<<(std::ostream& out, byte value);
+
+	class Voxel: Block {
 	public:
 		// members
 		byte opacity;
 		unsigned short material;
 
 		// constructors
-		Atom(byte opacity, unsigned short material);
-		Atom(const Atom& other);
+		Voxel(byte opacity, unsigned short material);
+		Voxel(const Voxel& other);
 
 		// methods
 		bool compact() const;
@@ -30,6 +33,7 @@ namespace Vox {
 	private:
 
 	};
+
 
 }
 

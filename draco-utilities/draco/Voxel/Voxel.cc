@@ -2,22 +2,25 @@
 
 #include "voxel.h"
 
+using namespace std;
+
+
 namespace Vox {
 
-    Atom::Atom(byte opacity, unsigned short material) :
+    Voxel::Voxel(byte opacity, unsigned short material) :
 		opacity(opacity), material(material) {}
 
-    Atom::Atom(const Atom& other) :
+    Voxel::Voxel(const Voxel& other) :
 		opacity(other.opacity), material(other.material) {}
 
 
-    bool Atom::compact() const {
+    bool Voxel::compact() const {
 	    return sizeof(this) <= 8;
     }
-	bool Atom::empty() const {
+	bool Voxel::empty() const {
 		return opacity == 0;
 	}
-	byte Atom::average() const {
+	byte Voxel::average() const {
 		return opacity;
 	}
 
@@ -61,5 +64,8 @@ namespace Vox {
 //			return this;
 //		}
 
+    ostream &operator<<(ostream& out, byte value) {
+	    return out << (unsigned int) value;
+    }
 
 }
