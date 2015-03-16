@@ -1,29 +1,107 @@
 ﻿
 #include "marchingCubes.h"
 
-//using namespace std;
+using namespace std;
 
 
 namespace Vox {
 
-	void MarchingCubes::stretchVertex(int x1, int y1, int z1, int x2, int y2, int z2, Voxel valp1, Voxel valp2, int vox) {
+    template<typename T> MarchingCubes::MarchingCubes(float voxelSize, byte isolevel, Vector3<T> offset, Vector3<T> *meshVerts) {
+
+    }
+
+    int *MarchingCubes::lookupTriangles(int x, int y, int z, int x1, int y1, int z1) const {
+		/*
+		Determine the index into the edge table which
+		tells us which vertices are inside of the surface
+		*/
+		int cubeindex = 0;
+		if (voxels[x,  y,  z ].opacity < isolevel) cubeindex |= 1;
+		if (voxels[x1, y,  z ].opacity < isolevel) cubeindex |= 2;
+		if (voxels[x1, y,  z1].opacity < isolevel) cubeindex |= 4;
+		if (voxels[x,  y,  z1].opacity < isolevel) cubeindex |= 8;
+		if (voxels[x,  y1, z ].opacity < isolevel) cubeindex |= 16;
+		if (voxels[x1, y1, z ].opacity < isolevel) cubeindex |= 32;
+		if (voxels[x1, y1, z1].opacity < isolevel) cubeindex |= 64;
+		if (voxels[x,  y1, z1].opacity < isolevel) cubeindex |= 128;
+
+		/* Cube is entirely in/out of the surface */
+		if (edgeTable[cubeindex] == 0)
+		return null;
+
+		/* Find the vertices where the surface intersects the cube */
+		if ((edgeTable[cubeindex] & 1) != 0) {
+			vertlist[0] = VoxelRenderer.getX(x, y, z);
+			stretchVertex(x, y, z, 1, 0, 0, voxels[x, y, z], voxels[x1, y, z], vertlist[0]);
+		}
+		if ((edgeTable[cubeindex] & 2) != 0) {
+			vertlist[1] = VoxelRenderer.getZ(x1, y, z);
+			stretchVertex(x1, y, z, 0, 0, 1, voxels[x1, y, z], voxels[x1, y, z1], vertlist[1]);
+		}
+		if ((edgeTable[cubeindex] & 4) != 0) {
+			vertlist[2] = VoxelRenderer.getX(x, y, z1);
+			stretchVertex(x1, y, z1, -1, 0, 0, voxels[x1, y, z1], voxels[x, y, z1], vertlist[2]);
+		}
+		if ((edgeTable[cubeindex] & 8) != 0) {
+			vertlist[3] = VoxelRenderer.getZ(x, y, z);
+			stretchVertex(x, y, z1, 0, 0, -1, voxels[x, y, z1], voxels[x, y, z], vertlist[3]);
+		}
+		if ((edgeTable[cubeindex] & 16) != 0) {
+			vertlist[4] = VoxelRenderer.getX(x, y1, z);
+			stretchVertex(x, y1, z, 1, 0, 0, voxels[x, y1, z], voxels[x1, y1, z], vertlist[4]);
+		}
+		if ((edgeTable[cubeindex] & 32) != 0) {
+			vertlist[5] = VoxelRenderer.getZ(x1, y1, z);
+			stretchVertex(x1, y1, z, 0, 0, 1, voxels[x1, y1, z], voxels[x1, y1, z1], vertlist[5]);
+		}
+		if ((edgeTable[cubeindex] & 64) != 0) {
+			vertlist[6] = VoxelRenderer.getX(x, y1, z1);
+			stretchVertex(x1, y1, z1, -1, 0, 0, voxels[x1, y1, z1], voxels[x, y1, z1], vertlist[6]);
+		}
+		if ((edgeTable[cubeindex] & 128) != 0) {
+			vertlist[7] = VoxelRenderer.getZ(x, y1, z);
+			stretchVertex(x, y1, z1, 0, 0, -1, voxels[x, y1, z1], voxels[x, y1, z], vertlist[7]);
+		}
+		if ((edgeTable[cubeindex] & 256) != 0) {
+			vertlist[8] = VoxelRenderer.getY(x, y, z);
+			stretchVertex(x, y, z, 0, 1, 0, voxels[x, y, z], voxels[x, y1, z], vertlist[8]);
+		}
+		if ((edgeTable[cubeindex] & 512) != 0) {
+			vertlist[9] = VoxelRenderer.getY(x1, y, z);
+			stretchVertex(x1, y, z, 0, 1, 0, voxels[x1, y, z], voxels[x1, y1, z], vertlist[9]);
+		}
+		if ((edgeTable[cubeindex] & 1024) != 0) {
+			vertlist[10] = VoxelRenderer.getY(x1, y, z1);
+			stretchVertex(x1, y, z1, 0, 1, 0, voxels[x1, y, z1], voxels[x1, y1, z1], vertlist[10]);
+		}
+		if ((edgeTable[cubeindex] & 2048) != 0) {
+			vertlist[11] = VoxelRenderer.getY(x, y, z1);
+			vertices[vertlist[11]] = stretchVertex(x, y, z1, 0, 1, 0, voxels[x, y, z1], voxels[x, y1, z1]);
+		}
+
+		/* Create the triangles */
+		int ntriang = triTable[cubeindex].Length;
+		if (ntriang <= 0) return null;
+		int[] triangles = new int[ntriang];
+		for (int i = 0; i < ntriang; ++i) {
+		triangles[ntriang - i - 1] = vertlist[triTable[cubeindex][i]];
+		}
+
+		return triangles;
+    }
+
+	template<typename T> Vector3<T> MarchingCubes::stretchVertex(int x, int y, int z, int xDiff, int yDiff, int zDiff, Voxel valp1, Voxel valp2) const {
 		float mu = (isolevel - valp1.opacity) / ((float)(valp2.opacity - valp1.opacity));
 		//float mu = 0.5f;
-		Vector3 pos = new Vector3(x1 + mu * (x2 - x1), y1 + mu * (y2 - y1), z1 + mu * (z2 - z1)) * voxelSize + offset;
-		if (vertices.ContainsKey(vox) && vertices[vox].GetType() == typeof(int))
-		meshVerts[(int)vertices[vox]] = pos;
-		else
-		vertices[vox] = pos;
-		if (valp1.opacity > valp2.opacity)
-			materials[vox] = valp1.matType;
-		else
-			materials[vox] = valp2.matType;
-		//vertices[vox] = new Vector3(x1, y1, z1) *voxelSize +offset;
-		//float mu = (valp1) / ((float)(byte.MaxValue));
-		//vertices[vox] = new Vector3(x1 + mu * (x2 - x1), y1 + mu * (y2 - y1), z1 + mu * (z2 - z1)) * voxelSize;
+		return Vector3<double>(x + mu * xDiff, y + mu * yDiff, z + mu * zDiff) * ((double)voxelSize) + offset;
 	}
 
-	// marching cubes tables, DO NOT MODIFY!!
+
+
+	//////////////////////////////////////////////
+	//  marching cubes tables, DO NOT MODIFY!!  //
+	//////////////////////////////////////////////
+
 	const unsigned short MarchingCubes::edgeTable[256] = {
 		0x0  , 0x109, 0x203, 0x30a, 0x406, 0x50f, 0x605, 0x70c,
 		0x80c, 0x905, 0xa0f, 0xb06, 0xc0a, 0xd03, 0xe09, 0xf00,
