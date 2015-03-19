@@ -66,12 +66,6 @@ template <typename T> bool Vector2<T>::operator==(const Vector2<T> &other) const
 template <typename T> bool Vector2<T>::operator!=(const Vector2<T> &other) const {
 	return !(*this == other);
 }
-template <typename T> Vector2<T> operator*(const Vector2<T> &vec, T scalar) {
-	return Vector2<T>(vec.x *scalar, vec.y *scalar);
-}
-template <typename T> Vector2<T> operator*(T scalar, const Vector2<T> &vec) {
-	return Vector2<T>(vec.x *scalar, vec.y *scalar);
-}
 template <typename T> Vector2<T> &Vector2<T>::operator+=(const Vector2<T> &other) {
 	x += other.x; y += other.y;
 	return *this;
@@ -90,10 +84,6 @@ template <typename T> Vector2<T> &Vector2<T>::operator/=(T scalar) {
 }
 
 // output/input
-template <typename T>
-ostream &operator<<(ostream &out, const Vector2<T> &vec) {
-	return out << '(' << vec.x << ", " << vec.y << ")";
-}
 
 template <typename T>
 istream &operator>>(istream &in, Vector2<T> &vec) {
@@ -196,17 +186,6 @@ template <typename T> T& Vector3<T>::operator[](int index) {
 template <typename T> T Vector3<T>::operator[](int index) const {
 	return ((T *)this)[index];
 }
-//template <typename T> Vector3<T> operator*(const Vector3<T> &vec, T scalar) {
-//	return Vector3<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar);
-//}
-//template <typename T> Vector3<T> operator*(T scalar, const Vector3<T> &vec) {
-//	return Vector3<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar);
-//}
-//
-//template <typename T>
-//ostream &operator<<(ostream &out, const Vector3<T> &vec) {
-//	return out << '(' << vec.x << ", " << vec.y << ", " << vec.z << ")";
-//}
 
 
 // constants
@@ -244,7 +223,7 @@ template <typename T> T Vector4<T>::dot(const Vector4<T> &other) const {
 	return x *other.x +y *other.y +z *other.z;
 }
 template <typename T> Vector4<T> Vector4<T>::normal() const {
-	T l = magnitude()();
+	T l = magnitude();
 	return Vector4<T>(x /l, y /l, z /l, w);
 }
 template <typename T> void Vector4<T>::normalize() {
@@ -283,12 +262,6 @@ template <typename T> bool Vector4<T>::operator==(const Vector4<T> &other) const
 template <typename T> bool Vector4<T>::operator!=(const Vector4<T> &other) const {
 	return !(*this == other);
 }
-template <typename T> Vector4<T> operator*(const Vector4<T> &vec, T scalar) {
-	return Vector4<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar, vec.w);
-}
-template <typename T> Vector4<T> operator*(T scalar, const Vector4<T> &vec) {
-	return Vector4<T>(vec.x *scalar, vec.y *scalar, vec.z *scalar, vec.w);
-}
 template <typename T> Vector4<T> &Vector4<T>::operator+=(const Vector4<T> &other) {
 	x += other.x; y += other.y; z += other.z;
 	return *this;
@@ -307,10 +280,6 @@ template <typename T> Vector4<T> &Vector4<T>::operator/=(T scalar) {
 }
 
 // output/input
-template <typename T>
-ostream &operator<<(ostream &out, const Vector4<T> &vec) {
-	return out << '(' << vec.x << ", " << vec.y << ", " << vec.z << ", " << vec.w << ")";
-}
 
 template <typename T>
 istream &operator>>(istream &in, Vector4<T> &vec) {
