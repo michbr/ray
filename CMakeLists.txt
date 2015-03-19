@@ -13,6 +13,7 @@ set (Draco_VERSION_MINOR 1)
 
 include(CMake/paths.cmake)
 
+add_subdirectory(${GTEST_DIR})
 add_subdirectory(${UTILITIES_DIR})
 add_subdirectory(${SCALES_DIR})
 
