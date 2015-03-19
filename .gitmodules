@@ -1,3 +1,6 @@
 [submodule "draco-utilities/glew"]
 	path = draco-utilities/glew/glew
 	url = https://github.com/nigels-com/glew.git
+[submodule "gtest/googletest"]
+	path = gtest/googletest
+	url = https://chromium.googlesource.com/external/googletest.git
