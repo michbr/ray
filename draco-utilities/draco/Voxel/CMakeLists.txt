@@ -34,7 +34,6 @@ file(GLOB SOURCES
 if (UNIX)
 	set (CUSTOM_FLAGS "-Wfatal-errors -Wall -Wextra -pedantic -O3")
 endif(UNIX)
-
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 
@@ -43,7 +42,7 @@ include_directories(
 	${PROJECT_SOURCE_DIR}
 	${UTILITIES_DIR}/draco/
 )
-set(LIBS ${LIBS} DragonMath)
+set(LIBS ${LIBS} DragonMath WorldModel)
 
 
 ##  deliverables  ##

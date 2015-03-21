@@ -6,95 +6,106 @@ using namespace std;
 
 namespace Vox {
 
-    template<typename T> MarchingCubes::MarchingCubes(float voxelSize, byte isolevel, Vector3<T> offset, Vector3<T> *meshVerts) {
-
-    }
-
-    int *MarchingCubes::lookupTriangles(int x, int y, int z, int x1, int y1, int z1) const {
-		/*
-		Determine the index into the edge table which
-		tells us which vertices are inside of the surface
-		*/
-		int cubeindex = 0;
-		if (voxels[x,  y,  z ].opacity < isolevel) cubeindex |= 1;
-		if (voxels[x1, y,  z ].opacity < isolevel) cubeindex |= 2;
-		if (voxels[x1, y,  z1].opacity < isolevel) cubeindex |= 4;
-		if (voxels[x,  y,  z1].opacity < isolevel) cubeindex |= 8;
-		if (voxels[x,  y1, z ].opacity < isolevel) cubeindex |= 16;
-		if (voxels[x1, y1, z ].opacity < isolevel) cubeindex |= 32;
-		if (voxels[x1, y1, z1].opacity < isolevel) cubeindex |= 64;
-		if (voxels[x,  y1, z1].opacity < isolevel) cubeindex |= 128;
-
-		/* Cube is entirely in/out of the surface */
-		if (edgeTable[cubeindex] == 0)
-		return null;
-
-		/* Find the vertices where the surface intersects the cube */
-		if ((edgeTable[cubeindex] & 1) != 0) {
-			vertlist[0] = VoxelRenderer.getX(x, y, z);
-			stretchVertex(x, y, z, 1, 0, 0, voxels[x, y, z], voxels[x1, y, z], vertlist[0]);
-		}
-		if ((edgeTable[cubeindex] & 2) != 0) {
-			vertlist[1] = VoxelRenderer.getZ(x1, y, z);
-			stretchVertex(x1, y, z, 0, 0, 1, voxels[x1, y, z], voxels[x1, y, z1], vertlist[1]);
-		}
-		if ((edgeTable[cubeindex] & 4) != 0) {
-			vertlist[2] = VoxelRenderer.getX(x, y, z1);
-			stretchVertex(x1, y, z1, -1, 0, 0, voxels[x1, y, z1], voxels[x, y, z1], vertlist[2]);
-		}
-		if ((edgeTable[cubeindex] & 8) != 0) {
-			vertlist[3] = VoxelRenderer.getZ(x, y, z);
-			stretchVertex(x, y, z1, 0, 0, -1, voxels[x, y, z1], voxels[x, y, z], vertlist[3]);
-		}
-		if ((edgeTable[cubeindex] & 16) != 0) {
-			vertlist[4] = VoxelRenderer.getX(x, y1, z);
-			stretchVertex(x, y1, z, 1, 0, 0, voxels[x, y1, z], voxels[x1, y1, z], vertlist[4]);
-		}
-		if ((edgeTable[cubeindex] & 32) != 0) {
-			vertlist[5] = VoxelRenderer.getZ(x1, y1, z);
-			stretchVertex(x1, y1, z, 0, 0, 1, voxels[x1, y1, z], voxels[x1, y1, z1], vertlist[5]);
-		}
-		if ((edgeTable[cubeindex] & 64) != 0) {
-			vertlist[6] = VoxelRenderer.getX(x, y1, z1);
-			stretchVertex(x1, y1, z1, -1, 0, 0, voxels[x1, y1, z1], voxels[x, y1, z1], vertlist[6]);
-		}
-		if ((edgeTable[cubeindex] & 128) != 0) {
-			vertlist[7] = VoxelRenderer.getZ(x, y1, z);
-			stretchVertex(x, y1, z1, 0, 0, -1, voxels[x, y1, z1], voxels[x, y1, z], vertlist[7]);
-		}
-		if ((edgeTable[cubeindex] & 256) != 0) {
-			vertlist[8] = VoxelRenderer.getY(x, y, z);
-			stretchVertex(x, y, z, 0, 1, 0, voxels[x, y, z], voxels[x, y1, z], vertlist[8]);
-		}
-		if ((edgeTable[cubeindex] & 512) != 0) {
-			vertlist[9] = VoxelRenderer.getY(x1, y, z);
-			stretchVertex(x1, y, z, 0, 1, 0, voxels[x1, y, z], voxels[x1, y1, z], vertlist[9]);
-		}
-		if ((edgeTable[cubeindex] & 1024) != 0) {
-			vertlist[10] = VoxelRenderer.getY(x1, y, z1);
-			stretchVertex(x1, y, z1, 0, 1, 0, voxels[x1, y, z1], voxels[x1, y1, z1], vertlist[10]);
-		}
-		if ((edgeTable[cubeindex] & 2048) != 0) {
-			vertlist[11] = VoxelRenderer.getY(x, y, z1);
-			vertices[vertlist[11]] = stretchVertex(x, y, z1, 0, 1, 0, voxels[x, y, z1], voxels[x, y1, z1]);
-		}
-
-		/* Create the triangles */
-		int ntriang = triTable[cubeindex].Length;
-		if (ntriang <= 0) return null;
-		int[] triangles = new int[ntriang];
-		for (int i = 0; i < ntriang; ++i) {
-		triangles[ntriang - i - 1] = vertlist[triTable[cubeindex][i]];
-		}
-
-		return triangles;
-    }
+    template<typename T> MarchingCubes::MarchingCubes(float voxelSize, byte isolevel, Vector3<T> offset):
+        Polygonizer(voxelSize, isolevel, offset) {}
 
 	template<typename T> Vector3<T> MarchingCubes::stretchVertex(int x, int y, int z, int xDiff, int yDiff, int zDiff, Voxel valp1, Voxel valp2) const {
-		float mu = (isolevel - valp1.opacity) / ((float)(valp2.opacity - valp1.opacity));
-		//float mu = 0.5f;
-		return Vector3<double>(x + mu * xDiff, y + mu * yDiff, z + mu * zDiff) * ((double)voxelSize) + offset;
+		float blend = (isolevel - valp1.opacity) / ((float)(valp2.opacity - valp1.opacity));
+		return Vector3<double>(x + blend * xDiff, y + blend * yDiff, z + blend * zDiff) * ((double)voxelSize) + offset;
 	}
+
+    int MarchingCubes::getX(int x, int y, int z) const {
+	    return (y * VERTEX_DIMENSION + z) * VERTEX_DIMENSION + x;
+    }
+
+    int MarchingCubes::getY(int x, int y, int z) const {
+	    return ((VERTEX_DIMENSION + x) * VERTEX_DIMENSION + z) * VERTEX_DIMENSION + y;
+    }
+
+    int MarchingCubes::getZ(int x, int y, int z) const {
+	    return ((VERTEX_DIMENSION * 2 + x) * VERTEX_DIMENSION + y) * VERTEX_DIMENSION + z;
+    }
+
+    template<typename T> vector<int> MarchingCubes::lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<T>>* vertices, Voxel*** voxels) const {
+	    /*
+	Determine the index into the edge table which
+	tells us which vertices are inside of the surface
+	*/
+	    int cubeindex = 0;
+	    if (voxels[x ][y ][z ].opacity < isolevel) cubeindex |= 1;
+	    if (voxels[x1][y ][z ].opacity < isolevel) cubeindex |= 2;
+	    if (voxels[x1][y ][z1].opacity < isolevel) cubeindex |= 4;
+	    if (voxels[x ][y ][z1].opacity < isolevel) cubeindex |= 8;
+	    if (voxels[x ][y1][z ].opacity < isolevel) cubeindex |= 16;
+	    if (voxels[x1][y1][z ].opacity < isolevel) cubeindex |= 32;
+	    if (voxels[x1][y1][z1].opacity < isolevel) cubeindex |= 64;
+	    if (voxels[x ][y1][z1].opacity < isolevel) cubeindex |= 128;
+
+	    // Cube is entirely in/out of the surface
+	    if (edgeTable[cubeindex] == 0)
+		    return vector<int>();
+
+	    // Find the vertices where the surface intersects the cube
+	    int vertlist[12];
+	    if (edgeTable[cubeindex] & 1) {
+		    vertlist[0] = getX(x, y, z);
+		    vertices->[vertlist[0]] = stretchVertex(x, y, z, 1, 0, 0, voxels[x][y][z], voxels[x1][y][z]);
+	    }
+	    if (edgeTable[cubeindex] & 2) {
+		    vertlist[1] = getZ(x1, y, z);
+		    vertices->[vertlist[1]] = stretchVertex(x1, y, z, 0, 0, 1, voxels[x1][y][z], voxels[x1][y][z1]);
+	    }
+	    if (edgeTable[cubeindex] & 4) {
+		    vertlist[2] = getX(x, y, z1);
+		    vertices->[vertlist[2]] = stretchVertex(x1, y, z1, -1, 0, 0, voxels[x1][y][z1], voxels[x][y][z1]);
+	    }
+	    if (edgeTable[cubeindex] & 8) {
+		    vertlist[3] = getZ(x, y, z);
+		    vertices->[vertlist[3]] = stretchVertex(x, y, z1, 0, 0, -1, voxels[x][y][z1], voxels[x][y][z]);
+	    }
+	    if (edgeTable[cubeindex] & 16) {
+		    vertlist[4] = getX(x, y1, z);
+		    vertices->[vertlist[4]] = stretchVertex(x, y1, z, 1, 0, 0, voxels[x][y1][z], voxels[x1][y1][z]);
+	    }
+	    if (edgeTable[cubeindex] & 32) {
+		    vertlist[5] = getZ(x1, y1, z);
+		    vertices->[vertlist[5]] = stretchVertex(x1, y1, z, 0, 0, 1, voxels[x1][y1][z], voxels[x1][y1][z1]);
+	    }
+	    if (edgeTable[cubeindex] & 64) {
+		    vertlist[6] = getX(x, y1, z1);
+		    vertices->[vertlist[6]] = stretchVertex(x1, y1, z1, -1, 0, 0, voxels[x1][y1][z1], voxels[x][y1][z1]);
+	    }
+	    if (edgeTable[cubeindex] & 128) {
+		    vertlist[7] = getZ(x, y1, z);
+		    vertices->[vertlist[7]] = stretchVertex(x, y1, z1, 0, 0, -1, voxels[x][y1][z1], voxels[x][y1][z]);
+	    }
+	    if (edgeTable[cubeindex] & 256) {
+		    vertlist[8] = getY(x, y, z);
+		    vertices->[vertlist[8]] = stretchVertex(x, y, z, 0, 1, 0, voxels[x][y][z], voxels[x][y1][z]);
+	    }
+	    if (edgeTable[cubeindex] & 512) {
+		    vertlist[9] = getY(x1, y, z);
+		    vertices->[vertlist[9]] = stretchVertex(x1, y, z, 0, 1, 0, voxels[x1][y][z], voxels[x1][y1][z]);
+	    }
+	    if (edgeTable[cubeindex] & 1024) {
+		    vertlist[10] = getY(x1, y, z1);
+		    vertices->[vertlist[10]] = stretchVertex(x1, y, z1, 0, 1, 0, voxels[x1][y][z1], voxels[x1][y1][z1]);
+	    }
+	    if (edgeTable[cubeindex] & 2048) {
+		    vertlist[11] = getY(x, y, z1);
+		    vertices->[vertlist[11]] = stretchVertex(x, y, z1, 0, 1, 0, voxels[x][y][z1], voxels[x][y1][z1]);
+	    }
+
+	    // Create the triangles
+	    byte ntriang = triTableLengths[cubeindex];
+	    if (ntriang <= 0) return vector<int>();
+	    vector<int> triangles(ntriang);
+	    for (byte i = 0; i < ntriang; ++i) {
+		    triangles[ntriang -i -1] = vertlist[triTable[cubeindex][i]];
+	    }
+
+	    return triangles;
+    }
 
 
 
@@ -138,22 +149,22 @@ namespace Vox {
 	};
 
     const byte MarchingCubes::triTableLengths[256] = {
-	    0, 3, 3, 6, 3, 6, 6, 9, 3, 6, 6, 9, 6, 9, 9, 6,
-	    3, 6, 6, 9, 6, 9, 9, 12, 6, 9, 9, 12, 9, 12, 12, 9,
-	    3, 6, 6, 9, 6, 9, 9, 12, 6, 9, 9, 12, 9, 12, 12, 9,
-	    6, 9, 9, 6, 9, 12, 12, 9, 9, 12, 12, 9, 12, 15, 15, 6,
-	    3, 6, 6, 9, 6, 9, 9, 12, 6, 9, 9, 12, 9, 12, 12, 9,
-	    6, 9, 9, 12, 9, 12, 12, 15, 9, 12, 12, 15, 12, 15, 15, 12,
-	    6, 9, 9, 12, 9, 12, 6, 9, 9, 12, 12, 15, 12, 15, 9, 6,
-	    9, 12, 12, 9, 12, 15, 9, 6, 12, 15, 15, 12, 15, 6, 12, 3,
-	    3, 6, 6, 9, 6, 9, 9, 12, 6, 9, 9, 12, 9, 12, 12, 9,
-	    6, 9, 9, 12, 9, 12, 12, 15, 9, 6, 12, 9, 12, 9, 15, 6,
-	    6, 9, 9, 12, 9, 12, 12, 15, 9, 12, 12, 15, 12, 15, 15, 12,
-	    9, 12, 12, 9, 12, 15, 15, 12, 12, 9, 15, 6, 15, 12, 6, 3,
-	    6, 9, 9, 12, 9, 12, 12, 15, 9, 12, 12, 15, 6, 9, 9, 6,
-	    9, 12, 12, 15, 12, 15, 15, 6, 12, 9, 15, 12, 9, 6, 12, 3,
-	    9, 12, 12, 15, 12, 15, 9, 12, 12, 15, 15, 6, 9, 12, 6, 3,
-	    6, 9, 9, 6, 9, 12, 6, 3, 9, 6, 12, 3, 6, 3, 3, 0
+	    0, 3,  3,  6,  3,  6,  6,  9,  3,  6,  6,  9,  6,  9,  9,  6,
+	    3, 6,  6,  9,  6,  9,  9,  12, 6,  9,  9,  12, 9,  12, 12, 9,
+	    3, 6,  6,  9,  6,  9,  9,  12, 6,  9,  9,  12, 9,  12, 12, 9,
+	    6, 9,  9,  6,  9,  12, 12, 9,  9,  12, 12, 9,  12, 15, 15, 6,
+	    3, 6,  6,  9,  6,  9,  9,  12, 6,  9,  9,  12, 9,  12, 12, 9,
+	    6, 9,  9,  12, 9,  12, 12, 15, 9,  12, 12, 15, 12, 15, 15, 12,
+	    6, 9,  9,  12, 9,  12, 6,  9,  9,  12, 12, 15, 12, 15, 9,  6,
+	    9, 12, 12, 9,  12, 15, 9,  6,  12, 15, 15, 12, 15, 6,  12, 3,
+	    3, 6,  6,  9,  6,  9,  9,  12, 6,  9,  9,  12, 9,  12, 12, 9,
+	    6, 9,  9,  12, 9,  12, 12, 15, 9,  6,  12, 9,  12, 9,  15, 6,
+	    6, 9,  9,  12, 9,  12, 12, 15, 9,  12, 12, 15, 12, 15, 15, 12,
+	    9, 12, 12, 9,  12, 15, 15, 12, 12, 9,  15, 6,  15, 12, 6,  3,
+	    6, 9,  9,  12, 9,  12, 12, 15, 9,  12, 12, 15, 6,  9,  9,  6,
+	    9, 12, 12, 15, 12, 15, 15, 6,  12, 9,  15, 12, 9,  6,  12, 3,
+	    9, 12, 12, 15, 12, 15, 9,  12, 12, 15, 15, 6,  9,  12, 6,  3,
+	    6, 9,  9,  6,  9,  12, 6,  3,  9,  6,  12, 3,  6,  3,  3,  0
     };
 
 	const byte MarchingCubes::triTable[256][15] = {
