@@ -8,6 +8,8 @@ namespace Vox {
 
 	class Node: Block {
 	public:
+		static const int CHILD_DIM = 2;
+		static const int CHILD_COUNT = CHILD_DIM << 2;
 
 		bool compact() const;
 		bool empty() const;
@@ -19,7 +21,7 @@ namespace Vox {
 	protected:
 		// members
 		byte compactChildren;
-		Block* children[8];
+		Block* children[CHILD_COUNT];
 
 		Block & get(byte x, byte y, byte z);
 		const Block & get(byte x, byte y, byte z) const;

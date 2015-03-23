@@ -5,7 +5,7 @@
 
 namespace Vox {
     byte Node::getIndex(byte x, byte y, byte z) const {
-	    return (byte)(x * 4 + y * 2 + z);
+	    return (byte)(x *(CHILD_DIM << 1) +y *CHILD_DIM +z);
     }
 
     Block &Node::get(byte i) {
@@ -24,7 +24,7 @@ namespace Vox {
     }
 	void Node::set(byte i, const Block &b) {
 		if (b.compact()) {
-			chi
+
 		}
 	}
 
@@ -37,18 +37,18 @@ namespace Vox {
 
 
     bool Node::compact() const {
-	    return sizeof(this) <= 8;
+	    return sizeof(this) <= CHILD_COUNT;
     }
     bool Node::empty() const {
-	    for (int i = 0; i < 8; ++i)
+	    for (int i = 0; i < CHILD_COUNT; ++i)
 		    if (!get(i).empty())
 			    return false;
 	    return true;
     }
 	byte Node::average() const {
 		int sum = 0;
-		for(int i=0; i<8; ++i)
+		for(int i=0; i<CHILD_COUNT; ++i)
 			sum += get(i).average();
-		return (byte) (sum /8);
+		return (byte) (sum /CHILD_COUNT);
 	}
 }

@@ -590,11 +590,13 @@ vector<int> * Renderer::colorFacePixel(Vector3<double> source, Vector3<double> d
 //void Renderer::prepare_raycast(const vector<Group *> models, const vector<Light * > & lights, const Material & materials) {
 void Renderer::prepareRaycast(const vector<Face *> & faces, const vector<Light * > & lights) {
 
-	Vector3<double> camPos = cam->getPos();
+	Vector3<double> camPos = cam->position;
 	Vector3<double> fp = cam->getFocalPoint();
 
 	Vector3<double> u = cam->getHorizontalAxis();
 	Vector3<double> v = cam->getVerticalAxis();
+
+	cout << "HEY!!!! " << u << endl;
 
 	double min_y = frame->get_miny();
 	double min_x = frame->get_minx();
