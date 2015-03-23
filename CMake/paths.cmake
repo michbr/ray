@@ -12,3 +12,5 @@ set(LIB_DIR "${TARGET_DIR}/utilities")
 set(BIN_DIR "${TARGET_DIR}/bin")
 set(SCALES_DIR "${BASE_DIR}/draco-scales")
 set(TARGET_SCALES_DIR "${TARGET_DIR}/scales")
+
+set(GTEST_DIR "${BASE_DIR}/gtest/googletest")

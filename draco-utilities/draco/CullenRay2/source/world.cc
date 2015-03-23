@@ -169,7 +169,7 @@ void World::render(char *commandFilename) {
 		getline(file, line);
 		prepareLine(line);
 		if (line.size() < 1) continue;
-		readCommand(line);
+//		readCommand(line);
 	}
 	file.close();
 	
