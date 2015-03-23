@@ -1,6 +1,6 @@
 
-#ifndef DRACO_VOX_VOXEL_H
-#define DRACO_VOX_VOXEL_H
+#ifndef DRACO_VOX_BLOCK_H
+#define DRACO_VOX_BLOCK_H
 
 
 #include "voxel.h"
@@ -27,4 +27,4 @@ namespace Vox {
 }
 
 
-#endif // DRACO_VOX_VOXEL_H
+#endif // DRACO_VOX_BLOCK_H

@@ -2,6 +2,7 @@
 
 #include "block.h"
 
-namespace Vox {
+using namespace std;
+using namespace Vox;
 
-}
+

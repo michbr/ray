@@ -1,21 +1,16 @@
 
-#ifndef DRACO_VOX_ATOM_H
-#define DRACO_VOX_ATOM_H
-
-
-#include "block.h"
+#ifndef DRACO_VOX_VOXEL_H
+#define DRACO_VOX_VOXEL_H
 
 #include <iostream>
 
 
 namespace Vox {
 
-	class Block;
-
     typedef unsigned char byte;
     std::ostream &operator<<(std::ostream& out, byte value);
 
-	class Voxel: Block {
+	class Voxel {
 	public:
 		// members
 		byte opacity;
@@ -38,4 +33,4 @@ namespace Vox {
 }
 
 
-#endif // DRACO_VOX_ATOM_H
+#endif // DRACO_VOX_VOXEL_H

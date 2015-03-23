@@ -4,14 +4,14 @@ cmake_minimum_required (VERSION 2.8)
 
 
 ##  meta data  ##
-project (Draco-startTab)
+project (Draco-VoxMod)
 
-set (Draco-startTab_VERSION_MAJOR 0)
-set (Draco-startTab_VERSION_MINOR 1)
+set (Draco-VoxMod_VERSION_MAJOR 0)
+set (Draco-VoxMod_VERSION_MINOR 1)
 
 include("../../CMake/paths.cmake")
 
-set (LIBRARY_NAME startTab.ds)
+set (LIBRARY_NAME VoxMod.ds)
 set (LIBRARY_OUTPUT_PATH ${TARGET_SCALES_DIR})
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIBRARY_OUTPUT_PATH} )
@@ -43,7 +43,7 @@ if(WIN32)
 	add_definitions(-DWIN32)
 endif(WIN32)
 
-set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 
 
@@ -60,7 +60,18 @@ else (UNIX)
 	find_library(FLTK_LIBRARIES winfltk
     PATHS ${FLTK_DIR})
 endif (UNIX)
-set(LIBS ${LIBS} ${FLTK_LIBRARIES} DracoCommon)
+
+find_library(FLTK_GL_LIBRARY fltk_gl
+PATHS ${FLTK_DIR})
+
+find_package(OpenGL REQUIRED)
+set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
+if(OPENGL_FOUND)
+	add_definitions(-DHAVE_GL)
+	include_directories(${OPENGL_INCLUDE_DIR})
+endif(OPENGL_FOUND)
+
+set(LIBS ${LIBS} ${FLTK_LIBRARISE} ${FLTK_GL_LIBRARY} DracoCommon DracoVoxel NewGLRenderer)
 
 
 

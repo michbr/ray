@@ -27,11 +27,6 @@ namespace Vox {
 		int getY(int x, int y, int z) const;
 		int getZ(int x, int y, int z) const;
 
-	private:
-		static const unsigned short *edgeTable;
-		static const byte *triTableLengths;
-		static const byte **triTable;
-
 	};
 }
 
