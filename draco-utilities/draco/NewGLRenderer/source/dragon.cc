@@ -1,5 +1,5 @@
 #include "dragon.h"
-#include "controls.h"
+//#include "controls.h"
 
 using namespace std;
 
@@ -30,10 +30,10 @@ void DragonEngine::render() {
 	//cout << *cam << endl;
 }
 
-void DragonEngine::event(int keyCode) {
-	controls->keyPress(keyCode);
-}
-
-void DragonEngine::motionEvent(int x, int y) {
-	controls->motionEvent(x, y);
-}
+//void DragonEngine::event(int keyCode) {
+//	controls->keyPress(keyCode);
+//}
+//
+//void DragonEngine::motionEvent(int x, int y) {
+//	controls->motionEvent(x, y);
+//}

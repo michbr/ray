@@ -52,11 +52,6 @@ DirectoryViewer::DirectoryViewer(int x, int y, int w, int h, string path, const 
 	homeBut->callback(goHome, this);
 	addressBar->callback(addressChange, this);
 	browser->callback(browserChange, this);
-//	bar->add(homeBut);
-//	bar->add(addressBar);
-////	add(homeBut);
-//	add(addressBar);
-//	add(browser);
 	bar->resizable(addressBar);
 	resizable(browser);
 	setPath(path);
@@ -85,7 +80,7 @@ void DirectoryViewer::update() {
 			directory = path;
 		else
 			directory = path.super();
-		list<string> fileList = directory.dirList(_showHidden);
+		vector<string> fileList = directory.dirList(_showHidden);
 		browser->clear();
 		for(string file: fileList)
 			browser->add(file.c_str());

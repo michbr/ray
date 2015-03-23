@@ -58,7 +58,7 @@ Fl_Group *addTab(Fl_Group *tabs, const char *label) {
 
 int main(int argc, char **argv) {
 	addLibDirectories();
-	cout << "DIRECTORY: " << Path::exeDir().super() << endl;
+//	cout << "DIRECTORY: " << Path::exeDir().super() << endl;
 	Fl::scheme(DEFAULT_FLTK_SCHEME);
 
 	Fl_Window *window = new Fl_Window(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
@@ -94,7 +94,7 @@ int main(int argc, char **argv) {
 	ScaleManager scaleMan;
 	scaleMan.loadScaleList();
 	vector<ScaleType> &scales = scaleMan.getScales();
-	cout << "DIRECTORY: " << Path::exeDir().super() << endl;
+//	cout << "DIRECTORY: " << Path::exeDir().super() << endl;
 	for(ScaleType &scale: scales) {
 		try {
 			scale.load();
@@ -105,10 +105,10 @@ int main(int argc, char **argv) {
 		tabs->current(tabs);
 		Fl_Group *pane = addTab(tabs, scale.name.c_str());
 	//	tabs->add(pane);
-		cout << "DIRECTORY: " << Path::exeDir().super() << endl;
+//		cout << "DIRECTORY: " << Path::exeDir().super() << endl;
 		scale.construct(pane, Path::exeDir().super());
 	}
-	cout << "GOT HERE!" << endl;
+//	cout << "GOT HERE!" << endl;
 	Fl::lock();
 	int endCode = Fl::run();
 

@@ -51,8 +51,8 @@ bool Path::isDir() const {
 	return (GetFileAttributes(native().c_str()) & FILE_ATTRIBUTE_DIRECTORY) != 0;
 }
 
-list<string> Path::dirList(bool includeHidden) const {
-	list<string> entries;
+vector<string> Path::dirList(bool includeHidden) const {
+	vector<string> entries;
 	WIN32_FIND_DATA data;
 	string path = Path(*this).addSlash().native() +'*';
 	HANDLE dir = FindFirstFile(path.c_str(), &data);

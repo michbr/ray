@@ -1,9 +1,10 @@
 #ifndef GL_RENDERER_OBJ_H
 #define GL_RENDERER_OBJ_H
 
-#include <worldModel/worldModel.h>
 #include "window.h"
+#include <worldModel/worldModel.h>
 #include "worldModel/camera.h"
+
 
 class GLRenderer {
 private:

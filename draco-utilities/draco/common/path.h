@@ -3,7 +3,7 @@
 #define DRACO_FILE_SYSTEM_H
 
 #include "EXPORT.h"
-#include <list>
+#include <vector>
 #include <string>
 
 
@@ -33,7 +33,7 @@ public:
 	DRACO_COMMON_API std::string native() const;
 	DRACO_COMMON_API bool exists() const;
 	DRACO_COMMON_API bool isDir() const;
-	DRACO_COMMON_API std::list<std::string> dirList(bool includeHidden = false) const;
+	DRACO_COMMON_API std::vector<std::string> dirList(bool includeHidden = false) const;
 	DRACO_COMMON_API std::string fileName() const;
     DRACO_COMMON_API Path super() const;
 	DRACO_COMMON_API Path &clean();

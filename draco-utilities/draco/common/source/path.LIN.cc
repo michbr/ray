@@ -54,8 +54,8 @@ bool Path::isDir() const {
 	return S_ISDIR(statBuf.st_mode);
 }
 
-list<string> Path::dirList(bool includeHidden) const {
-	list<string> entries;
+vector<string> Path::dirList(bool includeHidden) const {
+	vector<string> entries;
 	DIR *dir = opendir(c_str());
 	if (dir == NULL)
 		return entries;

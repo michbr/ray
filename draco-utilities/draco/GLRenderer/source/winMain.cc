@@ -166,8 +166,8 @@ int WinMain( HINSTANCE hInstance,  HINSTANCE hPrevInstance,  LPSTR lpCmdLine,  i
                         }
 						if (msg.message == WM_MOUSEMOVE) {
 							POINT p;
-							if(GetCursorPos(&p)) 
-								engine.motionEvent(p.x, p.y);
+//							if(GetCursorPos(&p))
+//								engine.motionEvent(p.x, p.y);
 						}
                         else {
 							TranslateMessage(&msg);

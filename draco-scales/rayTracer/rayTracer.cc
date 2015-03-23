@@ -1,6 +1,7 @@
 #include "rayTracer.h"
 #include "loader.h"
 #include "camera.h"
+#include "common/path.h"
 #include "wireframe.h"
 #include "renderer.h"
 #include "FL/Fl_File_Chooser.H"
@@ -20,7 +21,6 @@
 #include <iomanip>
 #include <iostream>
 #include <sstream>
-#include <unistd.h>
 #include <thread>
 
 using namespace std;
@@ -158,8 +158,9 @@ void RayTracer::run () {
 }
 
 void RayTracer::loadModel(string location) {
-        model = new WorldModel();
-        AssetLoader::loadAsset(location.c_str(), *model);
+	model = new WorldModel();
+	for(string file: Path(location).dirList(true))
+		AssetLoader::loadAsset(file, *model);
 }
 
 

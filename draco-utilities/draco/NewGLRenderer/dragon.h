@@ -26,8 +26,8 @@ class DragonEngine {
 
 	   void initRenderer();
 		void render();
-		void event(int keyCode);
-		void motionEvent(int x, int y);
+//		void event(int keyCode);
+//		void motionEvent(int x, int y);
 	   //GameWindow & getWindow();
 };
 
