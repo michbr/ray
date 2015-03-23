@@ -52,6 +52,8 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 ##  dependencies  ##
 include_directories(${UTILITIES_DIR}/draco/DragonMath/)
 
+set(LIBS ${LIBS} DragonMath)
+
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
 
