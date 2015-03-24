@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <iostream>
+#include <RayTracer/renderer.h>
 
 using namespace std;
 
@@ -58,3 +59,6 @@ vector<Vector3<double>> WorldModel::getVertices() {
 	return assets[0].getFaces();
 }*/
 
+void WorldModel::assignRenderer(Renderer &rend) {
+
+}

@@ -23,6 +23,7 @@ private:
 	DragonEngine engine;
 	Thread * main;
 	cube_box * display;
+	bool running;
 public:
         GLTab(ScaleType *type, Fl_Group *pane, const std::string &startDir);
         void draw();
