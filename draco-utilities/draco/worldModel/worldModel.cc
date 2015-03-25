@@ -17,6 +17,9 @@ WorldModel::WorldModel() {
 
 void WorldModel::addObject(SceneObject * asset) {
 	assets.push_back(asset);
+	for(Renderer *rend: renderers) {
+		rend->addObject(asset);
+	}
 //	SceneObject * head = new SceneObject();
 //	AssetLoader::loadAsset(filename, *head);
 //	assets.push_back(head);
@@ -59,6 +62,16 @@ vector<Vector3<double>> WorldModel::getVertices() {
 	return assets[0].getFaces();
 }*/
 
-void WorldModel::assignRenderer(Renderer &rend) {
+void WorldModel::addRenderer(Renderer &rend) {
+	renderers.push_back(&rend);
+	for(SceneObject *ob: assets) {
+		rend.addObject(ob);
+	}
+}
 
+void WorldModel::removeRenderer(Renderer &rend) {
+	renderers.push_back(&rend);
+	for(SceneObject *ob: assets) {
+		rend.removeObject(ob);
+	}
 }

@@ -2,6 +2,7 @@
 #define GL_RENDERER_OBJ_H
 
 #include "window.h"
+#include "worldModel/renderer.h"
 #include "worldModel/camera.h"
 
 #include <GL/glew.h>
@@ -9,11 +10,13 @@
 #include <worldModel/worldModel.h>
 
 
-class GLRenderer {
+class GLRenderer: public Renderer {
 public:
 	GLRenderer(GameWindow &win, Camera *cam);
+	void setWorld(WorldModel &world);
 
-	void add(std::string fileName);
+	void addObject(SceneObject *object);
+	void removeObject(SceneObject *object);
 
 
 	//static Renderer & getInstance();
@@ -27,7 +30,7 @@ private:
 	//static Renderer & instance;
 	Camera *cam;
 	WorldModel * world;
-	std::list<GLuint> buffers;
+	std::unordered_map<SceneObject*, GLuint> buffers;
 
 	void initGL(GameWindow &win);
 	void initialize(GameWindow &win);

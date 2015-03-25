@@ -11,6 +11,7 @@
 
 using namespace std;
 
+
 GLfloat	vertices[] = {
 	1, 1, 1,    1, -1,  1,    1,  -1,  -1,    1,  1, -1,
 	-1, 1, 1,   -1, 1,  -1,   -1,  -1,  -1,   -1,  -1, 1,
@@ -35,26 +36,30 @@ GLRenderer::GLRenderer(GameWindow & win, Camera * camera) {
 }
 
 GLfloat * triangle;
-GLfloat cube [] = {
-		-1.0f, -1.0f, 0.0f,
-		1.0f, -1.0f, 0.0f,
-		0.0f,  1.0f, 0.0f,
-};
+//GLfloat cube [] = {
+//		-1.0f, -1.0f, 0.0f,
+//		1.0f, -1.0f, 0.0f,
+//		0.0f,  1.0f, 0.0f,
+//};
 int vertexCount;
 
 void GLRenderer::initialize(GameWindow & win) {
-	world = new WorldModel();
 //	AssetLoader::loadAsset(assetFolder, *world);
-	vector<Vector3<double>> vertices = world->getVertices();
-	vertexCount = vertices.size();
-	triangle = new GLfloat[vertexCount*3];
-	for (int i = 0; i < vertexCount; i++) {
-		triangle[3*i] = (float)vertices[i].x;
-		triangle[3*i+1] = (float)vertices[i].y;
-		triangle[3*i+2] = (float)vertices[i].z;
-	}
+//	vector<Vector3<double>> vertices = world->getVertices();
+//	vertexCount = vertices.size();
+//	triangle = new GLfloat[vertexCount*3];
+//	for (int i = 0; i < vertexCount; i++) {
+//		triangle[3*i] = (float)vertices[i].x;
+//		triangle[3*i+1] = (float)vertices[i].y;
+//		triangle[3*i+2] = (float)vertices[i].z;
+//	}
 
 	initGL(win);
+}
+
+void GLRenderer::setWorld(WorldModel &world) {
+	this->world = &world;
+	world.addRenderer(*this);
 }
 
 GLuint vertexbuffer = 0;
@@ -73,14 +78,14 @@ void GLRenderer::initGL(GameWindow & win) {
 
 
 
-	// Generate 1 buffer, put the resulting identifier in vertexbuffer
-	glGenBuffers(1, &vertexbuffer);
-
-	// The following commands will talk about our 'vertexbuffer' buffer
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-
-	// Give our vertices to OpenGL.
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertexCount*3, triangle, GL_STATIC_DRAW);
+//	// Generate 1 buffer, put the resulting identifier in vertexbuffer
+//	glGenBuffers(1, &vertexbuffer);
+//
+//	// The following commands will talk about our 'vertexbuffer' buffer
+//	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+//
+//	// Give our vertices to OpenGL.
+//	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertexCount*3, triangle, GL_STATIC_DRAW);
 
 }
 
@@ -112,7 +117,39 @@ void GLRenderer::render() {
 	//glUseProgram(programID);
 	glColor3f(1, .07, .57);
 	glPushMatrix();
-	drawCube();
+
+//	drawCube();
+	// render all buffers
+
+
 	glPopMatrix();
 
+}
+
+void GLRenderer::addObject(SceneObject *object) {
+	GLuint buffer = buffers[object];
+	if (buffer == 0) {
+		// generate the new buffer
+		glGenBuffers(1, &buffer);
+//		glBindBuffer(GL_ARRAY_BUFFER, buffer);
+		buffers[object] = buffer;
+	}
+
+	// Give our vertices to OpenGL
+	vector<GLfloat> coords;
+	for (int i = 0; i < object->getFaces().size(); i++) {
+		vector<Vector3<double>> subset = object->getFaces()[i]->getVertices();
+		for (int j = 0; j < subset.size(); j++) {
+			coords.push_back(subset[j].x);
+			coords.push_back(subset[j].y);
+			coords.push_back(subset[j].z);
+		}
+	}
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * coords.size(), coords.data(), GL_STATIC_DRAW);
+}
+void GLRenderer::removeObject(SceneObject *object) {
+	GLuint buffer = buffers[object];
+	buffers.erase(object);
+	if (buffer == 0) return;
+	glDeleteBuffers(1, &buffer);
 }

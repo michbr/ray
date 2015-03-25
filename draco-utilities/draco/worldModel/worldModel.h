@@ -7,6 +7,7 @@
 #include "face.h"
 #include "renderer.h"
 
+#include <list>
 #include <string>
 #include <unordered_map>
 #include <vector>
@@ -23,12 +24,13 @@ public:
 
 	std::vector<Vector3<double>> getVertices();
 
-	void assignRenderer(Renderer &rend);
+	void addRenderer(Renderer &rend);
+	void removeRenderer(Renderer &rend);
 
 private:
 	std::vector<SceneObject *> assets;
-	std::vector<Texture *> textures;
-	Renderer *renderer;
+//	std::vector<Texture *> textures;
+	std::list<Renderer *> renderers;
 //	std::unordered_map<std::string, bool> supportedTypes { {"obj", true} };
 //	bool getFiles(std::string dir, std::vector<std::string> & files);
 };
