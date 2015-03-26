@@ -1,6 +1,8 @@
 #include "rendererTab.h"
 
+#include <common/path.h>
 #include <FL/Fl.H>
+#include <AssetLoader/loader.h>
 
 using namespace std;
 
@@ -37,6 +39,8 @@ void GLTab::run() {
 
 void GLTab::initialize() {
 	engine.initRenderer();
+	AssetLoader::loadAsset("../../old/models/cube/cube.obj", engine.getWorld());
+	AssetLoader::loadAsset("../../old/models/cube/cube 2.obj", engine.getWorld());
 }
 
 void GLTab::draw() {

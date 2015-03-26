@@ -41,7 +41,7 @@ GLfloat * triangle;
 //		1.0f, -1.0f, 0.0f,
 //		0.0f,  1.0f, 0.0f,
 //};
-int vertexCount;
+//int vertexCount;
 
 void GLRenderer::initialize(GameWindow & win) {
 //	AssetLoader::loadAsset(assetFolder, *world);
@@ -60,6 +60,9 @@ void GLRenderer::initialize(GameWindow & win) {
 void GLRenderer::setWorld(WorldModel &world) {
 	this->world = &world;
 	world.addRenderer(*this);
+}
+WorldModel& GLRenderer::getWorld() {
+	return *world;
 }
 
 GLuint vertexbuffer = 0;
@@ -93,9 +96,8 @@ void GLRenderer::initGL(GameWindow & win) {
 
 
 
-void drawCube() {
-	glEnableVertexAttribArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+void drawBuffer(GLuint buffer, GLsizei vertexCount) {
+	glBindBuffer(GL_ARRAY_BUFFER, buffer);
 	glVertexAttribPointer(
 		0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
 		3,                  // size
@@ -106,9 +108,10 @@ void drawCube() {
 	);
 
 	// Draw the triangle !
+	cout << "buffer: " << buffer << endl;
+	cout << "vertex count: " << vertexCount << endl;
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount); // Starting from vertex 0; 3 vertices total -> 1 triangle
 
-	glDisableVertexAttribArray(0);
 }
 
 
@@ -120,6 +123,11 @@ void GLRenderer::render() {
 
 //	drawCube();
 	// render all buffers
+	glEnableVertexAttribArray(0);
+	for(auto buffer: buffers) {
+		drawBuffer(buffer.second.buffer, buffer.second.vertexCount);
+	}
+	glDisableVertexAttribArray(0);
 
 
 	glPopMatrix();
@@ -127,12 +135,12 @@ void GLRenderer::render() {
 }
 
 void GLRenderer::addObject(SceneObject *object) {
-	GLuint buffer = buffers[object];
+	GLuint buffer = buffers[object].buffer;
 	if (buffer == 0) {
 		// generate the new buffer
 		glGenBuffers(1, &buffer);
-//		glBindBuffer(GL_ARRAY_BUFFER, buffer);
-		buffers[object] = buffer;
+		glBindBuffer(GL_ARRAY_BUFFER, buffer);
+		buffers[object].buffer = buffer;
 	}
 
 	// Give our vertices to OpenGL
@@ -145,10 +153,11 @@ void GLRenderer::addObject(SceneObject *object) {
 			coords.push_back(subset[j].z);
 		}
 	}
+	buffers[object].vertexCount = coords.size() /3;
 	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * coords.size(), coords.data(), GL_STATIC_DRAW);
 }
 void GLRenderer::removeObject(SceneObject *object) {
-	GLuint buffer = buffers[object];
+	GLuint buffer = buffers[object].buffer;
 	buffers.erase(object);
 	if (buffer == 0) return;
 	glDeleteBuffers(1, &buffer);

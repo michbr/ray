@@ -16,7 +16,7 @@
 #endif
 
 
-class Renderer {
+class ModelRenderer {
 public:
 	virtual void addObject(SceneObject *) = 0;
 	virtual void removeObject(SceneObject *) = 0;

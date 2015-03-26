@@ -219,10 +219,10 @@ void traverseScene(aiNode& node, SceneObject & output, aiMatrix4x4& accTransform
 }
 
 void AssetLoader::loadAsset ( string filename, WorldModel & out) {
-	if (chdir(filename.c_str()) < 0) {
-		cerr << "Unable to access folder: " << filename << endl;
-		exit(1);
-	}
+//	if (chdir(filename.c_str()) < 0) {
+//		cerr << "Unable to access folder: " << filename << endl;
+//		exit(1);
+//	}
 	Assimp::Importer importer;
 	SceneObject * head = new SceneObject();
 	//        cout << test[i] << endl;

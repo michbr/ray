@@ -24,13 +24,13 @@ public:
 
 	std::vector<Vector3<double>> getVertices();
 
-	void addRenderer(Renderer &rend);
-	void removeRenderer(Renderer &rend);
+	void addRenderer(ModelRenderer &rend);
+	void removeRenderer(ModelRenderer &rend);
 
 private:
 	std::vector<SceneObject *> assets;
 //	std::vector<Texture *> textures;
-	std::list<Renderer *> renderers;
+	std::list<ModelRenderer *> renderers;
 //	std::unordered_map<std::string, bool> supportedTypes { {"obj", true} };
 //	bool getFiles(std::string dir, std::vector<std::string> & files);
 };
