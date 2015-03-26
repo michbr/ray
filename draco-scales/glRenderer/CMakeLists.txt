@@ -75,6 +75,7 @@ endif(OPENGL_FOUND)
 set(LIBS ${LIBS} DracoCommon)
 
 set(LIBS ${LIBS} NewGLRenderer)
+set(LIBS ${LIBS} AssetLoader)
 
 
 
