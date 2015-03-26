@@ -1,59 +1,26 @@
+
 #include "glRenderer.h"
-#include "loadShader.h"
-
-#include <GL/glew.h>
-#include <GL/gl.h>
-
-#include <GL/glext.h>
-
-#include <iostream>
-#include <AssetLoader/loader.h>
+//#include "loadShader.h"
+//
+//#include <GL/glew.h>
+//#include <GL/gl.h>
+//
+//#include <GL/glext.h>
+//
+//#include <iostream>
+//#include <AssetLoader/loader.h>
 
 using namespace std;
 
 
-GLfloat	vertices[] = {
-	1, 1, 1,    1, -1,  1,    1,  -1,  -1,    1,  1, -1,
-	-1, 1, 1,   -1, 1,  -1,   -1,  -1,  -1,   -1,  -1, 1,
-	1, -1, 1,   -1, -1,  1,    -1, -1,  -1,    1, -1, -1,
-	-1,  1, -1,   -1,  1,  1,    1,  1,  1,    1,  1, -1,
-	-1, -1, -1,   -1,  1, -1,    1,  1, -1,    1, -1, -1,
-	1, 1,  1,   -1,  1,  1,    -1,  -1,  1,    1, -1,  1
-};
-
-GLfloat	colors[] = {
-	1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0,
-	0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
-	0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1,
-	1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0,
-	1, 0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, //changing this from 1, 0, 1 to green
-	0, 1, 1, 0, 1, 1, 0, 1, 1, 0, 1, 1
-};
 
 GLRenderer::GLRenderer(GameWindow & win, Camera * camera) {
 	cam = camera;
 	initialize(win);
 }
 
-GLfloat * triangle;
-//GLfloat cube [] = {
-//		-1.0f, -1.0f, 0.0f,
-//		1.0f, -1.0f, 0.0f,
-//		0.0f,  1.0f, 0.0f,
-//};
-//int vertexCount;
 
 void GLRenderer::initialize(GameWindow & win) {
-//	AssetLoader::loadAsset(assetFolder, *world);
-//	vector<Vector3<double>> vertices = world->getVertices();
-//	vertexCount = vertices.size();
-//	triangle = new GLfloat[vertexCount*3];
-//	for (int i = 0; i < vertexCount; i++) {
-//		triangle[3*i] = (float)vertices[i].x;
-//		triangle[3*i+1] = (float)vertices[i].y;
-//		triangle[3*i+2] = (float)vertices[i].z;
-//	}
-
 	initGL(win);
 }
 
@@ -65,9 +32,6 @@ WorldModel& GLRenderer::getWorld() {
 	return *world;
 }
 
-GLuint vertexbuffer = 0;
-//GLuint programID;
-
 void GLRenderer::initGL(GameWindow & win) {
 	glLoadIdentity();
 	glViewport(0,0,win.getWidth(),win.getHeight());
@@ -78,23 +42,7 @@ void GLRenderer::initGL(GameWindow & win) {
 	glFrustum(-1,1,-1,1,2,10000);
 	glTranslatef(0,0,-10);
 //	gl_font(FL_HELVETICA_BOLD, 16 );
-
-
-
-//	// Generate 1 buffer, put the resulting identifier in vertexbuffer
-//	glGenBuffers(1, &vertexbuffer);
-//
-//	// The following commands will talk about our 'vertexbuffer' buffer
-//	glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-//
-//	// Give our vertices to OpenGL.
-//	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * vertexCount*3, triangle, GL_STATIC_DRAW);
-
 }
-
-//#define v3f(x) glVertex3fv(x)
-
-
 
 void drawBuffer(GLuint buffer, GLsizei vertexCount) {
 	glBindBuffer(GL_ARRAY_BUFFER, buffer);
@@ -107,13 +55,9 @@ void drawBuffer(GLuint buffer, GLsizei vertexCount) {
 		(void*)0            // array buffer offset
 	);
 
-	// Draw the triangle !
-	cout << "buffer: " << buffer << endl;
-	cout << "vertex count: " << vertexCount << endl;
+	// Draw the triangle
 	glDrawArrays(GL_TRIANGLES, 0, vertexCount); // Starting from vertex 0; 3 vertices total -> 1 triangle
-
 }
-
 
 void GLRenderer::render() {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -121,7 +65,6 @@ void GLRenderer::render() {
 	glColor3f(1, .07, .57);
 	glPushMatrix();
 
-//	drawCube();
 	// render all buffers
 	glEnableVertexAttribArray(0);
 	for(auto buffer: buffers) {
