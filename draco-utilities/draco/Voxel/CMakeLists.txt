@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
 
 
+
 ##  meta data  ##
 project (DracoVoxel)
 
@@ -23,11 +24,13 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 add_definitions(-DDLL_EXPORT_DRACO_VOXEL)
 
 
+
 ##  source files  ##
 file(GLOB SOURCES
 	${PROJECT_SOURCE_DIR}/*.cc
 	${PROJECT_SOURCE_DIR}/*.h
 )
+
 
 
 ##  compiler directives ##
@@ -37,12 +40,17 @@ endif(UNIX)
 set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
+
+
+
 ##  dependencies  ##
 include_directories(
 	${PROJECT_SOURCE_DIR}
 	${UTILITIES_DIR}/draco/
 )
 set(LIBS ${LIBS} DragonMath WorldModel)
+
 
 
 ##  deliverables  ##

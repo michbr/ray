@@ -12,34 +12,12 @@
 
 using namespace std;
 
+
 const aiScene * currentScene;
 
 string folder;
 
-std::unordered_map<std::string, bool> supportedTypes { {"obj", true} };
-
-bool getFiles (string dir, vector<string> &files) {
-    DIR *dp;
-    struct dirent *dirp;
-    if((dp  = opendir(dir.c_str())) == NULL) {
-        cout << "Error(" << errno << ") opening " << dir << endl;
-        return false;
-    }
-
-    while ((dirp = readdir(dp)) != NULL) {
-        string ending = string(dirp->d_name);
-        size_t dotPos = ending.find_last_of(".");
-        if (dotPos != string::npos && dotPos < (ending.length() -1)) {
-                ending = ending.substr(dotPos+1);
-                //cout << ending << endl;
-                if (supportedTypes.count(ending)) {
-                        files.push_back(dir + "/" + dirp->d_name);
-                }
-        }
-    }
-    closedir(dp);
-    return true;
-}
+unordered_map<std::string, bool> supportedTypes { {"obj", true} };
 
 
 Vector3<double> constructVertex(aiVector3D & in) {
@@ -206,13 +184,13 @@ void traverseScene(aiNode& node, SceneObject & output, aiMatrix4x4& accTransform
 		//output.addChild(child);
 		traverseScene(*node.mChildren[i], output, accTransform );
 	}
-	
+
 /*	if (scene->HasCameras()) {
 		cout << "Cameras: " << endl;;
 		for (int i = 0; i < scene->mNumCameras; i++) {
 			cout << (scene->mCameras)[i]->mName.C_Str() << endl;
 		}
-	}	
+	}
 	if (scene->HasLights()) {
 		cout << "Lights: " << endl;
 		for (int i = 0; i < scene->mNumLights; i++) {
@@ -233,7 +211,7 @@ void traverseScene(aiNode& node, SceneObject & output, aiMatrix4x4& accTransform
 			cout << "      Faces: " << endl;
 			if ((scene->mMeshes)[i]->HasFaces()) {
 				for (int j = 0; j < (scene->mMeshes)[i]->mNumFaces; j++) {
-					cout << "         " << (scene->mMeshes)[i]->mFaces[j].mNumIndices << endl;	
+					cout << "         " << (scene->mMeshes)[i]->mFaces[j].mNumIndices << endl;
 				}
 			}
                 }
@@ -241,52 +219,36 @@ void traverseScene(aiNode& node, SceneObject & output, aiMatrix4x4& accTransform
 }
 
 void AssetLoader::loadAsset ( string filename, WorldModel & out) {
-	vector<string> test;
-        if (chdir(filename.c_str()) < 0) {
-                cerr << "Unable to access folder: " << filename << endl;
-                exit(1);
-        }
-        getFiles(".", test);
+//	if (chdir(filename.c_str()) < 0) {
+//		cerr << "Unable to access folder: " << filename << endl;
+//		exit(1);
+//	}
 	Assimp::Importer importer;
-        for (int i = 0; i < test.size(); i++) {
-		SceneObject * head = new SceneObject();
-		//        cout << test[i] << endl;
-        	//        out.addObject(test[i]);
-        
-		// Create an instance of the Importer class
+	SceneObject * head = new SceneObject();
+	//        cout << test[i] << endl;
+	//        out.addObject(test[i]);
 
-		// And have it read the given file with some example postprocessing
-		// Usually - if speed is not the most important aspect for you - you'll
-		// propably to request more postprocessing than we do in this example.
-		currentScene = importer.ReadFile( test[i],
+	// Create an instance of the Importer class
+
+	// And have it read the given file with some example postprocessing
+	// Usually - if speed is not the most important aspect for you - you'll
+	// propably to request more postprocessing than we do in this example.
+	currentScene = importer.ReadFile(filename,
 		aiProcess_CalcTangentSpace |
 		aiProcess_Triangulate |
 		aiProcess_JoinIdenticalVertices |
 		aiProcess_SortByPType);
-		// If the import failed, report it
-		if( !currentScene) {
-			//DoTheErrorLogging( importer.GetErrorString());
-			cerr << "Failed to load '" << filename << "'" << endl;
-			exit(1);
-			//return false;
-		}
-		// Now we can access the file's contents.
-	
-		folder = Path(filename).expand();
-		cout << folder << endl;
-		traverseScene(*(currentScene->mRootNode), *head,  currentScene->mRootNode->mTransformation);
-		out.addObject(head);
-		// We're done. Everything will be cleaned up by the importer destructor
-		//return true;
-	}
-}
-
-
-/*int main (int argc, char * argv [] ) {
-	if (argc < 2) {
-		cerr << "Usage: " << argv[0] << " <MODEL> " << endl;
+	// If the import failed, report it
+	if( !currentScene) {
+		//DoTheErrorLogging( importer.GetErrorString());
+		cerr << "Failed to load '" << filename << "'" << endl;
 		exit(1);
+		//return false;
 	}
-	cout << argv[1] << endl;
-	DoTheImportThing(string(argv[1]));	
-}*/
+	// Now we can access the file's contents.
+
+	traverseScene(*(currentScene->mRootNode), *head,  currentScene->mRootNode->mTransformation);
+	out.addObject(head);
+	// We're done. Everything will be cleaned up by the importer destructor
+	//return true;
+}

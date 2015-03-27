@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <iostream>
+#include <RayTracer/renderer.h>
 
 using namespace std;
 
@@ -16,6 +17,9 @@ WorldModel::WorldModel() {
 
 void WorldModel::addObject(SceneObject * asset) {
 	assets.push_back(asset);
+	for(ModelRenderer *rend: renderers) {
+		rend->addObject(asset);
+	}
 //	SceneObject * head = new SceneObject();
 //	AssetLoader::loadAsset(filename, *head);
 //	assets.push_back(head);
@@ -58,3 +62,16 @@ vector<Vector3<double>> WorldModel::getVertices() {
 	return assets[0].getFaces();
 }*/
 
+void WorldModel::addRenderer(ModelRenderer &rend) {
+	renderers.push_back(&rend);
+	for(SceneObject *ob: assets) {
+		rend.addObject(ob);
+	}
+}
+
+void WorldModel::removeRenderer(ModelRenderer &rend) {
+	renderers.push_back(&rend);
+	for(SceneObject *ob: assets) {
+		rend.removeObject(ob);
+	}
+}

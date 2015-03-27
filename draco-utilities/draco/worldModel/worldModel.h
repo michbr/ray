@@ -2,29 +2,37 @@
 #define WORLD_MODEL_OBJ_H
 
 #include "TextureLoader/texture.h"
-
 #include "sceneObject.h"
-
 #include "light.h"
 #include "face.h"
+#include "renderer.h"
 
+#include <list>
 #include <string>
 #include <unordered_map>
 #include <vector>
 
+
 class WorldModel {
-private:
-	std::vector<SceneObject *> assets;
-	std::vector<Texture *> textures;
-//	std::unordered_map<std::string, bool> supportedTypes { {"obj", true} };
-//	bool getFiles(std::string dir, std::vector<std::string> & files);
 public:
 	WorldModel();
-	void addObject(SceneObject *);//std::string filename);
+	WorldModel(const WorldModel &source);
+
+	void addObject(SceneObject *);
 	std::vector<Face *> & getFaces();
 	std::vector<Light *> getLights();
 
 	std::vector<Vector3<double>> getVertices();
+
+	void addRenderer(ModelRenderer &rend);
+	void removeRenderer(ModelRenderer &rend);
+
+private:
+	std::vector<SceneObject *> assets;
+//	std::vector<Texture *> textures;
+	std::list<ModelRenderer *> renderers;
+//	std::unordered_map<std::string, bool> supportedTypes { {"obj", true} };
+//	bool getFiles(std::string dir, std::vector<std::string> & files);
 };
 
 #endif
