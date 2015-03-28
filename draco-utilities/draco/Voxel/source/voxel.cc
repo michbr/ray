@@ -1,6 +1,6 @@
 ﻿
 
-#include "voxel.h"
+#include "../voxel.h"
 
 using namespace std;
 using namespace Vox;

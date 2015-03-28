@@ -1,6 +1,6 @@
 
 
-#include "node.h"
+#include "../node.h"
 
 using namespace std;
 using namespace Vox;

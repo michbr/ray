@@ -1,6 +1,6 @@
 
 
-#include "polygonizer.h"
+#include "../polygonizer.h"
 
 using namespace std;
 using namespace Vox;

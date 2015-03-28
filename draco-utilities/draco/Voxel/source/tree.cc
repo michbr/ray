@@ -1,6 +1,6 @@
 
 
-#include "tree.h"
+#include "../tree.h"
 
 using namespace std;
 using namespace Vox;
