@@ -1,6 +1,3 @@
-//
-// Created by Cullen on 3/26/2015.
-//
 
 #ifndef DRACO_VOXEL_MUTATOR_H
 #define DRACO_VOXEL_MUTATOR_H
@@ -19,13 +16,15 @@ namespace Vox {
 			replace
 		};
 
-		void apply(Tree &target) const;
+		void apply(Tree& target) const;
 
+
+	protected:
 		virtual Voxel mutate(const Index&) const = 0;
 		virtual TAction action(const Index&) const = 0;
 
-	protected:
-
+	private:
+		void apply(Node& target, const Index&) const;
 	};
 }
 

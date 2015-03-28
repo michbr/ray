@@ -65,3 +65,22 @@ byte Voxel::average() const {
 ostream &operator<<(ostream& out, byte value) {
     return out << (unsigned int) value;
 }
+
+Voxel Voxel::read(void *address) {
+	Voxel voxel(0, 0);
+	void **value = ((void**) (&voxel)) +1;
+	void **loc = (void**)address;
+	*value = *loc;
+	return voxel;
+}
+void Voxel::write(void *address, const Voxel& voxel) {
+	void **value = ((void**) (&voxel)) +1;
+	void **loc = (void**)address;
+
+//	cout << "voxel: " << &(voxel) << endl;
+//	cout << "value: " << (value) << endl;
+//	cout << "address: " << (address) << endl;
+//	cout << "loc: " << (loc) << endl;
+
+	*loc = *value;
+}

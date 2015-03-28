@@ -1,6 +1,7 @@
 
 
 #include "../node.h"
+#include "voxel.h"
 
 using namespace std;
 using namespace Vox;
@@ -8,36 +9,43 @@ using namespace Vox;
 
 Node::Node(): compactChildren(0xFF) {}
 
+
 byte Node::getIndex(byte x, byte y, byte z) const {
     return (byte)(x *(CHILD_DIM << 1) +y *CHILD_DIM +z);
 }
+Block Node::get(byte x, byte y, byte z) const {
+	return get(getIndex(x, y, z));
+}
 
-const Block &Node::get(byte i) const {
+Block Node::get(byte i) const {
 	if (compactChildren & (1 << i)) {
-		return (Block &) children[i];
+		return Voxel::read(&children[i]);
 	} else {
 		return *children[i];
 	}
 }
-Block &Node::get(byte i) {
-    if (compactChildren & (1 << i)) {
-	    return (Block &) children[i];
-    } else {
-	    return *children[i];
-    }
-}
-void Node::set(byte i, const Block &b) {
-	if (b.compact()) {
 
-	}
+
+void Node::set(byte i, Node* n) {
+	if (compactChildren & (1 << i))
+		delete children[i];
+	setNoClear(i, n);
+}
+void Node::set(byte i, const Voxel& v) {
+	if (compactChildren & (1 << i))
+		delete children[i];
+	setNoClear(i, v);
 }
 
-Block &Node::get(byte x, byte y, byte z) {
-    return get(getIndex(x, y, z));
+void Node::setNoClear(byte i, Node* n) {
+	compactChildren = compactChildren & ~(1 << i);
+	children[i] = n;
 }
-const Block &Node::get(byte x, byte y, byte z) const {
-    return get(getIndex(x, y, z));
+void Node::setNoClear(byte i, const Voxel &v) {
+	compactChildren = compactChildren | (1 << i);
+	Voxel::write(&children[i], v);
 }
+
 
 
 bool Node::compact() const {

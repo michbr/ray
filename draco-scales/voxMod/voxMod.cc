@@ -3,6 +3,7 @@
 #include "common/directoryViewer.h"
 #include "FL/Fl_Box.H"
 #include "FL/Fl_File_Chooser.H"
+#include "Voxel/tree.h"
 
 #include <iostream>
 #include <string>
@@ -28,6 +29,10 @@ VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startD
 		0, 0, 0,
 		0., 1., 0.
 	);
+//	Vox::Tree t;
+//	int *buf = new int[8];
+//	Vox::Voxel::write(buf, Vox::Voxel(0, 0));
+//	free(buf);
 	main = new Thread(this);
 	main->start();
 }

@@ -3,12 +3,14 @@
 #define DRACO_VOX_BLOCK_H
 
 
-#include "voxel.h"
+//#include "voxel.h"
+#include <iostream>
 
 
 namespace Vox {
 
-	class Atom;
+    typedef unsigned char byte;
+    std::ostream &operator<<(std::ostream& out, byte value);
 
 	class Block {
 	public:

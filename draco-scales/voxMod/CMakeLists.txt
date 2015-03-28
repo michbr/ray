@@ -20,6 +20,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG ${LIBRARY_OUTPUT_PATH} )
 
 set(DRACO_UTILITIES_DIR "${UTILITIES_DIR}/draco")
 set(FLTK_DIR "${UTILITIES_DIR}/fltk-1.3.3")
+set(GLEW_DIR "${UTILITIES_DIR}/glew/glew/include")
 
 
 
@@ -52,6 +53,7 @@ include_directories(
 	${DRACO_SOURCE_DIR}
 	${DRACO_UTILITIES_DIR}
 	${FLTK_DIR}
+	${GLEW_DIR}
 )
 if (UNIX)
 	find_library(FLTK_LIBRARIES fltk

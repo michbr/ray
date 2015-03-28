@@ -10,10 +10,11 @@ namespace Vox {
 
     class Tree {
     public:
-	    Tree();
-
-    protected:
+	    const byte maxDepth;
 	    Node head;
+
+	    Tree(byte maxDepth);
+
     };
 
 
@@ -26,6 +27,10 @@ namespace Vox {
 		Index(byte depth);
 		Index(byte depth, int x, int y, int z);
 		Index(const Index& source);
+
+		Index getChild() const;
+		Index getChild(byte index) const;
+		Index getNeighbor(byte index) const;
 	};
 }
 
