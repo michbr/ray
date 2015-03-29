@@ -1,5 +1,5 @@
 ﻿
-#include "../marchingCubes.h"
+#include "marchingCubes.h"
 
 using namespace std;
 using namespace Vox;

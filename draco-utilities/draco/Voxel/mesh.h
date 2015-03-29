@@ -3,6 +3,8 @@
 
 #include "voxel.h"
 
+#include <worldModel/sceneObject.h>
+
 
 namespace Vox {
 

@@ -16,15 +16,15 @@ namespace Vox {
 			replace
 		};
 
-		void apply(Tree& target) const;
+		virtual void apply(Tree& target) const;
 
 
 	protected:
-		virtual Voxel mutate(const Index&) const = 0;
+		virtual Voxel mutate(const Index&, Block) const = 0;
 		virtual TAction action(const Index&) const = 0;
 
 	private:
-		void apply(Node& target, const Index&) const;
+		void apply(Tree& target, Node& node, const Index&) const;
 	};
 }
 
