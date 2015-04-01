@@ -97,7 +97,7 @@ public:
 
 #endif
 
-cube_box *cube, *cube2;
+GLPane *cube, *cube2;
 
 class DisplayUpdater : public Runnable {
 public:
@@ -155,8 +155,8 @@ ModelViewerTab::ModelViewerTab(ScaleType *type, Fl_Group *pane, const string &st
 		chooser->ok_label("open");
 		Cube * c1 = new Cube(0);
 		Cube * c2 = new Cube(1);
-		cube = new cube_box(c1, 23,50,344,344, 0);
-		cube2 = new cube_box(c2, 375,50,344,344, 0);
+		cube = new GLPane(c1, 23,50,344,344, 0);
+		cube2 = new GLPane(c2, 375,50,344,344, 0);
 		makeform(pane);
 
 //		cube->show();

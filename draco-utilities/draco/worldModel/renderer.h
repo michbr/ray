@@ -3,6 +3,7 @@
 #define DRACO_WORLD_MODEL_RENDERER_H
 
 #include "sceneObject.h"
+#include "camera.h"
 
 
 #ifdef _WIN32
@@ -20,8 +21,9 @@ class ModelRenderer {
 public:
 	virtual void addObject(SceneObject *) = 0;
 	virtual void removeObject(SceneObject *) = 0;
-
+	virtual void setCamera(Camera *) = 0;
 private:
+	Camera * currentCam;
 
 };
 

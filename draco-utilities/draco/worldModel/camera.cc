@@ -11,19 +11,27 @@
 
 using namespace std;
 
-Camera::Camera(float x, float y, float z, float vrp_x, float vrp_y, float vrp_z, float upx, float upy, float upz) :
+Camera::Camera(const Vector3<double> pos, const Vector3<double> dir, const Vector3<double> up) :  position(
+		position), direction(direction), up(up) {
+
+}
+
+
+
+
+/*Camera::Camera(float x, float y, float z, float vrp_x, float vrp_y, float vrp_z, float upx, float upy, float upz) :
 	position(x, y, z),
 	up(upx, upy, upz),
-	direction((position +Vector3<double>(vrp_x, vrp_y, vrp_z)).normal()) {}
+	direction((position +Vector3<double>(vrp_x, vrp_y, vrp_z)).normal()) {}*/
 
-Camera::Camera(string camName, Vector3<double> startPos, Vector3<double> vp_normal, Vector3<double> v_up, double d) :
+/*Camera::Camera(string camName, Vector3<double> startPos, Vector3<double> vp_normal, Vector3<double> v_up, double d) :
 	name(camName),
 	position(startPos),
 	direction(vp_normal),
 	up(v_up),
-	nearPlane(d) {}
+	nearPlane(d) {}*/
 
-void Camera::LookAt(Vector3<double> target) {
+/*void Camera::LookAt(Vector3<double> target) {
 	direction = (target -position).normal();
 }
 
@@ -76,9 +84,9 @@ void Camera::Look(Vector3<float> look) {
 	//glTranslated(-pos[0], -pos[1], -pos[2]);
 	glMultMatrixf(M.toArray());
 	glTranslated(-position[0], -position[1], -position[2]);
-}
+}*/
 
-void Camera::setPerspective(float fovy, float aspect, float zNear, float zFar) {
+//void Camera::setPerspective(float fovy, float aspect, float zNear, float zFar) {
 //glLoadIdentity();
 	//cout << "persp look " << look << endl;
 	/*Matrix<T> M = Matrix<T>(4,4);
@@ -109,15 +117,15 @@ void Camera::setPerspective(float fovy, float aspect, float zNear, float zFar) {
 	//glLoadIdentity();
 	glMultMatrixf(M.toArray());
 	//Look();*/
-	double xmin, xmax, ymin, ymax;
+/*	double xmin, xmax, ymin, ymax;
     ymax = zNear * tan(fovy * M_PI / 360.0);
     ymin = -ymax;
     xmin = ymin * aspect;
     xmax = ymax * aspect;
     glFrustum(xmin, xmax, ymin, ymax, zNear, zFar);
-}
+}*/
 
-void Camera::rotate(float delta, int axis, Vector3<float> look) {
+/*void Camera::rotate(float delta, int axis, Vector3<float> look) {
 	//cout << *this << endl;
 	//look.normalize();
 	//cout << "hi" << endl;
@@ -156,7 +164,7 @@ void Camera::rotate(float delta, int axis, Vector3<float> look) {
 	test.normalize();
 	//TODO removed because the operator<< implementation doesn't work
 	//cout << test << endl;
-}
+}*/
 
 /*
 calc_angle(move_y, RWindow::cam_y, RWindow::cam_z, &RWindow::vrp_y, &RWindow::vrp_z);
@@ -179,7 +187,7 @@ GLfloat RWindow::calc_angle(GLfloat move, GLfloat cam_1, GLfloat cam_2, GLfloat 
 	RWindow::vrp_z = cos(angle - LOOK_SENSITIVITY*move) + RWindow::cam_z;
 }*/
 
-string Camera::getName() const {
+/*string Camera::getName() const {
 	return name;
 }
 
@@ -199,5 +207,5 @@ Vector3<double> Camera::getVerticalAxis() const {
         Vector3<double> v = n.cross(u).normal();
 
         return v;
-}
+}*/
 

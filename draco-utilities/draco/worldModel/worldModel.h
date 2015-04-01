@@ -23,6 +23,7 @@ public:
 	std::vector<Light *> getLights();
 
 	std::vector<Vector3<double>> getVertices();
+	std::vector<Camera> cameras;
 
 	void addRenderer(ModelRenderer &rend);
 	void removeRenderer(ModelRenderer &rend);

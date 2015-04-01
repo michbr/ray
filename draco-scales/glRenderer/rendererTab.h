@@ -22,12 +22,13 @@ class GLTab: public Scale, public Runnable, public GLDrawable  {
 private:
 	DragonEngine engine;
 	Thread * main;
-	cube_box * display;
+	GLPane * display;
 	bool running;
 public:
         GLTab(ScaleType *type, Fl_Group *pane, const std::string &startDir);
         void draw();
 	void initialize();
+	void handleEvent(int key);
 	void run();
 	static void update(void * context);
         ~GLTab();

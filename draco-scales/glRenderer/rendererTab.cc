@@ -19,7 +19,7 @@ GLTab::GLTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(typ
 	pane->current(pane);
 	main = new Thread(this);
 	{
-		display = new cube_box(this, 5, 30, 500, 500, 0);
+		display = new GLPane(this, 5, 30, 500, 500, 0);
 		engine.initWindow(500, 500);
 		engine.placeCamera (
 			0, 0, 8.,
@@ -45,6 +45,10 @@ void GLTab::initialize() {
 
 void GLTab::draw() {
 	engine.render();
+}
+
+void GLTab::handleEvent(int key) {
+	cout << "Got: " << key << endl;
 }
 
 GLTab::~GLTab() {

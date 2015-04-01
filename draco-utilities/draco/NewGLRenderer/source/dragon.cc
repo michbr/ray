@@ -16,7 +16,8 @@ void DragonEngine::placeCamera
  GLfloat v_x, GLfloat v_y, GLfloat v_z,	// look-at point
  GLfloat u_x, GLfloat u_y, GLfloat u_z) {	// up vector	
 
-	cam = new Camera(c_x, c_y, c_z, v_x, v_y, v_z, u_x, u_y, u_z);
+	//cam = new Camera(c_x, c_y, c_z, v_x, v_y, v_z, u_x, u_y, u_z);
+	cam = new Camera(Vector3<double>(c_x, c_y, c_z), Vector3<double>(v_x, v_y, v_z), Vector3<double>(u_x, u_y, u_z));
 //	controls = new Controls(*this, *cam);
 }
 
