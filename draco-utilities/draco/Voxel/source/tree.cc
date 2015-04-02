@@ -9,7 +9,7 @@ using namespace Vox;
 //  Tree class  //
 //////////////////
 
-Tree::Tree(byte maxDepth): maxDepth(maxDepth) {}
+Tree::Tree(byte maxDepth, double size): maxDepth(maxDepth), size(size), voxSize(size /(2 << maxDepth)), pos(0, 0, 0) {}
 
 
 
@@ -35,4 +35,8 @@ Index Index::getChild(byte i) const {
 }
 Index Index::getNeighbor(byte i) const {
 	return Vox::Index(depth, x +(i &4), y +(i &2), z +(i &1));
+}
+Index Index::getParent(byte pDepth) const {
+	byte diff = depth -pDepth;
+	return Vox::Index(pDepth, x >> diff, y >> diff, z >> diff);
 }

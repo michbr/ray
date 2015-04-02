@@ -4,6 +4,8 @@
 #include "node.h"
 #include "voxel.h"
 
+#include <DragonMath/vector.h>
+
 
 namespace Vox {
 
@@ -11,9 +13,11 @@ namespace Vox {
     class Tree {
     public:
 	    const byte maxDepth;
+	    const double size, voxSize;
+	    Vector3<double> pos;
 	    Node head;
 
-	    Tree(byte maxDepth);
+	    Tree(byte maxDepth, double size);
 
     };
 
@@ -31,6 +35,7 @@ namespace Vox {
 		Index getChild() const;
 		Index getChild(byte index) const;
 		Index getNeighbor(byte index) const;
+		Index getParent(byte depth) const;
 	};
 }
 
