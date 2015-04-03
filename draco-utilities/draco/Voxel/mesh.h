@@ -2,6 +2,7 @@
 #define DRACO_VOX_MESH_H
 
 #include "voxel.h"
+#include "meshIterator.h"
 
 #include <worldModel/sceneObject.h>
 
@@ -13,7 +14,10 @@ namespace Vox {
 	    static const byte VOXEL_DEPTH = 4;
 	    static const byte VOXEL_DIMENSION = 1 << VOXEL_DEPTH;
 
+		void update();
+
     private:
+		SceneObject *object;
 
     };
 

@@ -3,9 +3,15 @@
 
 #include "node.h"
 #include "voxel.h"
+#include "mesh.h"
+
+#include <unordered_map>
+#include <worldModel/worldModel.h>
 
 
 namespace Vox {
+
+	class Index;
 
 
     class Tree {
@@ -15,6 +21,13 @@ namespace Vox {
 
 	    Tree(byte maxDepth);
 
+		void addWorld(WorldModel* world);
+		void removeWorld(WorldModel* world);
+		const std::list<WorldModel*>& getWorlds() const;
+
+	protected:
+		std::unordered_map<Index, Mesh> meshes;
+		std::list<WorldModel *> worlds;
     };
 
 
@@ -31,6 +44,15 @@ namespace Vox {
 		Index getChild() const;
 		Index getChild(byte index) const;
 		Index getNeighbor(byte index) const;
+
+		bool operator==(const Index& o) const;
+	};
+}
+
+namespace std {
+	template <> struct hash<Vox::Index> {
+	public:
+		size_t operator()(const Vox::Index& i) const;
 	};
 }
 
