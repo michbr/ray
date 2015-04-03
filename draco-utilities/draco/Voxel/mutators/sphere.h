@@ -10,10 +10,16 @@
 namespace Vox {
     class SphereMut: Mutator {
     public:
-	    SphereMut(const Vector3);
+	    SphereMut(const Vector3& pos, double radius, const Voxel& value);
 
-	    Voxel mutate(const Index& pos, Block) const;
-	    Mutator::TAction action(const Index& pos) const;
+	    bool mutate(const Tree& target, const Index& pos, byte index, Node& parent) const;
+	    void getBounds(const Tree& target, Index& min, Index& max) const;
+//	    Mutator::TAction action(const Index& pos) const;
+
+    protected:
+	    Voxel value;
+	    Vector3<double> pos;
+	    double radius;
     };
 }
 

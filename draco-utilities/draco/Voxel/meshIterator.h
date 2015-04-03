@@ -5,13 +5,16 @@
 #ifndef _DRACO_MESHITERATOR_H_
 #define _DRACO_MESHITERATOR_H_
 
+#include "tree.h"
 
-class MeshIterator {
-public:
-	Index pos;
+namespace Vox {
+	class MeshIterator {
+	public:
+		Index pos;
 
 
-};
+	};
+}
 
 
 #endif //_DRACO_MESHITERATOR_H_

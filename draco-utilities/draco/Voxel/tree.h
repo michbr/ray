@@ -8,18 +8,23 @@
 #include <unordered_map>
 #include <worldModel/worldModel.h>
 
+#include <DragonMath/vector.h>
+
 
 namespace Vox {
 
 	class Index;
+	class Mesh;
 
 
     class Tree {
     public:
 	    const byte maxDepth;
+	    const double size, voxSize;
+	    Vector3<double> pos;
 	    Node head;
 
-	    Tree(byte maxDepth);
+	    Tree(byte maxDepth, double size);
 
 		void addWorld(WorldModel* world);
 		void removeWorld(WorldModel* world);
@@ -44,6 +49,7 @@ namespace Vox {
 		Index getChild() const;
 		Index getChild(byte index) const;
 		Index getNeighbor(byte index) const;
+		Index getParent(byte depth) const;
 
 		bool operator==(const Index& o) const;
 	};

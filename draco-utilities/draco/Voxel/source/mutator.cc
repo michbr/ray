@@ -6,23 +6,17 @@ using namespace Vox;
 
 
 void Mutator::apply(Tree& target) const {
-	apply(target, target.head, Index());
+	Index min, max;
+	getBounds(target, min, max);
+	apply(target, target.head, min, max, Index());
 }
 
-void Mutator::apply(Tree& target, Node& node, const Index& pos) const {
-	Index childPos = pos.getChild();
+void Mutator::apply(Tree& target, Node& node, const Index& min, const Index& max, const Index& pos) const {
+	Index cornerChild = pos.getChild();
 	for(int c=0; c <node.CHILD_COUNT; ++c) {
-		switch(action(pos)) {
-			case ignore:
-				break;
-			case traverse:
-				if (pos.depth < target.maxDepth) {
-					apply(target, node.getNode(c), childPos.getNeighbor(c));
-					break;
-				}
-			case replace:
-				node.set(c, mutate(childPos.getNeighbor(c), node.get(c)));
-				break;
-		}
+		Index childPos = cornerChild.getNeighbor(c);
+		bool traverse = mutate(target, childPos, c, node);
+		if (traverse && pos.depth < target.maxDepth)
+			apply(target, node.getNode(c), min, max, childPos);
 	}
 }

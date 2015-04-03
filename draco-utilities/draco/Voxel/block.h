@@ -15,10 +15,10 @@ namespace Vox {
 	class Block {
 	public:
 
-	    virtual bool compact() const = 0;
+//	    virtual bool compact() const = 0;
 //		virtual byte depth() const = 0;
-		virtual bool empty() const = 0;
-		virtual byte average() const = 0;
+//		virtual bool empty() const = 0;
+//		virtual byte average() const = 0;
 
 
 

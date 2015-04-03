@@ -10,21 +10,22 @@
 namespace Vox {
 	class Mutator {
 	public:
-		enum TAction {
-			traverse,
-			ignore,
-			replace
-		};
+//		enum TAction {
+//			traverse,
+//			ignore,
+//			replace
+//		};
 
 		virtual void apply(Tree& target) const;
 
 
 	protected:
-		virtual Voxel mutate(const Index&, Block) const = 0;
-		virtual TAction action(const Index&) const = 0;
+		virtual bool mutate(const Tree& target, const Index& pos, byte index, Node& parent) const = 0;
+	    virtual void getBounds(const Tree& target, Index& min, Index& max) const = 0;
+//		virtual bool traverse(const Index&) const = 0;
 
 	private:
-		void apply(Tree& target, Node& node, const Index&) const;
+		void apply(Tree& target, Node& node, const Index& min, const Index& max, const Index&) const;
 	};
 }
 

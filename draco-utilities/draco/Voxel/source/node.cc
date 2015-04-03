@@ -32,7 +32,7 @@ byte Node::getIndex(byte x, byte y, byte z) const {
 
 Block* Node::get(byte i) const {
 	if (compact(i)) {
-		return Voxel::read(&children[i]);
+		return (Voxel*) &children[i];
 	} else {
 		return children[i];
 	}
@@ -72,16 +72,16 @@ bool Node::compact() const {
     return sizeof(Node) <= sizeof(void*);
 }
 bool Node::empty() const {
-    for (int i = 0; i < CHILD_COUNT; ++i)
-	    if (!get(i).empty())
-		    return false;
-    return true;
+//    for (int i = 0; i < CHILD_COUNT; ++i)
+//	    if (!get(i).empty())
+//		    return false;
+//    return true;
 }
 byte Node::average() const {
-	int sum = 0;
-	for(int i=0; i<CHILD_COUNT; ++i)
-		sum += get(i).average();
-	return (byte) (sum /CHILD_COUNT);
+//	int sum = 0;
+//	for(int i=0; i<CHILD_COUNT; ++i)
+//		sum += get(i).average();
+//	return (byte) (sum /CHILD_COUNT);
 }
 
 bool Node::compact(byte child) const {
