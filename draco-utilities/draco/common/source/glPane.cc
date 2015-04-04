@@ -24,8 +24,8 @@ void GLPane::draw() {
 
 int GLPane::handle(int e) {
 	switch (e) {
-		case FL_KEYDOWN: drawable->handleEvent(Fl::event_key());
-		case FL_KEYUP:  drawable->handleEvent(Fl::event_key());
+		case FL_KEYDOWN: drawable->handleEvent(Fl::event_key()); break;
+		case FL_KEYUP:  drawable->handleEvent(Fl::event_key()); break;
 		case FL_ENTER: cursor(FL_CURSOR_CROSS); break;
 		case FL_LEAVE: cursor(FL_CURSOR_DEFAULT); break;
 	}

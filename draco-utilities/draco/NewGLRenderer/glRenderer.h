@@ -10,14 +10,16 @@
 #include <worldModel/worldModel.h>
 
 
-class GLRenderer: public ModelRenderer {
+class GLRenderer: public BaseRenderer {
 public:
-	GLRenderer(GameWindow &win, Camera *cam);
+	GLRenderer(int width, int height);
 	void setWorld(WorldModel &world);
 	WorldModel& getWorld();
 
 	void addObject(SceneObject *object);
 	void removeObject(SceneObject *object);
+
+	virtual void setCamera(Camera * cam);
 
 
 	//static Renderer & getInstance();
@@ -44,13 +46,10 @@ private:
 	// GameWindow & window;
 	//static bool initialized;
 	//static Renderer & instance;
-	Camera *cam;
 	WorldModel * world;
 	std::unordered_map<SceneObject*, BufferInfo> buffers;
 
-	void initGL(GameWindow &win);
-	void initialize(GameWindow &win);
-
+	void initGL(int width, int height);
 };
 
 #endif // GL_RENDERER_OBJ_H

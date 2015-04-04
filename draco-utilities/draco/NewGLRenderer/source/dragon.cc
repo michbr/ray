@@ -2,7 +2,7 @@
 //#include "controls.h"
 
 using namespace std;
-
+/*
 DragonEngine::DragonEngine() {
 	
 }
@@ -42,4 +42,4 @@ WorldModel& DragonEngine::getWorld() {
 //
 //void DragonEngine::motionEvent(int x, int y) {
 //	controls->motionEvent(x, y);
-//}
+//}*/

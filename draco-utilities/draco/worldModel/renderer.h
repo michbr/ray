@@ -4,6 +4,7 @@
 
 #include "sceneObject.h"
 #include "camera.h"
+#include "worldModel.h"
 
 
 #ifdef _WIN32
@@ -17,14 +18,14 @@
 #endif
 
 
-class ModelRenderer {
+class BaseRenderer {
 public:
 	virtual void addObject(SceneObject *) = 0;
 	virtual void removeObject(SceneObject *) = 0;
-	virtual void setCamera(Camera *) = 0;
-private:
+	virtual void setCamera(Camera * cam) = 0;
+protected:
 	Camera * currentCam;
-
+	WorldModel * currentModel;
 };
 
 

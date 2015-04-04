@@ -2,7 +2,7 @@
 #define GLRENDERER_TAB_OBJ
 
 #include "scale.h"
-#include "NewGLRenderer/dragon.h"
+#include "NewGLRenderer/glRenderer.h"
 #include "common/glPane.h"
 #include "common/thread.h"
 
@@ -20,7 +20,7 @@ const char *START_TAB_NAME = "GLRenderer";
 
 class GLTab: public Scale, public Runnable, public GLDrawable  {
 private:
-	DragonEngine engine;
+	GLRenderer renderer;
 	Thread * main;
 	GLPane * display;
 	bool running;
