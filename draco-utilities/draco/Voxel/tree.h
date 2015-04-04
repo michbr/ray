@@ -1,9 +1,11 @@
 #ifndef DRACO_VOX_TREE_H
 #define DRACO_VOX_TREE_H
 
-#include "node.h"
-#include "voxel.h"
+#include "index.h"
 #include "mesh.h"
+#include "node.h"
+#include "polygonizer.h"
+#include "voxel.h"
 
 #include <worldModel/worldModel.h>
 
@@ -26,9 +28,22 @@ namespace Vox {
 		void removeWorld(WorldModel* world);
 		const std::list<WorldModel*>& getWorlds() const;
 
+		void pushMesh(SceneObject* mesh) const;
+		void removeMesh(SceneObject* mesh) const;
+
+		void setPolygonizer(Polygonizer<double> *);
+		Polygonizer<double>* getPolygonizer();
+
 	protected:
-//		std::unordered_map<Index, Mesh> meshes;
+		std::unordered_map<Index, Mesh *> meshes;
 		std::list<WorldModel *> worlds;
+		Polygonizer<double>* polygonizer;
+
+		void pushMeshes(WorldModel* world) const;
+		void clearMeshes(WorldModel* world) const;
+
+
+		void updateMeshes();
     };
 
 }

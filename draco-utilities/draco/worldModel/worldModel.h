@@ -10,7 +10,7 @@
 #include <list>
 #include <string>
 #include <unordered_map>
-#include <vector>
+#include <unordered_set>
 
 
 class WorldModel {
@@ -19,6 +19,7 @@ public:
 	WorldModel(const WorldModel &source);
 
 	void addObject(SceneObject *);
+	void removeObject(SceneObject *);
 	std::vector<Face *> & getFaces();
 	std::vector<Light *> getLights();
 
@@ -28,7 +29,7 @@ public:
 	void removeRenderer(ModelRenderer &rend);
 
 private:
-	std::vector<SceneObject *> assets;
+	std::unordered_set<SceneObject *> assets;
 //	std::vector<Texture *> textures;
 	std::list<ModelRenderer *> renderers;
 //	std::unordered_map<std::string, bool> supportedTypes { {"obj", true} };

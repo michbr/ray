@@ -24,6 +24,7 @@ public:
 	void addVertex(Vector3<double>, Vector3<double> *);
 	void addFace(Face * f);
 	void addTexture(std::string path);
+	void clearFaces();
 
 	const Material * getMaterial(int index);
 	Vector3<double> getVertex(int index);

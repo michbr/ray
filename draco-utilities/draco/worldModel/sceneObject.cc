@@ -35,6 +35,10 @@ void SceneObject::addTexture(string texPath) {
 	textures.push_back(texPath);
 }
 
+void SceneObject::clearFaces() {
+	faces.clear();
+}
+
 const Material * SceneObject::getMaterial(int index) {
 	return materials[index];
 }
