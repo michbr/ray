@@ -1,5 +1,6 @@
 
 #include "mutator.h"
+#include "index.h"
 
 using namespace std;
 using namespace Vox;

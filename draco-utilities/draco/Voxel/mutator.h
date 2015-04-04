@@ -5,6 +5,7 @@
 #include "node.h"
 #include "tree.h"
 #include "voxel.h"
+#include "index.h"
 
 
 namespace Vox {

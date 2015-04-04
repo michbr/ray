@@ -1,11 +1,9 @@
-//
-// Created by Cullen on 3/31/2015.
-//
 
-#ifndef _DRACO_MESHITERATOR_H_
-#define _DRACO_MESHITERATOR_H_
+#ifndef DRACO_VOXEL_MESH_ITERATOR_H
+#define DRACO_VOXEL_MESH_ITERATOR_H
 
-#include "tree.h"
+#include "index.h"
+
 
 namespace Vox {
 	class MeshIterator {
@@ -17,4 +15,4 @@ namespace Vox {
 }
 
 
-#endif //_DRACO_MESHITERATOR_H_
+#endif // DRACO_VOXEL_MESH_ITERATOR_H
