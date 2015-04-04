@@ -13,7 +13,6 @@ add_subdirectory("assimp-3.1.1")
 
 add_subdirectory("draco/AssetLoader")
 add_subdirectory("draco/DragonMath")
-add_subdirectory("draco/GLRenderer")
 add_subdirectory("draco/NewGLRenderer")
 add_subdirectory("draco/Image")
 add_subdirectory("draco/RayTracer")
