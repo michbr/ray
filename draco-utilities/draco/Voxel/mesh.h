@@ -3,7 +3,6 @@
 
 #include "voxel.h"
 #include "meshIterator.h"
-#include "tree.h"
 
 #include <worldModel/sceneObject.h>
 
@@ -31,5 +30,7 @@ namespace Vox {
     };
 
 }
+
+#include "tree.h"
 
 #endif //DRACO_VOX_MESH_H

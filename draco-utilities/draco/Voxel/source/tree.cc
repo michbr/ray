@@ -26,12 +26,12 @@ const std::list<WorldModel*>& Tree::getWorlds() const {
 
 void Tree::pushMeshes(WorldModel* world) const {
 	for(auto mesh: meshes) {
-		world->addObject(mesh.second->getObject());
+		world->addObject(mesh.second.getObject());
 	}
 }
 void Tree::clearMeshes(WorldModel *world) const {
 	for(auto mesh: meshes) {
-		world->removeObject(mesh.second->getObject());
+		world->removeObject(mesh.second.getObject());
 	}
 }
 
@@ -51,4 +51,8 @@ void Tree::setPolygonizer(Polygonizer<double>* polygonizer) {
 }
 Polygonizer<double>* Tree::getPolygonizer() {
 	this->polygonizer = polygonizer;
+}
+
+void Tree::updateMeshes() {
+	for()
 }

@@ -12,7 +12,7 @@
 
 namespace Vox {
 
-	class Mesh;
+//	class Mesh;
 
 
     class Tree {
@@ -35,7 +35,7 @@ namespace Vox {
 		Polygonizer<double>* getPolygonizer();
 
 	protected:
-		std::unordered_map<Index, Mesh *> meshes;
+		std::unordered_map<Index, Mesh> meshes;
 		std::list<WorldModel *> worlds;
 		Polygonizer<double>* polygonizer;
 
