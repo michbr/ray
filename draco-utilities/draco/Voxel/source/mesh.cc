@@ -18,6 +18,6 @@ SceneObject* Vox::Mesh::getObject() {
 	return &object;
 }
 
-void Mesh::update() {
+void Mesh::update(MeshIterator& iter) {
 
 }

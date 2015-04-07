@@ -21,7 +21,7 @@ namespace Vox {
 
 		SceneObject* getObject();
 
-		void update();
+		void update(MeshIterator &iter);
 
     private:
 		Tree* tree;
