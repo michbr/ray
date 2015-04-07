@@ -126,6 +126,12 @@ template <typename T> void Vector3<T>::normalize() {
 	T m = sqrt((x*x) + (y*y) + (z*z));
 	x /= m; y /= m; z /= m;
 }
+
+template <typename T> Vector3<T> Vector3<T>::normalized() const {
+	T m = sqrt((x*x) + (y*y) + (z*z));
+	return Vector3<T>(x / m, y / m, z / m);
+}
+
 template <typename T> Vector3<T> Vector3<T>::scale(T s) const {
 	return Vector3<T> (x*s, y*s, z*s);
 }

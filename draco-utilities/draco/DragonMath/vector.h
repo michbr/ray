@@ -35,6 +35,7 @@ public:
 	T magnitude() const;
 	T magnitudeSquared() const;
 	Vector2<T> normal() const;
+	Vector2<T> normalized() const;
 	void normalize();
 	Vector2<T> scale(T scalar) const;
 	T dot(const Vector2<T> &other) const;
@@ -84,6 +85,7 @@ public:
 	T magnitudeSquared() const;
 	Vector3<T> normal() const;
 	void normalize();
+	Vector3<T> normalized() const;
 	Vector3<T> scale(T scalar) const;
 	T dot(const Vector3<T> &b) const;
 	Vector3<T> cross(const Vector3<T> &b) const;
@@ -137,6 +139,7 @@ public:
 	T magnitudeSquared() const;
 	Vector4<T> normal() const;
 	void normalize();
+	Vector2<T> normalized() const;
 	Vector4<T> scale(T scalar) const;
 	T dot(const Vector4<T> &other) const;
 	Vector4<T> cross(const Vector4<T> &other) const;
