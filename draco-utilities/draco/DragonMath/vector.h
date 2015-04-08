@@ -139,7 +139,7 @@ public:
 	T magnitudeSquared() const;
 	Vector4<T> normal() const;
 	void normalize();
-	Vector2<T> normalized() const;
+	Vector4<T> normalized() const;
 	Vector4<T> scale(T scalar) const;
 	T dot(const Vector4<T> &other) const;
 	Vector4<T> cross(const Vector4<T> &other) const;

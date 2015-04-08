@@ -41,6 +41,11 @@ template <typename T> void Vector2<T>::normalize() {
 	x /= l; y /= l;
 }
 
+template <typename T> Vector2<T> Vector2<T>::normalized() const {
+	T m = magnitude();
+	return Vector2<T>(x / m, y / m);
+}
+
 // operators
 template <typename T> Vector2<T> Vector2<T>::operator/(T scalar) const {
 	return Vector2<T>(x /scalar, y /scalar);
@@ -236,6 +241,12 @@ template <typename T> void Vector4<T>::normalize() {
 	T l = magnitude();
 	x /= l; y /= l; z /= l;
 }
+
+template <typename T> Vector4<T> Vector4<T>::normalized() const {
+	T m = magnitude();
+	return Vector4<T>(x / m, y / m, z / m);
+}
+
 template <typename T> Vector4<T> Vector4<T>::cross(const Vector4<T> &other) const {
 	return Vector4<T>(y *other.z -z *other.y,
 			z *other.x -x *other.z,
