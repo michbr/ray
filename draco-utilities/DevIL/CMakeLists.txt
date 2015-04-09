@@ -23,8 +23,8 @@ SET(DEVIL_INCS
 SUBDIRS(
 #	src-XTRA
 	src-IL
-#	src-ILU
-#	src-ILUT
+	src-ILU
+	src-ILUT
 
 #	examples
 )
