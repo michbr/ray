@@ -216,4 +216,5 @@ Testing/
 #Draco
 *.ppm
 **/.idea/
-
+*.exp
+nbproject/

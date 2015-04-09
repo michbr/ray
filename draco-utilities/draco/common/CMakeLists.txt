@@ -61,6 +61,9 @@ include_directories(
 if (UNIX)
 	find_library(FLTK_LIBRARIES fltk
 	PATHS ${FLTK_DIR})
+	find_library(FLTK_GL_LIBRARY fltk_gl
+	PATHS ${FLTK_DIR})
+	set(LIBS ${LIBS} ${FLTK_GL_LIBRARY})
 else (UNIX)
 	find_library(FLTK_LIBRARIES winfltk
     PATHS ${FLTK_DIR})
@@ -69,9 +72,6 @@ else (UNIX)
 endif (UNIX)
 set(LIBS ${LIBS} ${FLTK_LIBRARIES} DragonMath)
 
-find_library(FLTK_GL_LIBRARY fltk_gl
-PATHS ${FLTK_DIR})
-set(LIBS ${LIBS} ${FLTK_GL_LIBRARY})
 
 find_package(OpenGL REQUIRED)
 set(LIBS ${LIBS} ${OPENGL_LIBRARIES})

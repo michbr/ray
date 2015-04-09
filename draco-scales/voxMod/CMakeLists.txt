@@ -58,13 +58,13 @@ include_directories(
 if (UNIX)
 	find_library(FLTK_LIBRARIES fltk
 	PATHS ${FLTK_DIR})
+	find_library(FLTK_GL_LIBRARY fltk_gl
+	PATHS ${FLTK_DIR})
+	set(LIBS ${LIBS} ${FLTK_GL_LIBRARIES})
 else (UNIX)
 	find_library(FLTK_LIBRARIES winfltk
     PATHS ${FLTK_DIR})
 endif (UNIX)
-
-find_library(FLTK_GL_LIBRARY fltk_gl
-PATHS ${FLTK_DIR})
 
 find_package(OpenGL REQUIRED)
 set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
@@ -73,7 +73,7 @@ if(OPENGL_FOUND)
 	include_directories(${OPENGL_INCLUDE_DIR})
 endif(OPENGL_FOUND)
 
-set(LIBS ${LIBS} ${FLTK_LIBRARISE} ${FLTK_GL_LIBRARY} DracoCommon DracoVoxel NewGLRenderer)
+set(LIBS ${LIBS} ${FLTK_LIBRARISE} DracoCommon DracoVoxel NewGLRenderer)
 
 
 

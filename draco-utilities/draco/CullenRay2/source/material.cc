@@ -8,6 +8,8 @@
 
 #include "../material.h"
 
+#include <algorithm>
+
 using namespace std;
 
 
