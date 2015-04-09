@@ -8,6 +8,7 @@
 
 #include "../image.h"
 
+#include <algorithm>
 #include <cstring>
 
 

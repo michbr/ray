@@ -75,7 +75,7 @@ string Path::fileType() const {
 
 // TODO: unsafe buffer overflow possible!!
 Path &Path::expand() {
-	size_t bufSize = 512;
+	const size_t bufSize = 512;
 	char buffer[bufSize];
 	PathCanonicalize(buffer, native().c_str());
 //	cout << buffer << endl;
