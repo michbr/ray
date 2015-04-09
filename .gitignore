@@ -216,4 +216,5 @@ Testing/
 #Draco
 *.ppm
 **/.idea/
-*.exp #MSVC lib conversion files, accompany .lib files
+*.exp
+nbproject/
