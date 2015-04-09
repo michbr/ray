@@ -19,11 +19,11 @@ public:
 
 	Camera(std::string, Vector3<double> start_pos, Vector3<double> vp_normal, Vector3<double> focal_point, double focal_length);
 
-	void setPerspective(float fovy, float aspect_ratio, float near_plane, float far_plane);
+	//void setPerspective(float fovy, float aspect_ratio, float near_plane, float far_plane);
 
 	void LookAt(Vector3<double> target);
-	void Look(Vector3<float> look);
-	void rotate(float angle, int axis, Vector3<float> look);
+	//void Look(Vector3<float> look);
+	//void rotate(float angle, int axis, Vector3<float> look);
 	std::string getName() const;
 	Vector3<double> getFocalPoint() const;
 	Vector3<double> getHorizontalAxis() const;
