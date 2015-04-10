@@ -24,6 +24,10 @@ namespace Vox {
 //		Block get(byte x, byte y, byte z) const;
 		Block* get(byte i) const;
 		Node& getNode(byte i);
+		byte getOpacity() const;
+		byte getOpacity(byte i) const;
+		unsigned short getMaterial() const;
+		unsigned short getMaterial(byte i) const;
 
 		// setters
 		void set(byte i, Node* n);

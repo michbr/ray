@@ -17,7 +17,7 @@ namespace Vox {
 //			replace
 //		};
 
-		virtual void apply(Tree& target) const;
+		void apply(Tree& target) const;
 
 
 	protected:

@@ -31,17 +31,57 @@ byte Node::getIndex(byte x, byte y, byte z) const {
 //}
 
 Block* Node::get(byte i) const {
-	if (compact(i)) {
+	if (compact(i))
 		return (Voxel*) &children[i];
-	} else {
-		return children[i];
-	}
+	return children[i];
 }
 
 Node& Node::getNode(byte i) {
 	if (compact(i))
 		set(i, new Node(Voxel::read(&children[i])));
 	return *children[i];
+}
+
+byte Node::getOpacity() const {
+    int sum = 0;
+    for(byte i=0; i<CHILD_COUNT; ++i)
+        sum += getOpacity(i);
+    return (byte)(sum /CHILD_COUNT);
+}
+byte Node::getOpacity(byte i) const {
+    if (compact(i))
+		return ((Voxel*)&children[i])->opacity;
+	return children[i]->getOpacity();
+}
+
+unsigned short Node::getMaterial() const {
+    int mats[CHILD_COUNT+1];
+    byte counts[CHILD_COUNT];
+    mats[0] = -1;
+    byte winner = 0;
+    for(byte i=0; i<CHILD_COUNT; ++i) {
+        unsigned int mat = getMaterial(i);
+        byte j=0;
+        for(;; ++j) {
+            if (mats[j] < 0) {
+                mats[j] = mat;
+                mats[j+1] = -1;
+                counts[j] = 1;
+                break;
+            } else if (mats[j] == mat) {
+                ++counts[j];
+                break;
+            }
+        }
+        if (counts[winner] < counts[j])
+            winner = j;
+    }
+    return winner;
+}
+unsigned short Node::getMaterial(byte i) const {
+    if (compact(i))
+		return ((Voxel*)&children[i])->material;
+	return children[i]->getMaterial();
 }
 
 

@@ -28,6 +28,7 @@ add_definitions(-DDLL_EXPORT_DRACO_VOXEL)
 ##  source files  ##
 file(GLOB SOURCES
 	${PROJECT_SOURCE_DIR}/source/**.cc
+	${PROJECT_SOURCE_DIR}/source/*/*.cc
 	${PROJECT_SOURCE_DIR}/**.h
 )
 

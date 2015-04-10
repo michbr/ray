@@ -2,17 +2,17 @@
 #ifndef DRACO_VOXEL_MODELER_H
 #define DRACO_VOXEL_MODELER_H
 
-#include "FL/Fl_Group.H"
-#include "scale.h"
-#include "Voxel/tree.h"
-#include "Common/thread.h"
-
-#include <string>
-#include <vector>
 #include <NewGLRenderer/dragon.h>
 #include <common/glPane.h>
+#include <common/thread.h>
+#include <FL/Fl_Group.H>
+#include <scale.h>
+#include <string>
+#include <vector>
+#include <Voxel/tree.h>
 
 
+// this works around a bug in MinGW
 #ifdef __MINGW32__
 	typedef _off64_t off64_t;
 #endif
@@ -31,13 +31,17 @@ public:
 	static void update(void * context);
 
 private:
-	std::vector<Vox::Tree> trees;
+	std::vector<Vox::Tree*> trees;
+	Vox::Polygonizer<double>* polygonizer;
 	DragonEngine engine;
 	Thread * main;
+    WorldModel* world;
 
 	// GUI
 	cube_box * display;
+	
 
+	void addTree(byte depth, double width);
 };
 
 

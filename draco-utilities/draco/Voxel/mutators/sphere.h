@@ -2,15 +2,15 @@
 #ifndef DRACO_VOXEL_SPHERE_MODIFIER_H
 #define DRACO_VOXEL_SPHERE_MODIFIER_H
 
-#include "mutator.h"
+#include "../mutator.h"
 
 #include <DragonMath/vector.h>
 
 
 namespace Vox {
-    class SphereMut: Mutator {
+    class SphereMut: public Mutator {
     public:
-	    SphereMut(const Vector3& pos, double radius, const Voxel& value);
+	    SphereMut(const Vector3<double>& pos, double radius, const Voxel& value);
 
 	    bool mutate(const Tree& target, const Index& pos, byte index, Node& parent) const;
 	    void getBounds(const Tree& target, Index& min, Index& max) const;

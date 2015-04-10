@@ -6,6 +6,8 @@
 
 #include <string>
 
+
+// this works around a bug in MinGW
 #ifdef __MINGW32__
 	typedef _off64_t off64_t;
 #endif
