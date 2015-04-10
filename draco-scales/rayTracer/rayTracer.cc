@@ -1,6 +1,6 @@
 #include "rayTracer.h"
 #include "loader.h"
-#include "camera.h"
+#include "cameraStructure.h"
 #include "common/path.h"
 #include "wireframe.h"
 #include "renderer.h"

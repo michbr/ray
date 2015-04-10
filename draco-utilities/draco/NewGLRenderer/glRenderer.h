@@ -4,7 +4,7 @@
 #include "GL/glew.h"
 #include "window.h"
 #include "worldModel/renderer.h"
-#include "worldModel/camera.h"
+#include "cameraStructure.h"
 
 #include <list>
 #include <worldModel/worldModel.h>

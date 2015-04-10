@@ -1,7 +1,7 @@
 #ifndef WORLD_MODEL_OBJ_H
 #define WORLD_MODEL_OBJ_H
 
-#include "camera.h"
+#include "cameraStructure.h"
 #include "face.h"
 #include "light.h"
 #include "sceneObject.h"

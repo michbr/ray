@@ -3,7 +3,7 @@
 #define DRACO_WORLD_MODEL_RENDERER_H
 
 #include "sceneObject.h"
-#include "camera.h"
+#include "cameraStructure.h"
 #include "worldModel.h"
 
 
