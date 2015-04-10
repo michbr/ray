@@ -159,8 +159,11 @@ void RayTracer::run () {
 
 void RayTracer::loadModel(string location) {
 	model = new WorldModel();
-	for(string file: Path(location).dirList(true))
-		AssetLoader::loadAsset(file, *model);
+	for(string file: Path(location).dirList(true)) {
+		if (file.substr(file.find(".") + 1).compare("obj") == 0) {
+			AssetLoader::loadAsset(location +  file, *model);
+		}
+	}
 }
 
 
