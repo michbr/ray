@@ -5,7 +5,7 @@
 #include "wireframe.h"
 #include "worldModel/face.h"
 #include "worldModel/light.h"
-#include "cameraStructure.h"
+#include "camera.h"
 
 #include <vector>
 

@@ -19,7 +19,7 @@ GLTab::GLTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(typ
 	main = new Thread(this);
 	{
 		display = new GLPane(this, 5, 30, 500, 500, 0);
-		renderer.setCamera(new Camera(
+		renderer.addCamera(new CameraStructure(
 				Vector3<double>(0, 0, 8.),
 				Vector3<double>(0, 1, 0),
 				Vector3<double>(0, 0, 1)));

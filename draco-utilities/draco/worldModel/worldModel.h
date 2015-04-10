@@ -24,7 +24,7 @@ public:
 	std::vector<Light *> getLights();
 
 	std::vector<Vector3<double>> getVertices();
-	std::vector<Camera> cameras;
+	std::vector<CameraStructure> cameras;
 
 	void addRenderer(BaseRenderer &rend);
 	void removeRenderer(BaseRenderer &rend);

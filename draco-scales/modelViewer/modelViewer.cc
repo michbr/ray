@@ -93,6 +93,9 @@ public:
 		gl_draw(wire ? "Cube: wire" : "Cube: flat", -4.5f, -4.5f );
 		glEnable(GL_DEPTH_TEST);
 	}
+	void handleEvent(int key) {
+
+	}
 };
 
 #endif

@@ -121,7 +121,7 @@ RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): S
 	Vector3<double> pos = Vector3<double>(1, 1, 1);
 	Vector3<double> normal = Vector3<double>(0, 0, 1);
 	Vector3<double> up = Vector3<double>(0, 1, 0);
-	Camera * cam = new Camera(string("primary"), pos, normal, up, 1.0);
+	Camera * cam = new Camera(pos, normal, up, 1.0);
 
         Wireframe * frame = new Wireframe("default", -IMAGE_WIDTH/2, -IMAGE_HEIGHT/2, IMAGE_WIDTH/2, IMAGE_HEIGHT/2, 1);
         renderer = new Renderer(cam);

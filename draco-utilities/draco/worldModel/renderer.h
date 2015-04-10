@@ -22,9 +22,8 @@ class BaseRenderer {
 public:
 	virtual void addObject(SceneObject *) = 0;
 	virtual void removeObject(SceneObject *) = 0;
-	virtual void setCamera(Camera * cam) = 0;
+	virtual void addCamera(CameraStructure * cam) = 0;
 protected:
-	Camera * currentCam;
 	WorldModel * currentModel;
 };
 

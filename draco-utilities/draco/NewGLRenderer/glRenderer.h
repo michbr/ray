@@ -4,7 +4,8 @@
 #include "GL/glew.h"
 #include "window.h"
 #include "worldModel/renderer.h"
-#include "cameraStructure.h"
+#include "WorldModel/cameraStructure.h"
+#include "camera.h"
 
 #include <list>
 #include <worldModel/worldModel.h>
@@ -19,7 +20,7 @@ public:
 	void addObject(SceneObject *object);
 	void removeObject(SceneObject *object);
 
-	virtual void setCamera(Camera * cam);
+	virtual void addCamera(CameraStructure * cam);
 
 
 	//static Renderer & getInstance();
@@ -48,6 +49,7 @@ private:
 	//static Renderer & instance;
 	WorldModel * world;
 	std::unordered_map<SceneObject*, BufferInfo> buffers;
+	Camera * currentCam;
 
 	void initGL(int width, int height);
 };

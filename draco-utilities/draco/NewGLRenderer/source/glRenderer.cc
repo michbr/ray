@@ -1,18 +1,8 @@
 
 #include "glRenderer.h"
 //#include "loadShader.h"
-//
-//#include <GL/glew.h>
-//#include <GL/gl.h>
-//
-//#include <GL/glext.h>
-//
-//#include <iostream>
-//#include <AssetLoader/loader.h>
 
 using namespace std;
-
-
 
 GLRenderer::GLRenderer(int width, int height) {
 	initGL(width, height);
@@ -101,6 +91,6 @@ void GLRenderer::removeObject(SceneObject *object) {
 	glDeleteBuffers(1, &buffer);
 }
 
-void GLRenderer::setCamera(Camera *cam) {
-	currentCam = cam;
+void GLRenderer::addCamera(CameraStructure *cam) {
+	currentCam = new Camera(cam);
 }
