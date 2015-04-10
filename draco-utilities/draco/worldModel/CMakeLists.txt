@@ -47,9 +47,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 include_directories(${UTILITIES_DIR}/draco/)
 include_directories(${DEVIL_DIR}/include)
 
-find_package(OpenGL REQUIRED) ## TODO: ought not to need this
-
-set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY} DragonMath TextureLoader)
+set(LIBS ${LIBS} DragonMath TextureLoader)
 
 
 

@@ -3,7 +3,7 @@
 
 #include "image.h"
 #include "imageWidget.h"
-#include "renderer.h"
+#include "RayTracer/renderer.h"
 #include "scale.h"
 #include "thread.h"
 #include "worldModel.h"
