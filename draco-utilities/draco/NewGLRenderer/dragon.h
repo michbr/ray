@@ -5,7 +5,7 @@
 //#include "window.h"
 //#include "glRenderer.h"
 
-#include <GL/gl.h>
+//#include <GL/gl.h>
 
 //class Controls;
 

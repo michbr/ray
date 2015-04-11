@@ -13,7 +13,6 @@
 
 class GLRenderer: public BaseRenderer {
 public:
-	GLRenderer(int width, int height);
 	void setWorld(WorldModel &world);
 	WorldModel& getWorld();
 
@@ -25,6 +24,7 @@ public:
 
 	//static Renderer & getInstance();
 	void render();
+	void initGL(int width, int height);
 
 //	Camera &getCam();
 
@@ -51,7 +51,6 @@ private:
 	std::unordered_map<SceneObject*, BufferInfo> buffers;
 	Camera * currentCam;
 
-	void initGL(int width, int height);
 };
 
 #endif // GL_RENDERER_OBJ_H

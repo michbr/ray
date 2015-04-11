@@ -1,7 +1,7 @@
-#include "dragon.h"
+//#include "dragon.h"
 //#include "controls.h"
 
-using namespace std;
+//using namespace std;
 /*
 DragonEngine::DragonEngine() {
 	

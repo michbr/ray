@@ -42,16 +42,15 @@ void GLTab::run() {
 }
 
 void GLTab::initialize() {
-	//TODO
-	//engine.initRenderer();
-	//AssetLoader::loadAsset("../../old/models/cube/cube.obj", engine.getWorld());
-	//AssetLoader::loadAsset("../../old/models/cube/cube 2.obj", engine.getWorld());
+	renderer.initGL(500, 500);
+	WorldModel * wm = new WorldModel();
+	renderer.setWorld(*wm);
+	AssetLoader::loadAsset("../../old/models/cube/cube.obj", renderer.getWorld());
+	AssetLoader::loadAsset("../../old/models/cube/cube 2.obj", renderer.getWorld());
 }
 
 void GLTab::draw() {
-	cout << "drawing...";
 	renderer.render();
-	cout << "finished." << endl;
 }
 
 void GLTab::handleEvent(int key) {

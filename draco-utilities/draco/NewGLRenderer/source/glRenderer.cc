@@ -4,15 +4,11 @@
 
 using namespace std;
 
-GLRenderer::GLRenderer(int width, int height) {
-	initGL(width, height);
-}
-
-
 void GLRenderer::setWorld(WorldModel &world) {
 	this->world = &world;
 	world.addRenderer(*this);
 }
+
 WorldModel& GLRenderer::getWorld() {
 	return *world;
 }
