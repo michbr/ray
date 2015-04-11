@@ -59,7 +59,10 @@ void Tree::updateMeshes() {
 	for(; i.x<width;++i.x) {
 		for(; i.y<width;++i.y) {
 			for(; i.z<width;++i.z) {
-				
+				Mesh* m = meshes[i];
+                if (m == NULL)
+                    meshes[i] = new Mesh(this);
+                m->update();
 			}
 		}
 	}
