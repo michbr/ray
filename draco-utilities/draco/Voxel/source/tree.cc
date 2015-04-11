@@ -54,5 +54,13 @@ Polygonizer<double>* Tree::getPolygonizer() {
 }
 
 void Tree::updateMeshes() {
-	for()
+	Index i(maxDepth-Mesh::VOXEL_DEPTH, 0, 0, 0);
+	int width = 1<<(maxDepth -Mesh::VOXEL_DEPTH);
+	for(; i.x<width;++i.x) {
+		for(; i.y<width;++i.y) {
+			for(; i.z<width;++i.z) {
+				
+			}
+		}
+	}
 }

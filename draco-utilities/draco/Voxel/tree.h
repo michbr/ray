@@ -8,6 +8,7 @@
 #include "voxel.h"
 
 #include <worldModel/worldModel.h>
+#include <unordered_map>
 
 
 namespace Vox {
@@ -17,12 +18,12 @@ namespace Vox {
 
     class Tree {
     public:
-	    const byte maxDepth;
-	    const double size, voxSize;
-	    Vector3<double> pos;
-	    Node head;
+		const byte maxDepth;
+		const double size, voxSize;
+		Vector3<double> pos;
+		Node head;
 
-	    Tree(byte maxDepth, double size);
+		Tree(byte maxDepth, double size);
 
 		void addWorld(WorldModel* world);
 		void removeWorld(WorldModel* world);
@@ -33,6 +34,8 @@ namespace Vox {
 
 		void setPolygonizer(Polygonizer<double> *);
 		Polygonizer<double>* getPolygonizer();
+		
+		void updateMeshes();
 
 	protected:
 		std::unordered_map<Index, Mesh> meshes;
@@ -41,9 +44,6 @@ namespace Vox {
 
 		void pushMeshes(WorldModel* world) const;
 		void clearMeshes(WorldModel* world) const;
-
-
-		void updateMeshes();
     };
 
 }
