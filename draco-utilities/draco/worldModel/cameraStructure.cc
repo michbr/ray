@@ -1,9 +1,4 @@
-#include "camera.h"
-
-//#include <GL/gl.h>
-#define _USE_MATH_DEFINES
-#include <cmath>
-//#include <GL/glu.h>
+#include "cameraStructure.h"
 
 #ifndef M_PI
 	#define M_PI 3.14159265358979323846
@@ -11,12 +6,16 @@
 
 using namespace std;
 
-Camera::Camera(float x, float y, float z, float vrp_x, float vrp_y, float vrp_z, float upx, float upy, float upz) :
-	position(x, y, z),
-	up(upx, upy, upz),
-	direction((position +Vector3<double>(vrp_x, vrp_y, vrp_z)).normal()) {}
+CameraStructure::CameraStructure(Vector3<double> pos, Vector3<double> dir, Vector3<double> up) : position(pos), direction(dir), up(up) {}
 
-Camera::Camera(string camName, Vector3<double> startPos, Vector3<double> vp_normal, Vector3<double> v_up, double d) :
+
+//
+//Camera::Camera(float x, float y, float z, float vrp_x, float vrp_y, float vrp_z, float upx, float upy, float upz) :
+//	position(x, y, z),
+//	up(upx, upy, upz),
+//	direction((position +Vector3<double>(vrp_x, vrp_y, vrp_z)).normal()) {}
+
+/*Camera::Camera(string camName, Vector3<double> startPos, Vector3<double> vp_normal, Vector3<double> v_up, double d) :
 	name(camName),
 	position(startPos),
 	direction(vp_normal),
@@ -25,7 +24,7 @@ Camera::Camera(string camName, Vector3<double> startPos, Vector3<double> vp_norm
 
 void Camera::LookAt(Vector3<double> target) {
 	direction = (target -position).normal();
-}
+}*/
 
 // commented due to lack of GL import.  Should exist in gl camera
 //void Camera::Look(Vector3<float> look) {
@@ -182,25 +181,26 @@ GLfloat RWindow::calc_angle(GLfloat move, GLfloat cam_1, GLfloat cam_2, GLfloat 
 	RWindow::vrp_z = cos(angle - LOOK_SENSITIVITY*move) + RWindow::cam_z;
 }*/
 
-string Camera::getName() const {
-	return name;
-}
+//string Camera::getName() const {
+//	return name;
+//}
+//
+//Vector3<double> Camera::getFocalPoint() const {
+//	return position +direction *nearPlane;
+//}
+//
+//Vector3<double> Camera::getHorizontalAxis() const {
+//        Vector3<double> n = direction.normal();
+//        Vector3<double> u = up.normal().cross(n).normal();
+//        return u;
+//}
+//
+//Vector3<double> Camera::getVerticalAxis() const {
+//        Vector3<double> n = direction.normal();
+//        Vector3<double> u = up.normal().cross(n).normal();
+//        Vector3<double> v = n.cross(u).normal();
+//
+//        return v;
+//}
 
-Vector3<double> Camera::getFocalPoint() const {
-	return position +direction *nearPlane;
-}
-
-Vector3<double> Camera::getHorizontalAxis() const {
-        Vector3<double> n = direction.normal();
-        Vector3<double> u = up.normal().cross(n).normal();
-        return u;
-}
-
-Vector3<double> Camera::getVerticalAxis() const {
-        Vector3<double> n = direction.normal();
-        Vector3<double> u = up.normal().cross(n).normal();
-        Vector3<double> v = n.cross(u).normal();
-
-        return v;
-}
 

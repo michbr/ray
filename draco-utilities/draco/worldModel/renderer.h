@@ -3,6 +3,8 @@
 #define DRACO_WORLD_MODEL_RENDERER_H
 
 #include "sceneObject.h"
+#include "cameraStructure.h"
+#include "worldModel.h"
 
 
 #ifdef _WIN32
@@ -16,13 +18,13 @@
 #endif
 
 
-class ModelRenderer {
+class BaseRenderer {
 public:
 	virtual void addObject(SceneObject *) = 0;
 	virtual void removeObject(SceneObject *) = 0;
-
-private:
-
+	virtual void addCamera(CameraStructure * cam) = 0;
+protected:
+	WorldModel * currentModel;
 };
 
 

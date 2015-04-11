@@ -1,6 +1,5 @@
 #include "rendererTab.h"
 
-#include <common/path.h>
 #include <FL/Fl.H>
 #include <AssetLoader/loader.h>
 
@@ -15,17 +14,22 @@ DRACO_SCALE_API const char *scaleName() {
 }
 
 
-GLTab::GLTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), running(true) {
+GLTab::GLTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), running(true), renderer(500, 500) {
 	pane->current(pane);
 	main = new Thread(this);
 	{
-		display = new cube_box(this, 5, 30, 500, 500, 0);
-		engine.initWindow(500, 500);
+		display = new GLPane(this, 5, 30, 500, 500, 0);
+		renderer.addCamera(new CameraStructure(
+				Vector3<double>(0, 0, 8.),
+				Vector3<double>(0, 1, 0),
+				Vector3<double>(0, 0, 1)));
+		cout << "Camera placed" << endl;
+		/*engine.initWindow(500, 500);
 		engine.placeCamera (
 			0, 0, 8.,
 			0, 0, 0,
 			0., 1., 0.
-		);
+		);*/
 	}
 	main->start();
 }
@@ -38,13 +42,19 @@ void GLTab::run() {
 }
 
 void GLTab::initialize() {
-	engine.initRenderer();
-	AssetLoader::loadAsset("../../old/models/cube/cube.obj", engine.getWorld());
-	AssetLoader::loadAsset("../../old/models/cube/cube 2.obj", engine.getWorld());
+	renderer.initGL(500, 500);
+	WorldModel * wm = new WorldModel();
+	renderer.setWorld(*wm);
+	AssetLoader::loadAsset("../../old/models/cube/cube.obj", renderer.getWorld());
+	AssetLoader::loadAsset("../../old/models/cube/cube 2.obj", renderer.getWorld());
 }
 
 void GLTab::draw() {
-	engine.render();
+	renderer.render();
+}
+
+void GLTab::handleEvent(int key) {
+	cout << "Got: " << key << endl;
 }
 
 GLTab::~GLTab() {
