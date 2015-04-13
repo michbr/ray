@@ -14,7 +14,7 @@ DRACO_SCALE_API const char *scaleName() {
 }
 
 
-GLTab::GLTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), running(true), renderer(500, 500) {
+GLTab::GLTab(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), running(true), renderer() {
 	pane->current(pane);
 	main = new Thread(this);
 	{
