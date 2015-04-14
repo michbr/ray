@@ -38,7 +38,7 @@ namespace Vox {
 		void updateMeshes();
 
 	protected:
-		std::unordered_map<Index, Mesh> meshes;
+		std::unordered_map<Index, Mesh*> meshes;
 		std::list<WorldModel *> worlds;
 		Polygonizer<double>* polygonizer;
 

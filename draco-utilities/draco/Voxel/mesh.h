@@ -3,6 +3,7 @@
 
 #include "voxel.h"
 #include "meshIterator.h"
+//#include "tree.h"
 
 #include <worldModel/sceneObject.h>
 

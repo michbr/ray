@@ -12,15 +12,6 @@ Voxel::Voxel(const Voxel& other) :
 	opacity(other.opacity), material(other.material) {}
 
 
-bool Voxel::compact() const {
-    return sizeof(this) <= 8;
-}
-bool Voxel::empty() const {
-	return opacity == 0;
-}
-byte Voxel::average() const {
-	return opacity;
-}
 
 //public byte detail() {
 //	return 0;
@@ -62,10 +53,6 @@ byte Voxel::average() const {
 //	return this;
 //}
 
-ostream &operator<<(ostream& out, byte value) {
-    return out << (unsigned int) value;
-}
-
 Voxel Voxel::read(void *address) {
 	Voxel voxel(0, 0);
 	void **value = ((void**) (&voxel)) +1;
@@ -83,4 +70,9 @@ void Voxel::write(void *address, const Voxel& voxel) {
 //	cout << "loc: " << (loc) << endl;
 
 	*loc = *value;
+}
+
+
+ostream &operator<<(ostream& out, byte value) {
+    return out << (unsigned int) value;
 }

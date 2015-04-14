@@ -2,14 +2,15 @@
 #ifndef DRACO_VOXEL_INDEX_H
 #define DRACO_VOXEL_INDEX_H
 
+#include "voxel.h"
 #include <functional>
 
 
 namespace Vox {
 	class Index {
 	public:
-		unsigned char depth;
 		int x, y, z;
+		unsigned char depth;
 
 		Index();
 
@@ -21,8 +22,11 @@ namespace Vox {
 		Index getChild(unsigned char index) const;
 		Index getNeighbor(unsigned char index) const;
 		Index getParent(unsigned char depth) const;
+		byte directionTo(const Index& child) const;
 
 		bool operator==(const Index &o) const;
+		int &operator[](int index);
+		int operator[](int index) const;
 	};
 }
 

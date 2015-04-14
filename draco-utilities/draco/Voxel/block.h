@@ -3,22 +3,21 @@
 #define DRACO_VOX_BLOCK_H
 
 
-//#include "voxel.h"
-#include <iostream>
+#include "voxel.h"
 
 
 namespace Vox {
 
-    typedef unsigned char byte;
-    std::ostream &operator<<(std::ostream& out, byte value);
-
-	class Block {
+	class Block: public Voxel {
 	public:
+		
+		Block();
+		Block(const Voxel& source);
+		Block(const Block& source);
 
-//	    virtual bool compact() const = 0;
-//		virtual byte depth() const = 0;
-//		virtual bool empty() const = 0;
-//		virtual byte average() const = 0;
+	    virtual bool compact() const;
+		virtual Voxel get(byte i) const;
+		virtual const Block& getBlock(byte i) const;
 
 
 

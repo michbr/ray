@@ -3,7 +3,7 @@
 #define DRACO_VOX_NODE_H
 
 #include "block.h"
-#include "Voxel.h"
+#include "voxel.h"
 
 
 namespace Vox {
@@ -17,12 +17,11 @@ namespace Vox {
 		// ctor/dtor
 		Node();
 		Node(const Voxel& v);
+		Node(const Node& n);
 		~Node();
 
 		// getters
 		byte getIndex(byte x, byte y, byte z) const;
-//		Block get(byte x, byte y, byte z) const;
-		Block* get(byte i) const;
 		Node& getNode(byte i);
 		byte getOpacity() const;
 		byte getOpacity(byte i) const;
@@ -36,15 +35,15 @@ namespace Vox {
 		void setNoClear(byte i, Node* n);
 		void setNoClear(byte i, const Voxel& v);
 
-		//
+		// overriden methods
 		bool compact() const;
-		bool empty() const;
-		byte average() const;
+		Voxel get(byte i) const;
+		const Block& getBlock(byte i) const;
 
 	protected:
 		// members
 		byte compactChildren;
-		Node* children[CHILD_COUNT];
+		Block* children[CHILD_COUNT];
 
 		bool compact(byte child) const;
 

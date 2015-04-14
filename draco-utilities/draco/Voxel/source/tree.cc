@@ -26,12 +26,12 @@ const std::list<WorldModel*>& Tree::getWorlds() const {
 
 void Tree::pushMeshes(WorldModel* world) const {
 	for(auto mesh: meshes) {
-		world->addObject(mesh.second.getObject());
+		world->addObject(mesh.second->getObject());
 	}
 }
 void Tree::clearMeshes(WorldModel *world) const {
 	for(auto mesh: meshes) {
-		world->removeObject(mesh.second.getObject());
+		world->removeObject(mesh.second->getObject());
 	}
 }
 
@@ -62,7 +62,7 @@ void Tree::updateMeshes() {
 				Mesh* m = meshes[i];
                 if (m == NULL)
                     meshes[i] = new Mesh(this);
-                m->update();
+//                m->update(MeshIterator());
 			}
 		}
 	}

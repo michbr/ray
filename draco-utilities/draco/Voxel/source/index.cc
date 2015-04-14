@@ -26,11 +26,11 @@ Index Index::getChild() const {
 }
 
 Index Index::getChild(unsigned char i) const {
-	return Index((unsigned char)(depth +1), x *2 +(i &4), y *2 +(i &2), z *2 +(i &1));
+	return Index((unsigned char)(depth +1), x *2 +((i &4) >> 2), y *2 +((i &2) >> 1), z *2 +(i &1));
 }
 
 Index Index::getNeighbor(unsigned char i) const {
-	return Index(depth, x +(i &4), y +(i &2), z +(i &1));
+	return Index(depth, x +((i &4) >> 2), y +((i &2) >> 1), z +(i &1));
 }
 
 Index Index::getParent(unsigned char pDepth) const {
@@ -38,8 +38,19 @@ Index Index::getParent(unsigned char pDepth) const {
 	return Index(pDepth, x >> diff, y >> diff, z >> diff);
 }
 
+byte Index::directionTo(const Index& child) const {
+    int halfWidth = 1 << (child.depth -depth);
+    return (child.x -x *halfWidth) *4 | (child.y -y *halfWidth) *2 | (child.z -z *halfWidth);
+}
+
 bool Index::operator==(const Index& o) const {
 	return x == o.x && y == o.y && z == o.z && depth == o.depth;
+}
+int &Index::operator[](int index) {
+    return ((int *)this)[index];
+}
+int Index::operator[](int index) const {
+    return ((int *)this)[index];
 }
 
 

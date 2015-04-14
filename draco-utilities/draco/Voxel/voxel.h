@@ -2,16 +2,15 @@
 #ifndef DRACO_VOX_VOXEL_H
 #define DRACO_VOX_VOXEL_H
 
-//namespace Vox {
-//    typedef unsigned char byte;
-//}
-
-#include "block.h"
+#include <iostream>
 
 
 namespace Vox {
 
-	class Voxel: public Block {
+    typedef unsigned char byte;
+    std::ostream &operator<<(std::ostream& out, byte value);
+
+	class Voxel {
 	public:
 		// members
 		unsigned short material;
@@ -20,11 +19,6 @@ namespace Vox {
 		// constructors
 		Voxel(byte opacity, unsigned short material);
 		Voxel(const Voxel& other);
-
-		// methods
-		bool compact() const;
-		bool empty() const;
-		byte average() const;
 
 		static Voxel read(void *address);
 		static void write(void *address, const Voxel&);

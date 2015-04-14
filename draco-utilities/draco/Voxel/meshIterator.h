@@ -3,12 +3,22 @@
 #define DRACO_VOXEL_MESH_ITERATOR_H
 
 #include "index.h"
+#include "node.h"
 
 
 namespace Vox {
+	class Tree;
+	
 	class MeshIterator {
 	public:
+        static const byte DIMMENSION = 3;
 		Index pos;
+        const Block* blocks[DIMMENSION][DIMMENSION][DIMMENSION];
+        Tree* tree;
+        
+        MeshIterator(Tree* tree, const Index& startPos);
+        
+        void traverse(byte i);
 
 
 	};

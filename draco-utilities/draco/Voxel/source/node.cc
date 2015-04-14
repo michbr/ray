@@ -1,6 +1,8 @@
 
 #include "node.h"
 
+#include <typeinfo>
+
 using namespace std;
 using namespace Vox;
 
@@ -11,6 +13,11 @@ Node::Node(): compactChildren(0xFF) {}
 Node::Node(const Voxel &v) {
 	for(byte i=0; i< CHILD_COUNT; ++i) {
 		setNoClear(i, v);
+	}
+}
+Node::Node(const Node &n): Block(n) {
+	for(byte i=0; i<CHILD_COUNT; ++i) {
+		children[i] = n.children[i];
 	}
 }
 
@@ -26,20 +33,27 @@ Node::~Node() {
 byte Node::getIndex(byte x, byte y, byte z) const {
     return (byte)(x *(CHILD_DIM << 1) +y *CHILD_DIM +z);
 }
+
+Voxel Node::get(byte i) const {
+	return *((Voxel*) &children[i]);
+}
+const Block& Node::getBlock(byte i) const {
+	return *children[i];
+}
 //Block Node::get(byte x, byte y, byte z) const {
 //	return get(getIndex(x, y, z));
 //}
 
-Block* Node::get(byte i) const {
-	if (compact(i))
-		return (Voxel*) &children[i];
-	return children[i];
-}
+//Voxel Node::get(byte i) const {
+//	if (compact(i))
+//		return (Voxel*) &children[i];
+//	return children[i];
+//}
 
 Node& Node::getNode(byte i) {
-	if (compact(i))
+	if (compact(i) || typeid(children[i]) != typeid(Node))
 		set(i, new Node(Voxel::read(&children[i])));
-	return *children[i];
+	return *((Node*) children[i]);
 }
 
 byte Node::getOpacity() const {
@@ -51,7 +65,7 @@ byte Node::getOpacity() const {
 byte Node::getOpacity(byte i) const {
     if (compact(i))
 		return ((Voxel*)&children[i])->opacity;
-	return children[i]->getOpacity();
+	return children[i]->opacity;
 }
 
 unsigned short Node::getMaterial() const {
@@ -81,7 +95,7 @@ unsigned short Node::getMaterial() const {
 unsigned short Node::getMaterial(byte i) const {
     if (compact(i))
 		return ((Voxel*)&children[i])->material;
-	return children[i]->getMaterial();
+	return children[i]->material;
 }
 
 
@@ -111,19 +125,6 @@ void Node::setNoClear(byte i, const Voxel &v) {
 bool Node::compact() const {
     return sizeof(Node) <= sizeof(void*);
 }
-bool Node::empty() const {
-//    for (int i = 0; i < CHILD_COUNT; ++i)
-//	    if (!get(i).empty())
-//		    return false;
-//    return true;
-}
-byte Node::average() const {
-//	int sum = 0;
-//	for(int i=0; i<CHILD_COUNT; ++i)
-//		sum += get(i).average();
-//	return (byte) (sum /CHILD_COUNT);
-}
-
 bool Node::compact(byte child) const {
 	return compactChildren & ((byte)1 << child);
 }
