@@ -51,7 +51,7 @@ const Block& Node::getBlock(byte i) const {
 //}
 
 Node& Node::getNode(byte i) {
-	if (compact(i) || typeid(children[i]) != typeid(Node))
+	if (compact(i) || dynamic_cast<Node*>(children[i]))
 		set(i, new Node(Voxel::read(&children[i])));
 	return *((Node*) children[i]);
 }
@@ -100,7 +100,7 @@ unsigned short Node::getMaterial(byte i) const {
 
 
 // setters
-void Node::set(byte i, Node* n) {
+void Node::set(byte i, Block* n) {
 	if (!compact(i))
 		delete children[i];
 	setNoClear(i, n);
@@ -111,7 +111,7 @@ void Node::set(byte i, const Voxel& v) {
 	setNoClear(i, v);
 }
 
-void Node::setNoClear(byte i, Node* n) {
+void Node::setNoClear(byte i, Block* n) {
 	compactChildren = compactChildren & ~(1 << i);
 	children[i] = n;
 }

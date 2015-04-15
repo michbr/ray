@@ -62,7 +62,7 @@ void Tree::updateMeshes() {
 				Mesh* m = meshes[i];
                 if (m == NULL)
                     meshes[i] = new Mesh(this);
-//                m->update(MeshIterator());
+                m->update(MeshIterator(this, i));
 			}
 		}
 	}

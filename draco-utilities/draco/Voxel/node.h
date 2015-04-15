@@ -29,13 +29,13 @@ namespace Vox {
 		unsigned short getMaterial(byte i) const;
 
 		// setters
-		void set(byte i, Node* n);
+		void set(byte i, Block* n);
 		void set(byte i, const Voxel& v);
 		// the following two do not free memory: IMPROPER USAGE COULD CAUSE MEMORY LEAKS
-		void setNoClear(byte i, Node* n);
+		void setNoClear(byte i, Block* n);
 		void setNoClear(byte i, const Voxel& v);
 
-		// overriden methods
+		// override methods
 		bool compact() const;
 		Voxel get(byte i) const;
 		const Block& getBlock(byte i) const;

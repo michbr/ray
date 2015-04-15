@@ -22,11 +22,14 @@ namespace Vox {
 
 		SceneObject* getObject();
 
-		void update(MeshIterator &iter);
+		void update(MeshIterator iter);
 
     private:
 		Tree* tree;
 		SceneObject object;
+		
+		// depth must start at 0.
+		void populate(const Block& node, Index i, Voxel*** array) const;
 
     };
 
