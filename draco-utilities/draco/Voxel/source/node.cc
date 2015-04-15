@@ -108,11 +108,11 @@ void Node::set(byte i, const Voxel& v) {
 }
 
 void Node::setNoClear(byte i, Block* n) {
-	compactChildren = compactChildren & ~(1 << i);
+	compactChildren = compactChildren & ~((byte)1 << i);
 	children[i] = n;
 }
 void Node::setNoClear(byte i, const Voxel &v) {
-	compactChildren = compactChildren | (1 << i);
+	compactChildren = compactChildren | ((byte)1 << i);
 	Voxel::write(&children[i], v);
 }
 

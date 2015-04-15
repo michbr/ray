@@ -16,7 +16,7 @@ Index::Index(byte depth): Index(depth, 0, 0, 0) {}
 
 Index::Index(const Index& s): Index(s.depth, s.x, s.y, s.z) {}
 
-Index::Index(byte depth, int x, int y, int z):
+Index::Index(byte depth, unsigned int x, unsigned int y, unsigned int z):
 	depth(depth),
 	x(x), y(y), z(z) {}
 
@@ -34,13 +34,13 @@ Index Index::getNeighbor(byte i) const {
 }
 
 Index Index::getParent(byte pDepth) const {
-	byte diff = depth - pDepth;
+	byte diff = ((int)depth) - ((int)pDepth);
 	return Index(pDepth, x >> diff, y >> diff, z >> diff);
 }
 
 byte Index::directionTo(const Index& child) const {
-    int halfWidth = 1 << (child.depth -depth);
-    return (child.x -x *halfWidth) *4 | (child.y -y *halfWidth) *2 | (child.z -z *halfWidth);
+    unsigned int halfWidth = 1 << (((int)child.depth) -((int)depth) -1);
+    return ((child.x /halfWidth -x) *4) | ((child.y /halfWidth -y) *2) | (child.z /halfWidth -z);
 }
 
 bool Index::operator==(const Index& o) const {

@@ -23,6 +23,7 @@ MeshIterator::MeshIterator(Tree* tree, const Index& startPos): tree(tree), pos(0
 }
 
 void MeshIterator::traverse(byte i) {
+	if (i > 7) cout << i << endl;
     pos = pos.getChild(i);
     blocks[1][1][1] = blocks[1][1][1].traverse(i);
 //    Node* parentNodes[2][2][2];

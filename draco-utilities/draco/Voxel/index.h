@@ -9,13 +9,13 @@
 namespace Vox {
 	class Index {
 	public:
-		int x, y, z;
+		unsigned int x, y, z;
 		byte depth;
 
 		Index();
 
 		Index(byte depth);
-		Index(byte depth, int x, int y, int z);
+		Index(byte depth, unsigned int x, unsigned int y, unsigned int z);
 		Index(const Index &source);
 
 		Index getChild() const;
