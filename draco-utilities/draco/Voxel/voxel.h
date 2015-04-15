@@ -7,8 +7,7 @@
 
 namespace Vox {
 
-    typedef unsigned char byte;
-    std::ostream &operator<<(std::ostream& out, byte value);
+	typedef unsigned char byte;
 
 	class Voxel {
 	public:
@@ -17,6 +16,7 @@ namespace Vox {
 		byte opacity;
 
 		// constructors
+		Voxel();
 		Voxel(byte opacity, unsigned short material);
 		Voxel(const Voxel& other);
 
@@ -29,6 +29,8 @@ namespace Vox {
 
 
 }
+
+std::ostream &operator<<(std::ostream& out, Vox::byte value);
 
 
 #endif // DRACO_VOX_VOXEL_H

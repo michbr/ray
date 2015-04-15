@@ -5,6 +5,9 @@
 using namespace std;
 using namespace Vox;
 
+Voxel::Voxel() :
+opacity(0), material(0) {}
+
 Voxel::Voxel(byte opacity, unsigned short material) :
 	opacity(opacity), material(material) {}
 

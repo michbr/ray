@@ -10,18 +10,18 @@ namespace Vox {
 	class Index {
 	public:
 		int x, y, z;
-		unsigned char depth;
+		byte depth;
 
 		Index();
 
-		Index(unsigned char depth);
-		Index(unsigned char depth, int x, int y, int z);
+		Index(byte depth);
+		Index(byte depth, int x, int y, int z);
 		Index(const Index &source);
 
 		Index getChild() const;
-		Index getChild(unsigned char index) const;
-		Index getNeighbor(unsigned char index) const;
-		Index getParent(unsigned char depth) const;
+		Index getChild(byte index) const;
+		Index getNeighbor(byte index) const;
+		Index getParent(byte depth) const;
 		byte directionTo(const Index& child) const;
 
 		bool operator==(const Index &o) const;

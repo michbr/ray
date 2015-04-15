@@ -4,6 +4,7 @@
 #include "voxel.h"
 #include "meshIterator.h"
 //#include "tree.h"
+#include "pointer.h"
 
 #include <worldModel/sceneObject.h>
 
@@ -29,7 +30,7 @@ namespace Vox {
 		SceneObject object;
 		
 		// depth must start at 0.
-		void populate(const Block& node, Index i, Voxel*** array) const;
+		void populate(Pointer block, Index i, Voxel (*array)[VOXEL_DIMENSION][VOXEL_DIMENSION]) const;
 
     };
 

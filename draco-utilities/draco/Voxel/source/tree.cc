@@ -56,12 +56,16 @@ Polygonizer<double>* Tree::getPolygonizer() {
 void Tree::updateMeshes() {
 	Index i(maxDepth-Mesh::VOXEL_DEPTH, 0, 0, 0);
 	int width = 1<<(maxDepth -Mesh::VOXEL_DEPTH);
-	for(; i.x<width;++i.x) {
-		for(; i.y<width;++i.y) {
-			for(; i.z<width;++i.z) {
+	cout << width << endl;
+	for(i.x=0; i.x<width; ++i.x) {
+		for(i.y=0; i.y<width; ++i.y) {
+			for(i.z=0; i.z<width; ++i.z) {
+//				cout << "A mesh!" << endl;
 				Mesh* m = meshes[i];
-                if (m == NULL)
-                    meshes[i] = new Mesh(this);
+                if (m == NULL) {
+                    m = new Mesh(this);
+					meshes[i] = m;
+				}
                 m->update(MeshIterator(this, i));
 			}
 		}

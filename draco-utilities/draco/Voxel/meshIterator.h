@@ -4,6 +4,7 @@
 
 #include "index.h"
 #include "node.h"
+#include "pointer.h"
 
 
 namespace Vox {
@@ -13,7 +14,7 @@ namespace Vox {
 	public:
         static const byte DIMMENSION = 3;
 		Index pos;
-        const Block* blocks[DIMMENSION][DIMMENSION][DIMMENSION];
+        Pointer blocks[DIMMENSION][DIMMENSION][DIMMENSION];
         Tree* tree;
         
         MeshIterator(Tree* tree, const Index& startPos);

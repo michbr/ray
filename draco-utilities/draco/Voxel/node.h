@@ -22,11 +22,12 @@ namespace Vox {
 
 		// getters
 		byte getIndex(byte x, byte y, byte z) const;
-		Node& getNode(byte i);
+		Node& expand(byte i);
 		byte getOpacity() const;
 		byte getOpacity(byte i) const;
 		unsigned short getMaterial() const;
 		unsigned short getMaterial(byte i) const;
+		Node* getNode(byte child);
 
 		// setters
 		void set(byte i, Block* n);
@@ -36,8 +37,9 @@ namespace Vox {
 		void setNoClear(byte i, const Voxel& v);
 
 		// override methods
-		bool compact() const;
+		bool compact(byte child) const;
 		Voxel get(byte i) const;
+		Block& getBlock(byte i);
 		const Block& getBlock(byte i) const;
 
 	protected:
@@ -45,7 +47,6 @@ namespace Vox {
 		byte compactChildren;
 		Block* children[CHILD_COUNT];
 
-		bool compact(byte child) const;
 
 	};
 

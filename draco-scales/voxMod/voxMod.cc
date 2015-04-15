@@ -30,7 +30,7 @@ void VoxelModeler::addTree(byte depth, double width) {
     t->setPolygonizer(polygonizer);
     SphereMut mut(Vector3<double>(width, width, width) /2, width /4, Vox::Voxel(255, 1));
     mut.apply(*t);
-    t->updateMeshes();
+//    t->updateMeshes();
 }
 
 VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), world(new WorldModel) {
@@ -42,7 +42,7 @@ VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startD
 		0, 0, 0,
 		0., 1., 0.
 	);
-    addTree(5, 64);
+    addTree(12, 64);
 	
 	main = new Thread(this);
 	main->start();

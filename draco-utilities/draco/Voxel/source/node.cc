@@ -35,22 +35,18 @@ byte Node::getIndex(byte x, byte y, byte z) const {
 }
 
 Voxel Node::get(byte i) const {
-	return *((Voxel*) &children[i]);
+	if (compact(i))
+		return *((Voxel*) &children[i]);
+	return *children[i];
+}
+Block& Node::getBlock(byte i) {
+	return *children[i];
 }
 const Block& Node::getBlock(byte i) const {
 	return *children[i];
 }
-//Block Node::get(byte x, byte y, byte z) const {
-//	return get(getIndex(x, y, z));
-//}
 
-//Voxel Node::get(byte i) const {
-//	if (compact(i))
-//		return (Voxel*) &children[i];
-//	return children[i];
-//}
-
-Node& Node::getNode(byte i) {
+Node& Node::expand(byte i) {
 	if (compact(i) || dynamic_cast<Node*>(children[i]))
 		set(i, new Node(Voxel::read(&children[i])));
 	return *((Node*) children[i]);
@@ -122,9 +118,11 @@ void Node::setNoClear(byte i, const Voxel &v) {
 
 
 
-bool Node::compact() const {
-    return sizeof(Node) <= sizeof(void*);
-}
 bool Node::compact(byte child) const {
 	return compactChildren & ((byte)1 << child);
+}
+Node* Node::getNode(byte child) {
+	if (compact(child))
+		return NULL;
+	return dynamic_cast<Node*>(children[child]);
 }

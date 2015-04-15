@@ -18,6 +18,6 @@ void Mutator::apply(Tree& target, Node& node, const Index& min, const Index& max
 		Index childPos = cornerChild.getNeighbor(c);
 		bool traverse = mutate(target, childPos, c, node);
 		if (traverse && pos.depth < target.maxDepth)
-			apply(target, node.getNode(c), min, max, childPos);
+			apply(target, node.expand(c), min, max, childPos);
 	}
 }
