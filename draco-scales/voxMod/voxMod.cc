@@ -28,9 +28,9 @@ void VoxelModeler::addTree(byte depth, double width) {
     trees.push_back(t);
     t->addWorld(world);
     t->setPolygonizer(polygonizer);
-    SphereMut mut(Vector3<double>(width, width, width) /2, width /4, Vox::Voxel(255, 1));
-//    mut.apply(*t);
-    t->updateMeshes();
+    SphereMut mut(Vector3<double>(width, width, width) /2, width /3, Vox::Voxel(255, 1));
+    mut.apply(*t);
+//    t->updateMeshes();
 }
 
 VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), world(new WorldModel) {
@@ -42,7 +42,14 @@ VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startD
 		0, 0, 0,
 		0, 1, 0
 	);
-    addTree(7, 64);
+    addTree(8, 64);
+	
+//	Vox::Index test1(0, 0, 0, 0);
+//	Vox::Index test2(2, 3, 0, 0);
+//	Vox::byte direction = test1.directionTo(test2);
+//	cout << test1.getChild(direction) << " " << direction << endl;
+//	for(Index i(test1); i.depth<=test2.depth; i.getChild())
+//	cout << test1.getChild(test1.getChild(test1.directionTo(test2)).directionTo(test2)) << endl;
 	
 	main = new Thread(this);
 	main->start();

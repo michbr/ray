@@ -3,7 +3,9 @@
 #define DRACO_VOXEL_INDEX_H
 
 #include "voxel.h"
+
 #include <functional>
+#include <iostream>
 
 
 namespace Vox {
@@ -30,6 +32,7 @@ namespace Vox {
 	};
 }
 
+std::ostream& operator<<(std::ostream& out, const Vox::Index& index);
 
 
 namespace std {

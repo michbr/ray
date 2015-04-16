@@ -26,6 +26,9 @@ Index Index::getChild() const {
 }
 
 Index Index::getChild(byte i) const {
+//	cout << "x: " << (x *2 +((i &4) >> 2)) << endl;
+//	cout << "y: " << (y *2 +((i &2) >> 1)) << endl;
+//	cout << "z: " << (z *2 +(i &1)) << endl;
 	return Index(depth +1, x *2 +((i &4) >> 2), y *2 +((i &2) >> 1), z *2 +(i &1));
 }
 
@@ -39,8 +42,10 @@ Index Index::getParent(byte pDepth) const {
 }
 
 byte Index::directionTo(const Index& child) const {
-    unsigned int halfWidth = 1 << (((int)child.depth) -((int)depth) -1);
-    return ((child.x /halfWidth -x) *4) | ((child.y /halfWidth -y) *2) | (child.z /halfWidth -z);
+	int diff = ((int)child.depth) -((int)depth);
+    unsigned int halfWidth = 1 << (diff);
+//	cout << "half width: " << halfWidth << endl;
+    return (child.x & halfWidth >> (diff -2)) | (child.y & halfWidth >> (diff -1)) | (child.z & halfWidth >> (diff));
 }
 
 bool Index::operator==(const Index& o) const {
@@ -68,4 +73,9 @@ size_t hash<Index>::operator()(const Vox::Index& i) const {
 //	h = h ^ (h>>4);
 //	h = (h^0xdeadbeef) + (h<<5);
 //	return h ^ (h>>11);
+}
+
+
+ostream& operator<<(ostream& out, const Vox::Index& index) {
+	return out << "(" << index.x << "," << index.y << "," << index.z << ";" << index.depth << ")";
 }
