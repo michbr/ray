@@ -10,6 +10,7 @@ set(UTILITIES_DIR ${PROJECT_SOURCE_DIR})
 add_subdirectory("glew")
 add_subdirectory("DevIL")
 add_subdirectory("assimp-3.1.1")
+add_subdirectory("gtest-1.7.0")
 
 add_subdirectory("draco/AssetLoader")
 add_subdirectory("draco/DragonMath")
