@@ -46,7 +46,6 @@ add_subdirectory(test)
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} ${SOURCES})
-add_executable(${LIBRARY_NAME}Test ${SOURCES})
 
 #set_target_properties(${LIBRARY_NAME}Test PROPERTIES COMPILE_FLAGS "-g -O0 -Wall -W -Wshadow -Wunused-variable \
 # -Wunused-parameter -Wunused-function -Wunused -Wno-system-headers \
@@ -55,5 +54,3 @@ add_executable(${LIBRARY_NAME}Test ${SOURCES})
 #LDFLAGS="-fprofile-arcs -ftest-coverage")
 
 target_link_libraries(${LIBRARY_NAME} ${LIBS})
-target_link_libraries(${LIBRARY_NAME}Test UnitTests)
-add_test(${LIBRARY_NAME}Test ${LIBRARY_NAME}Test)
