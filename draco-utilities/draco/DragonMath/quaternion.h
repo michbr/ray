@@ -10,6 +10,7 @@
 
 class Quaternion {
 public:
+    Quaternion(double x_val, double y_val, double z_val, double w_val);
     double x, y, z, w;
     double length() const;
     void normalize();
