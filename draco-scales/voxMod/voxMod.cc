@@ -42,7 +42,7 @@ VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startD
 		0, 0, 0,
 		0, 1, 0
 	);
-    addTree(8, 64);
+    addTree(10, 64);
 	
 //	Vox::Index test1(0, 0, 0, 0);
 //	Vox::Index test2(2, 3, 0, 0);

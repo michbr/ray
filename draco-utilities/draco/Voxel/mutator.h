@@ -21,12 +21,22 @@ namespace Vox {
 
 
 	protected:
-		virtual bool mutate(const Tree& target, const Index& pos, byte index, Node& parent) const = 0;
-	    virtual void getBounds(const Tree& target, Index& min, Index& max) const = 0;
-//		virtual bool traverse(const Index&) const = 0;
+		
+		class Application {
+		public:
+			Index min, max;
+			Tree* tree;
+			
+			Application();
+		};
+		
+	    virtual Application* setup(Tree& target) const;
+		virtual bool mutate(Application* app, const Index& pos, byte index, Node& parent) const = 0;
+		virtual void breakdown(Application* app) const;
+		
 
 	private:
-		void apply(Tree& target, Node& node, const Index& min, const Index& max, const Index&) const;
+		void apply(Application* app, Node& node, const Index&) const;
 	};
 }
 

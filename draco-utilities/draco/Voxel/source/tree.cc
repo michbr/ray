@@ -9,7 +9,7 @@ using namespace Vox;
 //  Tree class  //
 //////////////////
 
-Tree::Tree(byte maxDepth, double size): maxDepth(maxDepth), size(size), voxSize(size /(2 << maxDepth)), pos(0, 0, 0) {}
+Tree::Tree(byte maxDepth, double size): maxDepth(maxDepth), size(size), voxSize(size /(1 << maxDepth)), pos(0, 0, 0) {}
 
 
 void Tree::addWorld(WorldModel* world) {
