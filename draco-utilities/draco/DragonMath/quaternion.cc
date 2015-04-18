@@ -1,17 +1,17 @@
 #include "dragonmath.h"
 
-Quaternion::normalize() {
+void Quaternion::normalize() {
     
 }
 
-Quaternion::normalized() const {
+Quaternion Quaternion::normalized() const {
     
 }
 
-Quaternion::conjugate() const {
+Quaternion Quaternion::conjugate() const {
     
 }
 
-Quaternion::length() const {
+double Quaternion::length() const {
     
 }

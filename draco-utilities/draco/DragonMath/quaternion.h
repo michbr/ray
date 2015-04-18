@@ -16,7 +16,7 @@ public:
     void normalize();
     Quaternion normalized() const;
     Quaternion conjugate() const;
-    Quaternion operator*(Quaternion a, Quaternion b);
+    Quaternion operator*(Quaternion multiplicand);
 private:
     
 };
