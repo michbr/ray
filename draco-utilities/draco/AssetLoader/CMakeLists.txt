@@ -44,7 +44,7 @@ include_directories(${UTILITIES_DIR}/draco/)
 # TODO improve this...
 include_directories(${UTILITIES_DIR}/assimp-3.1.1)
 
-set(LIBS ${LIBS} assimp WorldModel DragonMath TextureLoader DracoCommon)
+set(LIBS ${LIBS} assimp WorldModel DragonMath DracoCommon)
 
 
 

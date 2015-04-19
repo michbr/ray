@@ -1,8 +1,6 @@
 
 #include "material.h"
 
-#include "TextureLoader/textureLoader.h"
-
 #include <sstream>
 #include <iostream>
 #include <cmath>
@@ -21,8 +19,8 @@ void Material::addTexture(string texPath) {
         //texPath.append(cwd);
         //texPath.append("/");
         //texPath.append(blah[i]);
-	cout << "Adding texture: " << texPath << endl;
-	textures.push_back(TextureLoader::loadTexture(texPath));
+//	cout << "Adding texture: " << texPath << endl;
+//	textures.push_back(TextureLoader::loadTexture(texPath));
 	/*for (int i = 0; i < 5; i++ ) {
 		for (int j = 0; j < 2; j++) {
 			vector<int> out;
@@ -117,50 +115,50 @@ vector<int> * Material::color_diffuse(const vector<int> * light_color, double co
 	return final;
 }
 
-vector<int> * Material::color_diffuse(const vector<int> * light_color, double cos, double x, double y) const {
-		
-	vector<int> * final = new vector<int>();
-	//final->push_back(round((*(*result)[0])[0] * abs(cos)));
-	//final->push_back(round((*(*result)[1])[0] * abs(cos)));
-	//final->push_back(round((*(*result)[2])[0] * abs(cos)));
-//	cout << "r: " << (*light_color)[0] << " g: " << (*light_color)[1] << " b: " << (*light_color)[2] << endl;
-	//cout << "Kdg " << (*(*Kd)[index])[1] << endl;
-	double r,g,b;
-	r = (*light_color)[0];
-	g = (*light_color)[1];
-	b = (*light_color)[2];
-	vector<int> surfaceColor;
-	double w = textures[0]->getWidth();
-	double h = textures[0]->getHeight();
-	int x_pos = (w*x);
-	int y_pos = (h*y);
-	if (x_pos > 512 || y_pos > 512) {
-//		cout << "OOB: " << x_pos << ", " << y_pos << endl;
-		return color_diffuse(light_color, cos);
-	}
-	textures[0]->getPixel(x_pos, y_pos, &surfaceColor);
-	
-	double sr, sg, sb;
-	
-	sr = (surfaceColor)[0]/255.0;
-	sg = (surfaceColor)[1]/255.0;
-	sb = (surfaceColor)[2]/255.0;
-	
-//	cout << "cos: " << cos << endl;
-	
-//	cout << "surface: " << sr << ", " << sg << ", " << sb << endl;
-
-	final->push_back(round(sr*r * abs(cos)));
-	final->push_back(round(sg*g * abs(cos)));
-	final->push_back(round(sb*b * abs(cos)));
-
-//	cout << "color: "
-//	<< (*final)[0] << ", "
-//	<< (*final)[1] << ", "
-//	<< (*final)[2] << endl;
-	
-	return final;
-}
+//vector<int> * Material::color_diffuse(const vector<int> * light_color, double cos, double x, double y) const {
+//		
+//	vector<int> * final = new vector<int>();
+//	//final->push_back(round((*(*result)[0])[0] * abs(cos)));
+//	//final->push_back(round((*(*result)[1])[0] * abs(cos)));
+//	//final->push_back(round((*(*result)[2])[0] * abs(cos)));
+////	cout << "r: " << (*light_color)[0] << " g: " << (*light_color)[1] << " b: " << (*light_color)[2] << endl;
+//	//cout << "Kdg " << (*(*Kd)[index])[1] << endl;
+//	double r,g,b;
+//	r = (*light_color)[0];
+//	g = (*light_color)[1];
+//	b = (*light_color)[2];
+//	vector<int> surfaceColor;
+//	double w = textures[0]->getWidth();
+//	double h = textures[0]->getHeight();
+//	int x_pos = (w*x);
+//	int y_pos = (h*y);
+//	if (x_pos > 512 || y_pos > 512) {
+////		cout << "OOB: " << x_pos << ", " << y_pos << endl;
+//		return color_diffuse(light_color, cos);
+//	}
+//	textures[0]->getPixel(x_pos, y_pos, &surfaceColor);
+//	
+//	double sr, sg, sb;
+//	
+//	sr = (surfaceColor)[0]/255.0;
+//	sg = (surfaceColor)[1]/255.0;
+//	sb = (surfaceColor)[2]/255.0;
+//	
+////	cout << "cos: " << cos << endl;
+//	
+////	cout << "surface: " << sr << ", " << sg << ", " << sb << endl;
+//
+//	final->push_back(round(sr*r * abs(cos)));
+//	final->push_back(round(sg*g * abs(cos)));
+//	final->push_back(round(sb*b * abs(cos)));
+//
+////	cout << "color: "
+////	<< (*final)[0] << ", "
+////	<< (*final)[1] << ", "
+////	<< (*final)[2] << endl;
+//	
+//	return final;
+//}
 
 vector<int> * Material::color_specular(const vector<int> * light_color, double cos) const {
 	vector<int> * final = new vector<int>();
