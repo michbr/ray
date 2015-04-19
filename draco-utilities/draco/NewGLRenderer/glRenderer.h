@@ -4,24 +4,27 @@
 #include "GL/glew.h"
 #include "window.h"
 #include "worldModel/renderer.h"
-#include "worldModel/camera.h"
+#include "worldModel/cameraStructure.h"
+#include "camera.h"
 
 #include <list>
 #include <worldModel/worldModel.h>
 
 
-class GLRenderer: public ModelRenderer {
+class GLRenderer: public BaseRenderer {
 public:
-	GLRenderer(GameWindow &win, Camera *cam);
 	void setWorld(WorldModel &world);
 	WorldModel& getWorld();
 
 	void addObject(SceneObject *object);
 	void removeObject(SceneObject *object);
 
+	virtual void addCamera(CameraStructure * cam);
+
 
 	//static Renderer & getInstance();
 	void render();
+	void initGL(int width, int height);
 
 //	Camera &getCam();
 
@@ -44,12 +47,9 @@ private:
 	// GameWindow & window;
 	//static bool initialized;
 	//static Renderer & instance;
-	Camera *cam;
 	WorldModel * world;
 	std::unordered_map<SceneObject*, BufferInfo> buffers;
-
-	void initGL(GameWindow &win);
-	void initialize(GameWindow &win);
+	Camera * currentCam;
 
 };
 

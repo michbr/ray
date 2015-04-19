@@ -1,6 +1,6 @@
 #include "rayTracer.h"
 #include "loader.h"
-#include "camera.h"
+#include "cameraStructure.h"
 #include "common/path.h"
 #include "wireframe.h"
 #include "renderer.h"
@@ -121,7 +121,7 @@ RayTracer::RayTracer(ScaleType *type, Fl_Group *pane, const string &startDir): S
 	Vector3<double> pos = Vector3<double>(1, 1, 1);
 	Vector3<double> normal = Vector3<double>(0, 0, 1);
 	Vector3<double> up = Vector3<double>(0, 1, 0);
-	Camera * cam = new Camera(string("primary"), pos, normal, up, 1.0);
+	Camera * cam = new Camera(pos, normal, up, 1.0);
 
         Wireframe * frame = new Wireframe("default", -IMAGE_WIDTH/2, -IMAGE_HEIGHT/2, IMAGE_WIDTH/2, IMAGE_HEIGHT/2, 1);
         renderer = new Renderer(cam);
@@ -159,8 +159,11 @@ void RayTracer::run () {
 
 void RayTracer::loadModel(string location) {
 	model = new WorldModel();
-	for(string file: Path(location).dirList(true))
-		AssetLoader::loadAsset(file, *model);
+	for(string file: Path(location).dirList(true)) {
+		if (file.substr(file.find(".") + 1).compare("obj") == 0) {
+			AssetLoader::loadAsset(location +  file, *model);
+		}
+	}
 }
 
 

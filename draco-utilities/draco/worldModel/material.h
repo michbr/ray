@@ -34,7 +34,7 @@ public:
 
 	std::vector<int> * color_ambient(const std::vector<int> *) const;
 	std::vector<int> * color_diffuse(const std::vector<int> *, double) const;
-	std::vector<int> * color_diffuse(const std::vector<int> *, double, double, double) const;
+//	std::vector<int> * color_diffuse(const std::vector<int> *, double, double, double) const;
 	std::vector<int> * color_specular(const std::vector<int> *, double) const;
 	std::vector<int> * color_reflection(const std::vector<int> *) const;
 

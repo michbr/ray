@@ -314,7 +314,7 @@ vector<int> * Face::colorDiffuse(const Vector3<double> point, const vector<int> 
 //              cout << "one: " << lengthOne << endl;
 //              cout << "two: " << lengthTwo << endl;
 
-                return material->color_diffuse(light_color, cos, distOne, distTwo);
+//                return material->color_diffuse(light_color, cos, distOne, distTwo);
                 //vector<double> * pointVector2 = subtract(
                 //double AxisOneDot = dot_product(first,Axis
 

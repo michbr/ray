@@ -1,16 +1,15 @@
 
 #include "glPane.h"
 
-#include <FL/Fl_Box.H>
-#include <FL/gl.h>
+#include <FL/Fl.H>
 
 
-cube_box::cube_box(GLDrawable * toDraw,  int x,int y,int w,int h,const char *l)
+GLPane::GLPane(GLDrawable * toDraw,  int x,int y,int w,int h,const char *l)
 : Fl_Gl_Window(x,y,w,h,l) {
 	drawable = toDraw;
 }
 
-void cube_box::draw() {
+void GLPane::draw() {
 	if (!valid()) {
 		drawable->initialize();
 //		glLoadIdentity();
@@ -23,8 +22,10 @@ void cube_box::draw() {
 	drawable->draw();
 }
 
-int cube_box::handle(int e) {
+int GLPane::handle(int e) {
 	switch (e) {
+		case FL_KEYDOWN: drawable->handleEvent(Fl::event_key()); break;
+		case FL_KEYUP:  drawable->handleEvent(Fl::event_key()); break;
 		case FL_ENTER: cursor(FL_CURSOR_CROSS); break;
 		case FL_LEAVE: cursor(FL_CURSOR_DEFAULT); break;
 	}

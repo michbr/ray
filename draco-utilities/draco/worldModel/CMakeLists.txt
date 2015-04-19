@@ -19,7 +19,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH})
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY_RELEASE ${LIBRARY_OUTPUT_PATH} )
 
-set(DEVIL_DIR "${UTILITIES_DIR}/DevIL")
+#set(DEVIL_DIR "${UTILITIES_DIR}/DevIL")
 
 add_definitions(-DDLL_EXPORT_DRACO_WORLD_MODEL)
 add_definitions(-DDLL_IMPORT_DRACO_WORLD_MODEL_RENDERER)
@@ -45,9 +45,9 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 
 ##  dependencies  ##
 include_directories(${UTILITIES_DIR}/draco/)
-include_directories(${DEVIL_DIR}/include)
+#include_directories(${DEVIL_DIR}/include)
 
-set(LIBS ${LIBS} DragonMath TextureLoader)
+set(LIBS ${LIBS} DragonMath)# TextureLoader)
 
 
 

@@ -1,40 +1,21 @@
 
 #include "glRenderer.h"
 //#include "loadShader.h"
-//
-//#include <GL/glew.h>
-//#include <GL/gl.h>
-//
-//#include <GL/glext.h>
-//
-//#include <iostream>
-//#include <AssetLoader/loader.h>
 
 using namespace std;
-
-
-
-GLRenderer::GLRenderer(GameWindow & win, Camera * camera) {
-	cam = camera;
-	initialize(win);
-}
-
-
-void GLRenderer::initialize(GameWindow & win) {
-	initGL(win);
-}
 
 void GLRenderer::setWorld(WorldModel &world) {
 	this->world = &world;
 	world.addRenderer(*this);
 }
+
 WorldModel& GLRenderer::getWorld() {
 	return *world;
 }
 
-void GLRenderer::initGL(GameWindow & win) {
+void GLRenderer::initGL(int width, int height) {
 	glLoadIdentity();
-	glViewport(0,0,win.getWidth(),win.getHeight());
+	glViewport(0,0,width,height);
 	glewInit();
 	//programID = LoadShaders( "SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader" );
 
@@ -104,4 +85,8 @@ void GLRenderer::removeObject(SceneObject *object) {
 	buffers.erase(object);
 	if (buffer == 0) return;
 	glDeleteBuffers(1, &buffer);
+}
+
+void GLRenderer::addCamera(CameraStructure *cam) {
+	currentCam = new Camera(cam);
 }

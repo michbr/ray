@@ -4,6 +4,7 @@
 #include "EXPORT.h"
 
 #include "matrix.h"
+#include "quaternion.h"
 #include "ray.h"
 #include "vector.h"
 
