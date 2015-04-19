@@ -1,6 +1,7 @@
 
 #include "mutators/sphere.h"
 #include "tree.h"
+#include <cmath>
 
 using namespace std;
 using namespace Vox;
@@ -17,19 +18,23 @@ SphereMut::SphereMut(const Vector3<double>& pos, double radius, const Voxel& val
 
 bool SphereMut::mutate(Application* app, const Index& voxelPos, byte index, Node& parent) const {
 	SphereApplication* sApp = (SphereApplication*) app;
-	double dis = (pos -Vector3<double>(voxelPos.x, voxelPos.y, voxelPos.z)).magnitude();
-	if (dis > sApp->maxRadius)
+	double disSqr = (pos -Vector3<double>(voxelPos.x, voxelPos.y, voxelPos.z)).magnitudeSquared();
+	if (disSqr > sApp->maxRadSqr)
 		return false;
-	if (dis < sApp->minRadius) {
+	//	cout << "YO!!! Hello there!" << sApp->maxRadius << endl;
+	if (disSqr < sApp->minRadSqr) {
 		parent.set(index, value);
 		return false;
 	}
+	if (voxelPos.depth > app->tree->maxDepth)
+		return false;
+	double dis = sqrt(disSqr);
 	byte newOpacity = (byte)((parent.getOpacity(index) * (dis -sApp->minRadius) + value.opacity * (sApp->maxRadius - dis)) / 2);
 	if ((dis - sApp->minRadius) > 0.5f)
 		parent.set(index, Voxel(value.material, newOpacity));
-    else
-        parent.set(index, Voxel(parent.getMaterial(index), newOpacity));
-    return true;
+	else
+		parent.set(index, Voxel(parent.getMaterial(index), newOpacity));
+	return true;
 }
 
 Mutator::Application* SphereMut::setup(Tree& target) const {
@@ -45,4 +50,5 @@ Mutator::Application* SphereMut::setup(Tree& target) const {
 	app->minRadSqr = app->minRadius *app->minRadius;
 	app->maxRadius = radius /target.voxSize +1;
 	app->maxRadSqr = app->maxRadius *app->maxRadius;
+	return app;
 }

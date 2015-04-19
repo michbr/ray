@@ -31,6 +31,7 @@ void VoxelModeler::addTree(byte depth, double width) {
     SphereMut mut(Vector3<double>(width, width, width) /2, width /3, Vox::Voxel(255, 1));
     mut.apply(*t);
 //    t->updateMeshes();
+	cout << "Vox size: " << t->voxSize << endl;
 }
 
 VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), world(new WorldModel) {
@@ -42,7 +43,7 @@ VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startD
 		0, 0, 0,
 		0, 1, 0
 	);
-    addTree(8, 64);
+    addTree(14, 64);
 	
 //	Vox::Index test1(0, 0, 0, 0);
 //	Vox::Index test2(2, 3, 0, 0);
