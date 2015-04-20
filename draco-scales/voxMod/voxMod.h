@@ -2,7 +2,7 @@
 #ifndef DRACO_VOXEL_MODELER_H
 #define DRACO_VOXEL_MODELER_H
 
-#include <NewGLRenderer/dragon.h>
+#include <NewGLRenderer/glRenderer.h>
 #include <common/glPane.h>
 #include <common/thread.h>
 #include <FL/Fl_Group.H>
@@ -28,17 +28,18 @@ public:
 	void draw();
 	void initialize();
 	void run();
+	void handleEvent(int key);
 	static void update(void * context);
 
 private:
 	std::vector<Vox::Tree*> trees;
 	Vox::Polygonizer<double>* polygonizer;
-	DragonEngine engine;
+	GLRenderer renderer;
 	Thread * main;
     WorldModel* world;
 
 	// GUI
-	cube_box * display;
+	GLPane * display;
 	
 
 	void addTree(byte depth, double width);

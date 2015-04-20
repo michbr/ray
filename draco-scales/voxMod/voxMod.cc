@@ -36,12 +36,11 @@ void VoxelModeler::addTree(byte depth, double width) {
 
 VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), world(new WorldModel) {
 	pane->current(pane);
-	display = new cube_box(this, 5, 30, 500, 500, 0);
-	engine.initWindow(500, 500);
-	engine.placeCamera (
-		0, 0, 8,
-		0, 0, 0,
-		0, 1, 0
+	display = new GLPane(this, 5, 30, 500, 500, 0);
+	renderer.addCamera(new CameraStructure(
+		Vector3<double>(0, 0, 8.),
+		Vector3<double>(0, 1, 0),
+		Vector3<double>(0, 0, 1))
 	);
     addTree(14, 64);
 	
@@ -70,11 +69,17 @@ void VoxelModeler::run() {
 }
 
 void VoxelModeler::initialize() {
-	engine.initRenderer();
+	renderer.initGL(500, 500);
+	WorldModel * wm = new WorldModel();
+	renderer.setWorld(*wm);
 }
 
 void VoxelModeler::draw() {
-	engine.render();
+	renderer.render();
+}
+
+void VoxelModeler::handleEvent(int key) {
+	cout << "Got: " << key << endl;
 }
 
 void VoxelModeler::update(void * context) {
