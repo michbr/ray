@@ -10,6 +10,7 @@ const Block Block::EMPTY = Block(Voxel(0, 0));
 Block::Block(): Voxel(0, 0) {}
 Block::Block(const Voxel& source): Voxel(source) {}
 Block::Block(const Block& source): Voxel(source) {}
+Block::~Block() {}
 
 bool Block::compact(byte child) const {
 	return false;

@@ -6,22 +6,25 @@
 using namespace std;
 using namespace Vox;
 
-
+unsigned long Node::count = 0;
 // ctors and dtor
-Node::Node(): compactChildren(0xFF) {}
+Node::Node(): compactChildren(0xFF) {++count;}
 
 Node::Node(const Voxel &v) {
+	++count;
 	for(byte i=0; i< CHILD_COUNT; ++i) {
-		setNoClear(i, v);
+		setNoFree(i, v);
 	}
 }
 Node::Node(const Node &n): Block(n) {
+	++count;
 	for(byte i=0; i<CHILD_COUNT; ++i) {
 		children[i] = n.children[i];
 	}
 }
 
 Node::~Node() {
+	--count;
 	for(byte i=0; i< CHILD_COUNT; ++i) {
 		if (!compact(i))
 			delete children[i];
@@ -99,19 +102,19 @@ unsigned short Node::getMaterial(byte i) const {
 void Node::set(byte i, Block* n) {
 	if (!compact(i))
 		delete children[i];
-	setNoClear(i, n);
+	setNoFree(i, n);
 }
 void Node::set(byte i, const Voxel& v) {
 	if (!compact(i))
 		delete children[i];
-	setNoClear(i, v);
+	setNoFree(i, v);
 }
 
-void Node::setNoClear(byte i, Block* n) {
+void Node::setNoFree(byte i, Block* n) {
 	compactChildren = compactChildren & ~((byte)1 << i);
 	children[i] = n;
 }
-void Node::setNoClear(byte i, const Voxel &v) {
+void Node::setNoFree(byte i, const Voxel &v) {
 	compactChildren = compactChildren | ((byte)1 << i);
 	Voxel::write(&children[i], v);
 }

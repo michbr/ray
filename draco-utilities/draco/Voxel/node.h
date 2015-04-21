@@ -13,6 +13,8 @@ namespace Vox {
 		// constants
 		static const int CHILD_DIM = 2;
 		static const int CHILD_COUNT = CHILD_DIM << 2;
+		
+		static unsigned long count;
 
 		// ctor/dtor
 		Node();
@@ -33,8 +35,8 @@ namespace Vox {
 		void set(byte i, Block* n);
 		void set(byte i, const Voxel& v);
 		// the following two do not free memory: IMPROPER USAGE COULD CAUSE MEMORY LEAKS
-		void setNoClear(byte i, Block* n);
-		void setNoClear(byte i, const Voxel& v);
+		void setNoFree(byte i, Block* n);
+		void setNoFree(byte i, const Voxel& v);
 
 		// override methods
 		bool compact(byte child) const;

@@ -15,6 +15,7 @@ namespace Vox {
 		Block();
 		Block(const Voxel& source);
 		Block(const Block& source);
+		virtual ~Block();
 
 		virtual bool compact(byte child) const;
 		virtual Voxel get(byte i) const;

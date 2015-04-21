@@ -30,7 +30,10 @@ void VoxelModeler::addTree(byte depth, double width) {
     t->setPolygonizer(polygonizer);
     SphereMut mut(Vector3<double>(width, width, width) /2, width /3, Vox::Voxel(255, 1));
     mut.apply(*t);
+//	for(int i=0; i<8; ++i)
+//		t->head.set(i, Vox::Voxel(0, 0));
 //    t->updateMeshes();
+	cout << "Nodes: " << Vox::Node::count << endl;
 	cout << "Vox size: " << t->voxSize << endl;
 }
 
@@ -42,7 +45,7 @@ VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startD
 		Vector3<double>(0, 1, 0),
 		Vector3<double>(0, 0, 1))
 	);
-    addTree(14, 64);
+    addTree(11, 64);
 	
 //	Vox::Index test1(0, 0, 0, 0);
 //	Vox::Index test2(2, 3, 0, 0);
