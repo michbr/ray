@@ -71,12 +71,10 @@ if (UNIX)
 	PATHS ${FLTK_DIR})
 	find_library(FLTK_GL_LIBRARY fltk_gl
 	PATHS ${FLTK_DIR})
-	set(LIBS ${LIBS} ${FLTK_GL_LIBRARY})
+	set(LIBS ${LIBS} ${FLTK_GL_LIBRARIES})
 else (UNIX)
 	find_library(FLTK_LIBRARIES winfltk
-	PATHS ${FLTK_DIR})
-	set(LIBS ${LIBS} Shlwapi)
-	add_definitions(-DFL_DLL)
+    PATHS ${FLTK_DIR})
 endif (UNIX)
 set(LIBS ${LIBS} ${FLTK_LIBRARIES})
 

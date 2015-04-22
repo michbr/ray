@@ -1,5 +1,6 @@
 #include "camera.h"
 #include <FL/Fl.H>
+#include <cmath>
 
 double MouseSensitivity = 1.0;
 
@@ -83,28 +84,30 @@ void Camera::SetViewByMouse() {
 }
 
 void Camera::rotateCamera(double Angle, double x, double y, double z) {
-    Quaternion temp, quat_view, result;
+    Quaternion temp(x * sin(Angle / 2),
+            y * sin(Angle / 2),
+            z * sin(Angle / 2),
+            cos(Angle / 2));
 
-    temp.x = x * sin(Angle / 2);
-    temp.y = y * sin(Angle / 2);
-    temp.z = z * sin(Angle / 2);
-    temp.w = cos(Angle / 2);
+    Quaternion quat_view(direction.x,
+            direction.y,
+            direction.z,
+            0);
 
-    quat_view.x = direction.x;
-    quat_view.y = direction.y;
-    quat_view.z = direction.z;
-    quat_view.w = 0;
-
-    result =(temp*quat_view)* temp.conjugate();
+    Quaternion result = (temp * quat_view) * temp.conjugate();
 
     direction.x = result.x;
     direction.y = result.y;
     direction.z = result.z;
 }
 
+#if defined _WIN32
+#include <Windows.h>
+#endif
+
 int warpMouse(int new_x, int new_y) {
 
-#if defined WIN32
+#if defined _WIN32
     BOOL result = SetCursorPos(new_x, new_y);
     if (result) return 0; // OK
 
