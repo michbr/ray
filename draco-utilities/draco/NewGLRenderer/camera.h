@@ -12,9 +12,15 @@
 #include "worldModel/cameraStructure.h"
 
 class Camera {
+private:
+    int screenWidth;
+    int screenHeight;
+    double CurrentRotationX;
 public:
     Vector3<double> position, direction, up;
-    Camera(CameraStructure * camStructure);
+    Camera(CameraStructure * camStructure, int width, int height);
+    void SetViewByMouse();
+    void rotateCamera(double Angle, double x, double y, double z);
 };
 
 

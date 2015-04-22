@@ -64,6 +64,22 @@ set(LIBS ${LIBS} ${OPENGL_LIBRARIES})
 set(LIBS ${LIBS} ${OPENGL_gl_LIBRARY})
 set(LIBS ${LIBS} DragonMath WorldModel glew)
 
+set(FLTK_DIR "${UTILITIES_DIR}/fltk-1.3.3")
+include_directories(${FLTK_DIR})
+if (UNIX)
+	find_library(FLTK_LIBRARIES fltk
+	PATHS ${FLTK_DIR})
+	find_library(FLTK_GL_LIBRARY fltk_gl
+	PATHS ${FLTK_DIR})
+	set(LIBS ${LIBS} ${FLTK_GL_LIBRARY})
+else (UNIX)
+	find_library(FLTK_LIBRARIES winfltk
+	PATHS ${FLTK_DIR})
+	set(LIBS ${LIBS} Shlwapi)
+	add_definitions(-DFL_DLL)
+endif (UNIX)
+set(LIBS ${LIBS} ${FLTK_LIBRARIES})
+
 
 
 ##  deliverables  ##
