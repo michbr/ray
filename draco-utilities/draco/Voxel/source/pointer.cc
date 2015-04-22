@@ -20,9 +20,9 @@ Voxel Pointer::get() const {
 	return block->get(child);
 }
 Pointer Pointer::traverse(byte child) const {
+	// TODO: remove this check
 	if (child > 7) {cout << "NO!" << endl; return *this;}
 	if (block->compact(this->child))
 		return *this;
-	cout << "not compact" << endl;
 	return Pointer(&block->getBlock(this->child), child);
 }

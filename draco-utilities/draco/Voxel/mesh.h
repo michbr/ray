@@ -3,7 +3,6 @@
 
 #include "voxel.h"
 #include "meshIterator.h"
-//#include "tree.h"
 #include "pointer.h"
 
 #include <worldModel/sceneObject.h>
@@ -17,6 +16,8 @@ namespace Vox {
     public:
 	    static const byte VOXEL_DEPTH = 4;
 	    static const byte VOXEL_DIMENSION = 1 << VOXEL_DEPTH;
+		
+		static unsigned long count;
 
 		Mesh(Tree* tree);
 		~Mesh();

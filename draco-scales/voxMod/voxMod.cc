@@ -32,8 +32,9 @@ void VoxelModeler::addTree(byte depth, double width) {
     mut.apply(*t);
 //	for(int i=0; i<8; ++i)
 //		t->head.set(i, Vox::Voxel(0, 0));
-//    t->updateMeshes();
+    t->updateMeshes();
 	cout << "Nodes: " << Vox::Node::count << endl;
+	cout << "Meshes: " << Vox::Mesh::count << endl;
 	cout << "Vox size: " << t->voxSize << endl;
 }
 
@@ -45,7 +46,7 @@ VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startD
 		Vector3<double>(0, 1, 0),
 		Vector3<double>(0, 0, 1))
 	);
-    addTree(11, 64);
+    addTree(6, 64);
 	
 //	Vox::Index test1(0, 0, 0, 0);
 //	Vox::Index test2(2, 3, 0, 0);

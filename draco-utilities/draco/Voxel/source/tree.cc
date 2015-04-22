@@ -50,7 +50,7 @@ void Tree::setPolygonizer(Polygonizer<double>* polygonizer) {
 	this->polygonizer = polygonizer;
 }
 Polygonizer<double>* Tree::getPolygonizer() {
-	this->polygonizer = polygonizer;
+	return polygonizer;
 }
 
 void Tree::updateMeshes() {
@@ -60,7 +60,6 @@ void Tree::updateMeshes() {
 	for(i.x=0; i.x<width; ++i.x) {
 		for(i.y=0; i.y<width; ++i.y) {
 			for(i.z=0; i.z<width; ++i.z) {
-//				cout << "A mesh!" << endl;
 				Mesh* m = meshes[i];
                 if (m == NULL) {
                     m = new Mesh(this);
