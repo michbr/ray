@@ -1,4 +1,6 @@
 
+#include <vector>
+
 #include "mesh.h"
 
 using namespace std;
@@ -26,9 +28,23 @@ void Mesh::update(MeshIterator iter) {
 	Voxel voxels[VOXEL_DIMENSION][VOXEL_DIMENSION][VOXEL_DIMENSION];
 	populate(iter.blocks[1][1][1], Index(1), voxels);
 	
-	unordered_map<int, Vector3<double> > vertices;
-//	for(int x=0;;)
-//		tree->getPolygonizer()->lookupTriangles();
+//	unordered_map<int, Vector3<double> > vertices;
+//	vector<vector<int> > rawTris;
+//	for(int x=1; x<VOXEL_DIMENSION; ++x) {
+//		for(int y=1; y<VOXEL_DIMENSION; ++y) {
+//			for(int z=1; z<VOXEL_DIMENSION; ++z) {
+//				rawTris.push_back(tree->getPolygonizer()->lookupTriangles(x-1, y-1, z-1, x, y, z, &vertices, voxels));
+//			}
+//		}
+//	}
+//	
+//	unordered_map<int, int> vertexIndices;
+//	vector<Vector3<double> > vertexList;
+//	for(auto vertex: vertices) {
+//		vertexList.push_back(vertex.second);
+////		vertexIndices[]
+//	}
+	
 }
 
 void Mesh::populate(Pointer block, Index i, Voxel (*array)[VOXEL_DIMENSION][VOXEL_DIMENSION]) const {

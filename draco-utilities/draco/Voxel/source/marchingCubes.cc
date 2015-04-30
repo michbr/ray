@@ -348,7 +348,7 @@ template<typename T> int MarchingCubes<T>::getZ(int x, int y, int z) const {
     return ((VERTEX_DIMENSION * 2 + x) * VERTEX_DIMENSION + y) * VERTEX_DIMENSION + z;
 }
 
-template<typename T> vector<int> MarchingCubes<T>::lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<T>>* vertices, Voxel*** voxels) const {
+template<typename T> vector<int> MarchingCubes<T>::lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<T> >* vertices, Voxel*** voxels) const {
     /*
 Determine the index into the edge table which
 tells us which vertices are inside of the surface
