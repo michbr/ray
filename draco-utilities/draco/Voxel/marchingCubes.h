@@ -20,7 +20,7 @@ namespace Vox {
 
 		MarchingCubes(float voxelSize, byte isolevel, Vector3<T> offset);
 
-		std::vector<int> lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<T>>* vertices, Voxel*** voxels) const;
+		std::vector<int> lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<T> >* vertices, Voxel*** voxels) const;
 		Vector3<T> stretchVertex(int x1, int y1, int z1, int x2, int y2, int z2, Voxel valp1, Voxel valp2) const;
 
 		int getX(int x, int y, int z) const;

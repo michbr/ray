@@ -35,6 +35,7 @@ void SceneObject::addTexture(string texPath) {
 	textures.push_back(texPath);
 }
 
+// TODO: KNOWN MEMORY LEAK!!!  In most cases, the faces are allocated in memory with no other references kept
 void SceneObject::clearFaces() {
 	faces.clear();
 }
