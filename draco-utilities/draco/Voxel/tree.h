@@ -14,6 +14,7 @@
 namespace Vox {
 
 //	class Mesh;
+	template<typename T> class Polygonizer;
 
 
     class Tree {

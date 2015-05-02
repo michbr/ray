@@ -12,6 +12,7 @@ using namespace std;
 //////////////
 
 // constructors
+template<typename T> Vector2<T>::Vector2(): Vector2<T>(0, 0) {}
 template<typename T> Vector2<T>::Vector2(T x, T y): x(x), y(y) {}
 template<typename T> Vector2<T>::Vector2(const Vector2<T> &source): Vector2<T>(source.x, source.y) {}
 template<typename T> Vector2<T>::Vector2(const Vector3<T> &source): Vector2<T>(source.x, source.y) {}
@@ -111,6 +112,7 @@ template <typename T> const Vector2<T> Vector2<T>::down(0, -1);
 //////////////
 
 // constructors
+template <typename T> Vector3<T>::Vector3(): Vector3<T>(0, 0, 0) {}
 template <typename T> Vector3<T>::Vector3(T x, T y, T z): x(x), y(y), z(z) {}
 template <typename T> Vector3<T>::Vector3(const Vector3<T> &source): x(source.x), y(source.y), z(source.z) {}
 template <typename T> Vector3<T>::Vector3(const Vector4<T> &source): x(source.x), y(source.y), z(source.z) {}
@@ -215,6 +217,7 @@ template<typename T> const Vector3<T> Vector3<T>::back(0, 0, -1);
 //////////////
 
 // constructors
+template<typename T> Vector4<T>::Vector4(): Vector4<T>(0, 0, 0, 1) {}
 template<typename T> Vector4<T>::Vector4(T x, T y, T z): Vector4<T>(x, y, z, 1) {}
 template<typename T> Vector4<T>::Vector4(T x, T y, T z, T w): x(x), y(y), z(z), w(w) {}
 template<typename T> Vector4<T>::Vector4(const Vector3<T> &source): Vector4<T>(source.x, source.y, source.z) {}

@@ -26,6 +26,7 @@ public:
 	T x, y;
 
 	// constructors
+	Vector2();
 	Vector2(T x, T y);
 	Vector2(const Vector2<T> &source);
 	Vector2(const Vector3<T> &source);
@@ -75,6 +76,7 @@ public:
 	T x, y, z;
 
 	// constructors
+	Vector3();
 	Vector3(T x, T y, T z);
 	Vector3(const Vector3<T> &source);
 	Vector3(const Vector4<T> &source);
@@ -129,6 +131,7 @@ public:
 	T x, y, z, w;
 
 	// constructors
+	Vector4();
 	Vector4(T x, T y, T z);
 	Vector4(T x, T y, T z, T w);
 	Vector4(const Vector3<T> &source);

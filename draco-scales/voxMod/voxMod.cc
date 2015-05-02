@@ -6,6 +6,7 @@
 #include <FL/Fl_File_Chooser.H>
 #include <iostream>
 #include <string>
+#include <Voxel/marchingCubes.h>
 #include <Voxel/mutators/sphere.h>
 #include <Voxel/tree.h>
 #include <Voxel/voxel.h>
@@ -46,6 +47,7 @@ VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startD
 		Vector3<double>(0, 1, 0),
 		Vector3<double>(0, 0, 1))
 	);
+	polygonizer = new MarchingCubes<double>(127);
     addTree(6, 64);
 	
 //	Vox::Index test1(0, 0, 0, 0);

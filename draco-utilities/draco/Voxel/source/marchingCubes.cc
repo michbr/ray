@@ -327,7 +327,7 @@ const byte triTable[256][15] = {
 ////////////////////////////
 //  Marching Cubes Class  //
 ////////////////////////////
-
+template<typename T> MarchingCubes<T>::MarchingCubes(byte isolevel): Polygonizer<T>(isolevel) {}
 template<typename T> MarchingCubes<T>::MarchingCubes(float voxelSize, byte isolevel, Vector3<T> offset):
     Polygonizer<T>(voxelSize, isolevel, offset) {}
 
@@ -348,11 +348,12 @@ template<typename T> int MarchingCubes<T>::getZ(int x, int y, int z) const {
     return ((VERTEX_DIMENSION * 2 + x) * VERTEX_DIMENSION + y) * VERTEX_DIMENSION + z;
 }
 
-template<typename T> vector<int> MarchingCubes<T>::lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<T> >* vertices, Voxel*** voxels) const {
+template<typename T> vector<int> MarchingCubes<T>::lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<T> >* vertices, Voxel voxels[][Mesh::VOXEL_DIMENSION][Mesh::VOXEL_DIMENSION]) const {
     /*
 Determine the index into the edge table which
 tells us which vertices are inside of the surface
 */
+	cout << "did stuff" << endl;
     int cubeindex = 0;
     if (voxels[x ][y ][z ].opacity < Polygonizer<T>::isolevel) cubeindex |= 1;
     if (voxels[x1][y ][z ].opacity < Polygonizer<T>::isolevel) cubeindex |= 2;
@@ -362,6 +363,8 @@ tells us which vertices are inside of the surface
     if (voxels[x1][y1][z ].opacity < Polygonizer<T>::isolevel) cubeindex |= 32;
     if (voxels[x1][y1][z1].opacity < Polygonizer<T>::isolevel) cubeindex |= 64;
     if (voxels[x ][y1][z1].opacity < Polygonizer<T>::isolevel) cubeindex |= 128;
+	
+	cout << "did stuff" << endl;
 
     // Cube is entirely in/out of the surface
     if (edgeTable[cubeindex] == 0)
