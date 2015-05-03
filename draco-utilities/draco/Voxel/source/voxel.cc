@@ -1,4 +1,3 @@
-﻿
 
 #include "voxel.h"
 
@@ -58,13 +57,13 @@ Voxel::Voxel(const Voxel& other) :
 
 Voxel Voxel::read(void *address) {
 	Voxel voxel(0, 0);
-	void **value = ((void**) (&voxel)) +1;
+	void **value = ((void**) (&voxel));
 	void **loc = (void**)address;
 	*value = *loc;
 	return voxel;
 }
 void Voxel::write(void *address, const Voxel& voxel) {
-	void **value = ((void**) (&voxel)) +1;
+	void **value = ((void**) (&voxel));
 	void **loc = (void**)address;
 
 //	cout << "voxel: " << &(voxel) << endl;

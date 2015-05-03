@@ -4,6 +4,8 @@
 using namespace std;
 using namespace Vox;
 
+//template class MarchingCubes<double>;
+
 
 //////////////////////////////////////////////
 //  marching cubes tables, DO NOT MODIFY!!  //
@@ -327,44 +329,44 @@ const byte triTable[256][15] = {
 ////////////////////////////
 //  Marching Cubes Class  //
 ////////////////////////////
-template<typename T> MarchingCubes<T>::MarchingCubes(byte isolevel): Polygonizer<T>(isolevel) {}
-template<typename T> MarchingCubes<T>::MarchingCubes(float voxelSize, byte isolevel, Vector3<T> offset):
-    Polygonizer<T>(voxelSize, isolevel, offset) {}
+MarchingCubes::MarchingCubes(byte isolevel): Polygonizer(isolevel) {}
+MarchingCubes::MarchingCubes(double voxelSize, byte isolevel, Vector3<double> offset):
+    Polygonizer(voxelSize, isolevel, offset) {}
 
-template<typename T> Vector3<T> MarchingCubes<T>::stretchVertex(int x, int y, int z, int xDiff, int yDiff, int zDiff, Voxel valp1, Voxel valp2) const {
-	float blend = (Polygonizer<T>::isolevel - valp1.opacity) / ((float)(valp2.opacity - valp1.opacity));
-	return Vector3<double>(x + blend * xDiff, y + blend * yDiff, z + blend * zDiff) * ((double)Polygonizer<T>::voxelSize) + Polygonizer<T>::offset;
+Vector3<double> MarchingCubes::stretchVertex(int x, int y, int z, int xDiff, int yDiff, int zDiff, Voxel valp1, Voxel valp2) const {
+	float blend = (Polygonizer::isolevel - valp1.opacity) / ((float)(valp2.opacity - valp1.opacity));
+	return Vector3<double>(x + blend * xDiff, y + blend * yDiff, z + blend * zDiff) * ((double)Polygonizer::voxelSize) + Polygonizer::offset;
 }
 
-template<typename T> int MarchingCubes<T>::getX(int x, int y, int z) const {
+int MarchingCubes::getX(int x, int y, int z) const {
     return (y * VERTEX_DIMENSION + z) * VERTEX_DIMENSION + x;
 }
 
-template<typename T> int MarchingCubes<T>::getY(int x, int y, int z) const {
+int MarchingCubes::getY(int x, int y, int z) const {
     return ((VERTEX_DIMENSION + x) * VERTEX_DIMENSION + z) * VERTEX_DIMENSION + y;
 }
 
-template<typename T> int MarchingCubes<T>::getZ(int x, int y, int z) const {
+int MarchingCubes::getZ(int x, int y, int z) const {
     return ((VERTEX_DIMENSION * 2 + x) * VERTEX_DIMENSION + y) * VERTEX_DIMENSION + z;
 }
 
-template<typename T> vector<int> MarchingCubes<T>::lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<T> >* vertices, Voxel voxels[][Mesh::VOXEL_DIMENSION][Mesh::VOXEL_DIMENSION]) const {
+vector<int> MarchingCubes::lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<double> >* vertices, Voxel voxels[][Mesh::VOXEL_DIMENSION][Mesh::VOXEL_DIMENSION]) const {
     /*
 Determine the index into the edge table which
 tells us which vertices are inside of the surface
 */
-	cout << "did stuff" << endl;
+//	cout << "did stuff" << endl;
     int cubeindex = 0;
-    if (voxels[x ][y ][z ].opacity < Polygonizer<T>::isolevel) cubeindex |= 1;
-    if (voxels[x1][y ][z ].opacity < Polygonizer<T>::isolevel) cubeindex |= 2;
-    if (voxels[x1][y ][z1].opacity < Polygonizer<T>::isolevel) cubeindex |= 4;
-    if (voxels[x ][y ][z1].opacity < Polygonizer<T>::isolevel) cubeindex |= 8;
-    if (voxels[x ][y1][z ].opacity < Polygonizer<T>::isolevel) cubeindex |= 16;
-    if (voxels[x1][y1][z ].opacity < Polygonizer<T>::isolevel) cubeindex |= 32;
-    if (voxels[x1][y1][z1].opacity < Polygonizer<T>::isolevel) cubeindex |= 64;
-    if (voxels[x ][y1][z1].opacity < Polygonizer<T>::isolevel) cubeindex |= 128;
+    if (voxels[x ][y ][z ].opacity < Polygonizer::isolevel) cubeindex |= 1;
+    if (voxels[x1][y ][z ].opacity < Polygonizer::isolevel) cubeindex |= 2;
+    if (voxels[x1][y ][z1].opacity < Polygonizer::isolevel) cubeindex |= 4;
+    if (voxels[x ][y ][z1].opacity < Polygonizer::isolevel) cubeindex |= 8;
+    if (voxels[x ][y1][z ].opacity < Polygonizer::isolevel) cubeindex |= 16;
+    if (voxels[x1][y1][z ].opacity < Polygonizer::isolevel) cubeindex |= 32;
+    if (voxels[x1][y1][z1].opacity < Polygonizer::isolevel) cubeindex |= 64;
+    if (voxels[x ][y1][z1].opacity < Polygonizer::isolevel) cubeindex |= 128;
 	
-	cout << "did stuff" << endl;
+//	cout << "did stuff" << endl;
 
     // Cube is entirely in/out of the surface
     if (edgeTable[cubeindex] == 0)

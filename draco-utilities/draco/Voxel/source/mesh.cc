@@ -28,22 +28,22 @@ void Mesh::update(MeshIterator iter) {
 	Voxel voxels[VOXEL_DIMENSION][VOXEL_DIMENSION][VOXEL_DIMENSION];
 	populate(iter.blocks[1][1][1], Index(1), voxels);
 	
-	cout << "populated" << endl;
+//	cout << "populated" << endl;
 	unordered_map<int, Vector3<double> > vertices;
 	vector<vector<int> > rawTris;
 	int totalTris = 0;
 	for(int x=1; x<VOXEL_DIMENSION; ++x) {
 		for(int y=1; y<VOXEL_DIMENSION; ++y) {
 			for(int z=1; z<VOXEL_DIMENSION; ++z) {
-				cout << "polygonizing" << endl;
+//				cout << "polygonizing" << endl;
 				rawTris.push_back(tree->getPolygonizer()->lookupTriangles(x-1, y-1, z-1, x, y, z, &vertices, voxels));
 				totalTris += rawTris.back().size();
-				cout << " finished" << endl;
+//				cout << " finished" << endl;
 			}
 		}
 	}
 	
-	cout << "polygonized" << endl;
+//	cout << "polygonized" << endl;
 //	unordered_map<int, int> vertexIndices;
 //	vector<Vector3<double> > vertexList;
 //	for(auto vertex: vertices) {
@@ -62,12 +62,14 @@ void Mesh::update(MeshIterator iter) {
 			face->addVertex(vertices[tris[i]]);
 			face->addVertex(vertices[tris[i+1]]);
 			face->addVertex(vertices[tris[i+2]]);
+			cout << vertices[tris[i]] << "\n";
 			object.addFace(face);
 		}
 	}
 	
-	cout << "converted" << endl;
+//	cout << "converted" << endl;
 	
+	cout << object.getFaces().size() << endl;
 	for(auto world: tree->getWorlds()) {
 		world->addObject(&object);
 	}
@@ -78,6 +80,10 @@ void Mesh::populate(Pointer block, Index i, Voxel (*array)[VOXEL_DIMENSION][VOXE
 	if (i.depth >= Mesh::VOXEL_DEPTH) {
 		for(byte c=0; c<Node::CHILD_COUNT; ++c) {
 			array[i.x +(c &4) /4][i.y +(c &2) /2][i.z +(c & 1)] = block.traverse(c).get();
+//			if (block.traverse(c).get().opacity > 128)
+//				cout << "yes!" << endl;
+//			else
+//				cout << "no!" << endl;
 		}
 	} else {
 		for(byte c=0; c<Node::CHILD_COUNT; ++c) {

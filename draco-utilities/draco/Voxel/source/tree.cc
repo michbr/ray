@@ -46,11 +46,11 @@ void Tree::removeMesh(SceneObject *mesh) const {
 	}
 }
 
-void Tree::setPolygonizer(Polygonizer<double>* polygonizer) {
+void Tree::setPolygonizer(Polygonizer* polygonizer) {
 	this->polygonizer = polygonizer;
 	polygonizer->setTree(this);
 }
-Polygonizer<double>* Tree::getPolygonizer() {
+Polygonizer* Tree::getPolygonizer() {
 	return polygonizer;
 }
 

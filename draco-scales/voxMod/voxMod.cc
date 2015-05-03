@@ -26,6 +26,7 @@ DRACO_SCALE_API const char *scaleName() {
 
 void VoxelModeler::addTree(byte depth, double width) {
     Tree* t = new Tree(depth, width);
+//	t->pos = Vector3<double>(0, 0, 5);
     trees.push_back(t);
     t->addWorld(world);
     t->setPolygonizer(polygonizer);
@@ -37,6 +38,7 @@ void VoxelModeler::addTree(byte depth, double width) {
 	cout << "Nodes: " << Vox::Node::count << endl;
 	cout << "Meshes: " << Vox::Mesh::count << endl;
 	cout << "Vox size: " << t->voxSize << endl;
+	cout << "Voxel size (bytes): " << sizeof(Vox::Voxel) << endl;
 }
 
 VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), world(new WorldModel) {
@@ -47,8 +49,6 @@ VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startD
 		Vector3<double>(0, 1, 0),
 		Vector3<double>(0, 0, 1))
 	);
-	polygonizer = new MarchingCubes<double>(127);
-    addTree(6, 64);
 	
 //	Vox::Index test1(0, 0, 0, 0);
 //	Vox::Index test2(2, 3, 0, 0);
@@ -76,8 +76,9 @@ void VoxelModeler::run() {
 
 void VoxelModeler::initialize() {
 	renderer.initGL(500, 500);
-	WorldModel * wm = new WorldModel();
-	renderer.setWorld(*wm);
+	renderer.setWorld(*world);
+	polygonizer = new Vox::MarchingCubes(127);
+    addTree(4, 2);
 }
 
 void VoxelModeler::draw() {

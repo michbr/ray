@@ -33,7 +33,7 @@ public:
 
 private:
 	std::vector<Vox::Tree*> trees;
-	Vox::Polygonizer<double>* polygonizer;
+	Vox::Polygonizer* polygonizer;
 	GLRenderer renderer;
 	Thread * main;
     WorldModel* world;

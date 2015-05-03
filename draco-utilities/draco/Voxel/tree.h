@@ -14,7 +14,7 @@
 namespace Vox {
 
 //	class Mesh;
-	template<typename T> class Polygonizer;
+	class Polygonizer;
 
 
     class Tree {
@@ -33,15 +33,15 @@ namespace Vox {
 		void pushMesh(SceneObject* mesh) const;
 		void removeMesh(SceneObject* mesh) const;
 
-		void setPolygonizer(Polygonizer<double> *);
-		Polygonizer<double>* getPolygonizer();
+		void setPolygonizer(Polygonizer *);
+		Polygonizer* getPolygonizer();
 		
 		void updateMeshes();
 
 	protected:
 		std::unordered_map<Index, Mesh*> meshes;
 		std::list<WorldModel *> worlds;
-		Polygonizer<double>* polygonizer;
+		Polygonizer* polygonizer;
 
 		void pushMeshes(WorldModel* world) const;
 		void clearMeshes(WorldModel* world) const;
