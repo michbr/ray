@@ -41,6 +41,10 @@ void VoxelModeler::addTree(byte depth, double width) {
 	cout << "Meshes: " << Vox::Mesh::count << endl;
 	cout << "Vox size: " << t->voxSize << endl;
 	cout << "Voxel size (bytes): " << sizeof(Vox::Voxel) << endl;
+	cout << "tree walking time: " << Mesh::treeWalkingTime << endl;
+	cout << "marching cubes time: " << Mesh::marchingCubesTime << endl;
+	cout << "mesh creation time: " << Mesh::meshCreateTime << endl;
+	cout << "mesh buffer time: " << Mesh::meshPushTime << endl;
 }
 
 VoxelModeler::VoxelModeler(ScaleType *type, Fl_Group *pane, const string &startDir): Scale(type, pane, startDir), world(new WorldModel) {

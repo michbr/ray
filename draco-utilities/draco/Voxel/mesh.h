@@ -16,6 +16,10 @@ namespace Vox {
     public:
 	    static const byte VOXEL_DEPTH = 4;
 	    static const byte VOXEL_DIMENSION = 1 << VOXEL_DEPTH;
+		static double treeWalkingTime;
+		static double marchingCubesTime;
+		static double meshCreateTime;
+		static double meshPushTime;
 		
 		static unsigned long count;
 

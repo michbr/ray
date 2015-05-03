@@ -1,5 +1,6 @@
 
 #include <vector>
+#include <time.h>
 
 #include "mesh.h"
 
@@ -8,6 +9,10 @@ using namespace Vox;
 
 
 unsigned long Mesh::count = 0;
+double Mesh::treeWalkingTime = 0;
+double Mesh::marchingCubesTime = 0;
+double Mesh::meshCreateTime = 0;
+double Mesh::meshPushTime = 0;
 
 Mesh::Mesh(Tree *tree): tree(tree) {
 	++count;
@@ -26,9 +31,12 @@ SceneObject* Vox::Mesh::getObject() {
 
 void Mesh::update(MeshIterator iter) {
 	Voxel voxels[VOXEL_DIMENSION][VOXEL_DIMENSION][VOXEL_DIMENSION];
+	clock_t start = clock();
 	populate(iter.blocks[1][1][1], Index(1), voxels);
+	clock_t end = clock();
+	treeWalkingTime += ((double)end -start) /CLOCKS_PER_SEC;
 	
-//	cout << "populated" << endl;
+	start = clock();
 	unordered_map<int, Vector3<double> > vertices;
 	vector<vector<int> > rawTris;
 	int totalTris = 0;
@@ -36,15 +44,13 @@ void Mesh::update(MeshIterator iter) {
 	for(int x=1; x<VOXEL_DIMENSION; ++x) {
 		for(int y=1; y<VOXEL_DIMENSION; ++y) {
 			for(int z=1; z<VOXEL_DIMENSION; ++z) {
-//				cout << "polygonizing" << endl;
 				rawTris.push_back(tree->getPolygonizer()->lookupTriangles(x-1, y-1, z-1, x, y, z, &vertices, voxels, offset));
 				totalTris += rawTris.back().size();
-//				if (voxels[x][y][z].opacity < 128)
-//					cout << "oh no again!" << endl;
-//				cout << " finished" << endl;
 			}
 		}
 	}
+	end = clock();
+	marchingCubesTime += ((double)end -start) /CLOCKS_PER_SEC;
 	
 //	cout << "polygonized" << endl;
 //	unordered_map<int, int> vertexIndices;
@@ -59,22 +65,25 @@ void Mesh::update(MeshIterator iter) {
 		delete face;
 	object.clearFaces();
 	
+	start = clock();
 	for(auto tris: rawTris) {
 		for(int i=0; i<tris.size(); i+=3) {
 			Face* face = new Face(NULL);
 			face->addVertex(vertices[tris[i]]);
 			face->addVertex(vertices[tris[i+1]]);
 			face->addVertex(vertices[tris[i+2]]);
-//			cout << vertices[tris[i]] << "\n";
 			object.addFace(face);
 		}
 	}
+	end = clock();
+	meshCreateTime += ((double)end -start) /CLOCKS_PER_SEC;
 	
-//	cout << object.getFaces().size() << endl;
+	start = clock();
 	for(auto world: tree->getWorlds()) {
 		world->addObject(&object);
 	}
-//	cout << "assigned" << endl;
+	end = clock();
+	meshPushTime += ((double)end -start) /CLOCKS_PER_SEC;
 }
 
 void Mesh::populate(Pointer block, Index i, Voxel array[][VOXEL_DIMENSION][VOXEL_DIMENSION]) const {
