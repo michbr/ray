@@ -8,7 +8,10 @@
 #ifndef QUATERNION_H
 #define	QUATERNION_H
 
-class Quaternion {
+#include "EXPORT.h"
+
+
+class DRACO_DRAGON_MATH_API Quaternion {
 public:
     Quaternion(double x_val, double y_val, double z_val, double w_val);
     double x, y, z, w;

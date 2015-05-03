@@ -19,8 +19,9 @@ private:
 public:
     Vector3<double> position, direction, up;
     Camera(CameraStructure * camStructure, int width, int height);
-    void SetViewByMouse();
+    void SetViewByMouse(int x, int y);
     void rotateCamera(double Angle, double x, double y, double z);
+    void look();
 };
 
 

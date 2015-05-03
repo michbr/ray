@@ -24,7 +24,7 @@ public:
 
 	//static Renderer & getInstance();
 	void render();
-	void initGL(int width, int height);
+	void initGL(int width, int height, int offX, int offY);
 
 //	Camera &getCam();
 
@@ -50,6 +50,7 @@ private:
 	WorldModel * world;
 	std::unordered_map<SceneObject*, BufferInfo> buffers;
 	Camera * currentCam;
+        int x, y;
 
 };
 
