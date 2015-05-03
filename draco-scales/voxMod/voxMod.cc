@@ -32,8 +32,8 @@ void VoxelModeler::addTree(byte depth, double width) {
     t->setPolygonizer(polygonizer);
     SphereMut mut(Vector3<double>(width, width, width) /2, width /3, Vox::Voxel(255, 1));
     mut.apply(*t);
-	for(int i=0; i<8; ++i)
-		t->head.set(i, Vox::Voxel(255, 1));
+//	for(int i=0; i<6; ++i)
+//		t->head.set(i, Vox::Voxel(255, 1));
 //	t->head.set(0, Vox::Voxel(255, 1));
 //	t->head.set(5, Vox::Voxel(255, 1));
     t->updateMeshes();
@@ -80,7 +80,7 @@ void VoxelModeler::initialize() {
 	renderer.initGL(500, 500);
 	renderer.setWorld(*world);
 	polygonizer = new Vox::MarchingCubes(127);
-    addTree(7, 6);
+    addTree(8, 6);
 }
 
 void VoxelModeler::draw() {

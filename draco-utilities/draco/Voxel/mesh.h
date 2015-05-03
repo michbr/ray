@@ -31,7 +31,7 @@ namespace Vox {
 		SceneObject object;
 		
 		// depth must start at 0.
-		void populate(Pointer block, Index i, Voxel (*array)[VOXEL_DIMENSION][VOXEL_DIMENSION]) const;
+		void populate(Pointer block, Index i, Voxel array[][VOXEL_DIMENSION][VOXEL_DIMENSION]) const;
 
     };
 
