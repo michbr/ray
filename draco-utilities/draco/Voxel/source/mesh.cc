@@ -32,11 +32,13 @@ void Mesh::update(MeshIterator iter) {
 	unordered_map<int, Vector3<double> > vertices;
 	vector<vector<int> > rawTris;
 	int totalTris = 0;
+	Vector3<double> offset = tree->pos +Vector3<double>(iter.pos.x, iter.pos.y, iter.pos.z) *(double)VOXEL_DIMENSION *tree->voxSize;
+	cout << iter.pos << endl;
 	for(int x=1; x<VOXEL_DIMENSION; ++x) {
 		for(int y=1; y<VOXEL_DIMENSION; ++y) {
 			for(int z=1; z<VOXEL_DIMENSION; ++z) {
 //				cout << "polygonizing" << endl;
-				rawTris.push_back(tree->getPolygonizer()->lookupTriangles(x-1, y-1, z-1, x, y, z, &vertices, voxels));
+				rawTris.push_back(tree->getPolygonizer()->lookupTriangles(x-1, y-1, z-1, x, y, z, &vertices, voxels, offset));
 				totalTris += rawTris.back().size();
 //				cout << " finished" << endl;
 			}
@@ -62,12 +64,10 @@ void Mesh::update(MeshIterator iter) {
 			face->addVertex(vertices[tris[i]]);
 			face->addVertex(vertices[tris[i+1]]);
 			face->addVertex(vertices[tris[i+2]]);
-			cout << vertices[tris[i]] << "\n";
+//			cout << vertices[tris[i]] << "\n";
 			object.addFace(face);
 		}
 	}
-	
-//	cout << "converted" << endl;
 	
 	cout << object.getFaces().size() << endl;
 	for(auto world: tree->getWorlds()) {

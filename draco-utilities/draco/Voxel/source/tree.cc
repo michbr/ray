@@ -57,7 +57,7 @@ Polygonizer* Tree::getPolygonizer() {
 void Tree::updateMeshes() {
 	Index i(maxDepth-Mesh::VOXEL_DEPTH, 0, 0, 0);
 	int width = 1<<(maxDepth -Mesh::VOXEL_DEPTH);
-	cout << width << endl;
+	cout << "tree width: " << width << endl;
 	for(i.x=0; i.x<width; ++i.x) {
 		for(i.y=0; i.y<width; ++i.y) {
 			for(i.z=0; i.z<width; ++i.z) {

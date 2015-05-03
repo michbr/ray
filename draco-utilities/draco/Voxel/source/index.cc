@@ -43,9 +43,8 @@ Index Index::getParent(byte pDepth) const {
 
 byte Index::directionTo(const Index& child) const {
 	int diff = ((int)child.depth) -((int)depth);
-    unsigned int halfWidth = 1 << (diff);
-//	cout << "half width: " << halfWidth << endl;
-    return (child.x & halfWidth >> (diff -2)) | (child.y & halfWidth >> (diff -1)) | (child.z & halfWidth >> (diff));
+    unsigned int halfWidth = 1 << (diff -1);
+    return ((child.x & halfWidth) /halfWidth *4) | ((child.y & halfWidth) /halfWidth *2) | ((child.z & halfWidth) /halfWidth);
 }
 
 bool Index::operator==(const Index& o) const {

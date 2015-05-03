@@ -10,10 +10,8 @@ using namespace Vox;
 //template<typename T>
 Polygonizer::Polygonizer(byte isolevel): isolevel(isolevel) {}
 //template<typename T>
-Polygonizer::Polygonizer(double voxelSize, byte isolevel, Vector3<double> offset) :
-    voxelSize(voxelSize), isolevel(isolevel), offset(offset) {}
+Polygonizer::Polygonizer(double voxelSize, byte isolevel): voxelSize(voxelSize), isolevel(isolevel) {}
 
 void Polygonizer::setTree(Tree* tree) {
 	voxelSize = tree->voxSize;
-	offset = tree->pos;
 }

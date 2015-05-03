@@ -330,12 +330,12 @@ const byte triTable[256][15] = {
 //  Marching Cubes Class  //
 ////////////////////////////
 MarchingCubes::MarchingCubes(byte isolevel): Polygonizer(isolevel) {}
-MarchingCubes::MarchingCubes(double voxelSize, byte isolevel, Vector3<double> offset):
-    Polygonizer(voxelSize, isolevel, offset) {}
+MarchingCubes::MarchingCubes(double voxelSize, byte isolevel):
+    Polygonizer(voxelSize, isolevel) {}
 
-Vector3<double> MarchingCubes::stretchVertex(int x, int y, int z, int xDiff, int yDiff, int zDiff, Voxel valp1, Voxel valp2) const {
+Vector3<double> MarchingCubes::stretchVertex(int x, int y, int z, int xDiff, int yDiff, int zDiff, Voxel valp1, Voxel valp2, const Vector3<double>& offset) const {
 	float blend = (Polygonizer::isolevel - valp1.opacity) / ((float)(valp2.opacity - valp1.opacity));
-	return Vector3<double>(x + blend * xDiff, y + blend * yDiff, z + blend * zDiff) * ((double)Polygonizer::voxelSize) + Polygonizer::offset;
+	return Vector3<double>(x + blend * xDiff, y + blend * yDiff, z + blend * zDiff) * ((double)Polygonizer::voxelSize) + offset;
 }
 
 int MarchingCubes::getX(int x, int y, int z) const {
@@ -350,7 +350,7 @@ int MarchingCubes::getZ(int x, int y, int z) const {
     return ((VERTEX_DIMENSION * 2 + x) * VERTEX_DIMENSION + y) * VERTEX_DIMENSION + z;
 }
 
-vector<int> MarchingCubes::lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<double> >* vertices, Voxel voxels[][Mesh::VOXEL_DIMENSION][Mesh::VOXEL_DIMENSION]) const {
+vector<int> MarchingCubes::lookupTriangles(int x, int y, int z, int x1, int y1, int z1, std::unordered_map<int, Vector3<double> >* vertices, Voxel voxels[][Mesh::VOXEL_DIMENSION][Mesh::VOXEL_DIMENSION], const Vector3<double>& offset) const {
     /*
 Determine the index into the edge table which
 tells us which vertices are inside of the surface
@@ -376,51 +376,51 @@ tells us which vertices are inside of the surface
     int vertlist[12];
     if (edgeTable[cubeindex] & 1) {
 	    vertlist[0] = getX(x, y, z);
-	    (*vertices)[vertlist[0]] = stretchVertex(x, y, z, 1, 0, 0, voxels[x][y][z], voxels[x1][y][z]);
+	    (*vertices)[vertlist[0]] = stretchVertex(x, y, z, 1, 0, 0, voxels[x][y][z], voxels[x1][y][z], offset);
     }
     if (edgeTable[cubeindex] & 2) {
 	    vertlist[1] = getZ(x1, y, z);
-	    (*vertices)[vertlist[1]] = stretchVertex(x1, y, z, 0, 0, 1, voxels[x1][y][z], voxels[x1][y][z1]);
+	    (*vertices)[vertlist[1]] = stretchVertex(x1, y, z, 0, 0, 1, voxels[x1][y][z], voxels[x1][y][z1], offset);
     }
     if (edgeTable[cubeindex] & 4) {
 	    vertlist[2] = getX(x, y, z1);
-	    (*vertices)[vertlist[2]] = stretchVertex(x1, y, z1, -1, 0, 0, voxels[x1][y][z1], voxels[x][y][z1]);
+	    (*vertices)[vertlist[2]] = stretchVertex(x1, y, z1, -1, 0, 0, voxels[x1][y][z1], voxels[x][y][z1], offset);
     }
     if (edgeTable[cubeindex] & 8) {
 	    vertlist[3] = getZ(x, y, z);
-	    (*vertices)[vertlist[3]] = stretchVertex(x, y, z1, 0, 0, -1, voxels[x][y][z1], voxels[x][y][z]);
+	    (*vertices)[vertlist[3]] = stretchVertex(x, y, z1, 0, 0, -1, voxels[x][y][z1], voxels[x][y][z], offset);
     }
     if (edgeTable[cubeindex] & 16) {
 	    vertlist[4] = getX(x, y1, z);
-	    (*vertices)[vertlist[4]] = stretchVertex(x, y1, z, 1, 0, 0, voxels[x][y1][z], voxels[x1][y1][z]);
+	    (*vertices)[vertlist[4]] = stretchVertex(x, y1, z, 1, 0, 0, voxels[x][y1][z], voxels[x1][y1][z], offset);
     }
     if (edgeTable[cubeindex] & 32) {
 	    vertlist[5] = getZ(x1, y1, z);
-	    (*vertices)[vertlist[5]] = stretchVertex(x1, y1, z, 0, 0, 1, voxels[x1][y1][z], voxels[x1][y1][z1]);
+	    (*vertices)[vertlist[5]] = stretchVertex(x1, y1, z, 0, 0, 1, voxels[x1][y1][z], voxels[x1][y1][z1], offset);
     }
     if (edgeTable[cubeindex] & 64) {
 	    vertlist[6] = getX(x, y1, z1);
-	    (*vertices)[vertlist[6]] = stretchVertex(x1, y1, z1, -1, 0, 0, voxels[x1][y1][z1], voxels[x][y1][z1]);
+	    (*vertices)[vertlist[6]] = stretchVertex(x1, y1, z1, -1, 0, 0, voxels[x1][y1][z1], voxels[x][y1][z1], offset);
     }
     if (edgeTable[cubeindex] & 128) {
 	    vertlist[7] = getZ(x, y1, z);
-	    (*vertices)[vertlist[7]] = stretchVertex(x, y1, z1, 0, 0, -1, voxels[x][y1][z1], voxels[x][y1][z]);
+	    (*vertices)[vertlist[7]] = stretchVertex(x, y1, z1, 0, 0, -1, voxels[x][y1][z1], voxels[x][y1][z], offset);
     }
     if (edgeTable[cubeindex] & 256) {
 	    vertlist[8] = getY(x, y, z);
-	    (*vertices)[vertlist[8]] = stretchVertex(x, y, z, 0, 1, 0, voxels[x][y][z], voxels[x][y1][z]);
+	    (*vertices)[vertlist[8]] = stretchVertex(x, y, z, 0, 1, 0, voxels[x][y][z], voxels[x][y1][z], offset);
     }
     if (edgeTable[cubeindex] & 512) {
 	    vertlist[9] = getY(x1, y, z);
-	    (*vertices)[vertlist[9]] = stretchVertex(x1, y, z, 0, 1, 0, voxels[x1][y][z], voxels[x1][y1][z]);
+	    (*vertices)[vertlist[9]] = stretchVertex(x1, y, z, 0, 1, 0, voxels[x1][y][z], voxels[x1][y1][z], offset);
     }
     if (edgeTable[cubeindex] & 1024) {
 	    vertlist[10] = getY(x1, y, z1);
-	    (*vertices)[vertlist[10]] = stretchVertex(x1, y, z1, 0, 1, 0, voxels[x1][y][z1], voxels[x1][y1][z1]);
+	    (*vertices)[vertlist[10]] = stretchVertex(x1, y, z1, 0, 1, 0, voxels[x1][y][z1], voxels[x1][y1][z1], offset);
     }
     if (edgeTable[cubeindex] & 2048) {
 	    vertlist[11] = getY(x, y, z1);
-	    (*vertices)[vertlist[11]] = stretchVertex(x, y, z1, 0, 1, 0, voxels[x][y][z1], voxels[x][y1][z1]);
+	    (*vertices)[vertlist[11]] = stretchVertex(x, y, z1, 0, 1, 0, voxels[x][y][z1], voxels[x][y1][z1], offset);
     }
 
     // Create the triangles

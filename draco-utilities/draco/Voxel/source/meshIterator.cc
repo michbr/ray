@@ -15,16 +15,18 @@ MeshIterator::MeshIterator(Tree* tree, const Index& startPos): tree(tree), pos(0
 //        }
 //    }
 	byte firstChild = pos.directionTo(startPos);
+//	cout << "i: " << firstChild << " " << pos << endl;
 	blocks[1][1][1] = Pointer(&tree->head, firstChild);
 	pos = pos.getChild(firstChild);
+//	cout << "got here? " << pos << " " << startPos << endl;
     while(pos.depth<startPos.depth) {
         traverse(pos.directionTo(startPos));
     }
 }
 
 void MeshIterator::traverse(byte i) {
-	if (i > 7) cout << i << endl;
     pos = pos.getChild(i);
+//	cout << "da pos! " << pos << endl;
     blocks[1][1][1] = blocks[1][1][1].traverse(i);
 //    Node* parentNodes[2][2][2];
 //    byte xOff = (i &4) >> 2;
