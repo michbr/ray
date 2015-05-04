@@ -37,7 +37,7 @@ set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${CUSTOM_FLAGS} -std=c++11")
 include_directories(${UTILITIES_DIR}/draco/)
 include_directories(${UTILITIES_DIR})
 
-set(LIBS ${LIBS} DragonMath WorldModel TextureLoader)
+set(LIBS ${LIBS} DragonMath WorldModel)
 
 ##  deliverables  ##
 add_library (${LIBRARY_NAME} SHARED ${SOURCES})
