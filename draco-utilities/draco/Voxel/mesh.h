@@ -1,6 +1,7 @@
 #ifndef DRACO_VOX_MESH_H
 #define DRACO_VOX_MESH_H
 
+#include "EXPORT.h"
 #include "voxel.h"
 #include "meshIterator.h"
 #include "pointer.h"
@@ -12,7 +13,7 @@ namespace Vox {
 
 	class Tree;
 
-    class Mesh {
+	class DRACO_VOXEL_API Mesh {
     public:
 	    static const byte VOXEL_DEPTH = 4;
 	    static const byte VOXEL_DIMENSION = 1 << VOXEL_DEPTH;

@@ -2,6 +2,7 @@
 #ifndef DRACO_VOXEL_INDEX_H
 #define DRACO_VOXEL_INDEX_H
 
+#include "EXPORT.h"
 #include "voxel.h"
 
 #include <functional>
@@ -9,7 +10,8 @@
 
 
 namespace Vox {
-	class Index {
+
+	class DRACO_VOXEL_API Index {
 	public:
 		unsigned int x, y, z;
 		byte depth;
@@ -32,11 +34,11 @@ namespace Vox {
 	};
 }
 
-std::ostream& operator<<(std::ostream& out, const Vox::Index& index);
+DRACO_VOXEL_API std::ostream& operator<<(std::ostream& out, const Vox::Index& index);
 
 
 namespace std {
-	template <> struct hash<Vox::Index> {
+	template <> struct DRACO_VOXEL_API hash<Vox::Index> {
 	public:
 		size_t operator()(const Vox::Index& i) const;
 	};

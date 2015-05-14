@@ -2,14 +2,16 @@
 #ifndef DRACO_VOXEL_MUTATOR_H
 #define DRACO_VOXEL_MUTATOR_H
 
+#include "EXPORT.h"
+#include "index.h"
 #include "node.h"
 #include "tree.h"
 #include "voxel.h"
-#include "index.h"
 
 
 namespace Vox {
-	class Mutator {
+
+	class DRACO_VOXEL_API Mutator {
 	public:
 //		enum TAction {
 //			traverse,

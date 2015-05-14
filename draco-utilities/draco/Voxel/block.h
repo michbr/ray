@@ -3,12 +3,13 @@
 #define DRACO_VOX_BLOCK_H
 
 
+#include "EXPORT.h"
 #include "voxel.h"
 
 
 namespace Vox {
 
-	class Block: public Voxel {
+	class DRACO_VOXEL_API Block : public Voxel {
 	public:
 		static const Block EMPTY;
 		

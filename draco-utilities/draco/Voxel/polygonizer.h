@@ -3,6 +3,7 @@
 #define DRACO_VOX_POLYONGIZER_H
 
 
+#include "EXPORT.h"
 #include "voxel.h"
 #include "mesh.h"
 
@@ -16,7 +17,7 @@ namespace Vox {
 	class Tree;
 
 //    template<typename T>
-	class Polygonizer {
+	class DRACO_VOXEL_API Polygonizer {
 	public:
 
 		Polygonizer(byte isoLevel);

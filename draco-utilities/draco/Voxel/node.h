@@ -3,12 +3,13 @@
 #define DRACO_VOX_NODE_H
 
 #include "block.h"
+#include "EXPORT.h"
 #include "voxel.h"
 
 
 namespace Vox {
 
-	class Node: public Block {
+	class DRACO_VOXEL_API Node : public Block {
 	public:
 		// constants
 		static const int CHILD_DIM = 2;

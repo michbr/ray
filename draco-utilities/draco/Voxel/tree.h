@@ -1,6 +1,7 @@
 #ifndef DRACO_VOX_TREE_H
 #define DRACO_VOX_TREE_H
 
+#include "EXPORT.h"
 #include "index.h"
 #include "mesh.h"
 #include "node.h"
@@ -17,7 +18,7 @@ namespace Vox {
 	class Polygonizer;
 
 
-    class Tree {
+	class DRACO_VOXEL_API Tree {
     public:
 		const byte maxDepth;
 		const double size, voxSize;

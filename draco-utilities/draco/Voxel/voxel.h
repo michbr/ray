@@ -2,14 +2,15 @@
 #ifndef DRACO_VOX_VOXEL_H
 #define DRACO_VOX_VOXEL_H
 
+#include "EXPORT.h"
 #include <iostream>
 
 
 namespace Vox {
 
-	typedef unsigned char byte;
+	DRACO_VOXEL_API typedef unsigned char byte;
 
-	class Voxel {
+	class DRACO_VOXEL_API Voxel {
 	public:
 		// members
 		unsigned short material;
@@ -30,7 +31,7 @@ namespace Vox {
 
 }
 
-std::ostream &operator<<(std::ostream& out, Vox::byte value);
+DRACO_VOXEL_API std::ostream &operator<<(std::ostream& out, Vox::byte value);
 
 
 #endif // DRACO_VOX_VOXEL_H

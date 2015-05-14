@@ -2,13 +2,14 @@
 #ifndef DRACO_VOXEL_SPHERE_MODIFIER_H
 #define DRACO_VOXEL_SPHERE_MODIFIER_H
 
+#include "../EXPORT.h"
 #include "../mutator.h"
 
 #include <DragonMath/vector.h>
 
 
 namespace Vox {
-    class SphereMut: public Mutator {
+    class DRACO_VOXEL_API SphereMut: public Mutator {
     public:
 	    SphereMut(const Vector3<double>& pos, double radius, const Voxel& value);
 

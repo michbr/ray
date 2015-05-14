@@ -3,10 +3,11 @@
 #define	DRACO_VOXEL_POINTER_H
 
 #include "block.h"
+#include "EXPORT.h"
 
 
 namespace Vox {
-	class Pointer {
+	class DRACO_VOXEL_API Pointer {
 	public:
 		Block* block;
 		byte child;

@@ -2,6 +2,7 @@
 #ifndef DRACO_VOX_MARCHING_CUBES_H
 #define DRACO_VOX_MARCHING_CUBES_H
 
+#include "EXPORT.h"
 #include "DragonMath/dragonmath.h"
 #include "mesh.h"
 #include "polygonizer.h"
@@ -14,7 +15,7 @@
 namespace Vox {
 
 //	template<typename T>
-	class MarchingCubes: public Polygonizer {
+	class DRACO_VOXEL_API MarchingCubes : public Polygonizer {
 	public:
 		static const byte VERTEX_DIMENSION = Mesh::VOXEL_DIMENSION + 2;
 
