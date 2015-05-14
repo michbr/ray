@@ -2,11 +2,12 @@
 #define SCENE_OBJECT_OBJ_H
 
 #include "material.h"
+#include "EXPORT.h"
 #include "face.h"
 
 #include <vector>
 
-class SceneObject {
+class DRACO_WORLD_MODEL_API SceneObject {
 private:
 	std::vector<SceneObject * > children;
 	std::vector<Material *> materials;

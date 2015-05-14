@@ -3,6 +3,7 @@
 
 #include "cameraStructure.h"
 #include "face.h"
+#include "EXPORT.h"
 #include "light.h"
 #include "sceneObject.h"
 #include "TextureLoader/texture.h"
@@ -14,7 +15,7 @@
 
 class BaseRenderer;
 
-class WorldModel {
+class DRACO_WORLD_MODEL_API WorldModel {
 public:
 	WorldModel();
 	WorldModel(const WorldModel &source);

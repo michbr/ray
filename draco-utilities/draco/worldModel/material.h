@@ -1,6 +1,7 @@
 #ifndef MATERIAL_OBJECT_H
 #define MATERIAL_OBJECT_H
 
+#include "EXPORT.h"
 #include "DragonMath/dragonmath.h"
 #include "TextureLoader/texture.h"
 
@@ -8,7 +9,7 @@
 #include <vector>
 #include <string>
 
-class Material {
+class DRACO_WORLD_MODEL_API Material {
 private:
 	std::string name;
 	Vector3<double> Ka;

@@ -4,6 +4,7 @@
 
 #include "sceneObject.h"
 #include "cameraStructure.h"
+#include "EXPORT.h"
 #include "worldModel.h"
 
 
@@ -18,7 +19,7 @@
 #endif
 
 
-class BaseRenderer {
+class DRACO_WORLD_MODEL_API BaseRenderer {
 public:
 	virtual void addObject(SceneObject *) = 0;
 	virtual void removeObject(SceneObject *) = 0;

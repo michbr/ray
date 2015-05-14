@@ -1,15 +1,16 @@
 #ifndef FACE_OBJECT_H
 #define FACE_OBJECT_H
 
-#include "material.h"
+#include "EXPORT.h"
 #include "DragonMath/dragonmath.h"
+#include "material.h"
 
 #include <string>
 #include <vector>
 #include <unordered_map>
 
 
-class Face {
+class DRACO_WORLD_MODEL_API Face {
 	private:
 		//std::vector<int> vertex_numbers;
 		//std::vector<int> texVertNumbers;		

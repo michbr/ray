@@ -1,12 +1,13 @@
 #ifndef LIGHT_OBJECT_H
 #define LIGHT_OBJECT_H
 
+#include "EXPORT.h"
 #include "DragonMath/dragonmath.h"
 #include "face.h"
 
 #include <vector>
 
-class Light {
+class DRACO_WORLD_MODEL_API Light {
     private:
 	//Vector3<double> center;
 	std::vector<int> color;

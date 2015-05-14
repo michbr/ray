@@ -2,9 +2,10 @@
 #define GL_CAMERA_OBJ_H
 
 #include "DragonMath/dragonmath.h"
+#include "EXPORT.h"
 
 
-class CameraStructure {
+class DRACO_WORLD_MODEL_API CameraStructure {
 public:
 	// members
 	//std::string name;
