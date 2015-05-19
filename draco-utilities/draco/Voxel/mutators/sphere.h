@@ -13,7 +13,7 @@ namespace Vox {
     public:
 	    SphereMut(const Vector3<double>& pos, double radius, const Voxel& value);
 
-	    bool mutate(Application* app, const Index& pos, byte index, Node& parent) const;
+	    Action mutate(Application* app, const Index& pos, byte index, Node& parent) const;
 	    Application* setup(Tree& target) const;
 //	    Mutator::TAction action(const Index& pos) const;
 

@@ -36,9 +36,10 @@ void VoxelModeler::addTree(byte depth, double width) {
 //		t->head.set(i, Vox::Voxel(255, 1));
 //	t->head.set(0, Vox::Voxel(255, 1));
 //	t->head.set(5, Vox::Voxel(255, 1));
-    t->updateMeshes();
+    t->updateDirtyMeshes();
 	cout << "Nodes: " << Vox::Node::count << endl;
 	cout << "Meshes: " << Vox::Mesh::count << endl;
+	cout << "Triangles: " << Vox::Mesh::triangleCount << endl;
 	cout << "Vox size: " << t->voxSize << endl;
 	cout << "Voxel size (bytes): " << sizeof(Vox::Voxel) << endl;
 	cout << "tree walking time: " << Mesh::treeWalkingTime << endl;

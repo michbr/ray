@@ -31,16 +31,21 @@ namespace Vox {
 		void removeWorld(WorldModel* world);
 		const std::list<WorldModel*>& getWorlds() const;
 
+		void pushDirtyMesh(Index mesh);
 		void pushMesh(SceneObject* mesh) const;
 		void removeMesh(SceneObject* mesh) const;
 
 		void setPolygonizer(Polygonizer *);
 		Polygonizer* getPolygonizer();
-		
-		void updateMeshes();
+
+		void updateMesh(const Index& i);
+		bool updateDirtyMesh();
+		void updateDirtyMeshes();
+		void updateAllMeshes();
 
 	protected:
 		std::unordered_map<Index, Mesh*> meshes;
+		std::list<Index> dirtyMeshes;
 		std::list<WorldModel *> worlds;
 		Polygonizer* polygonizer;
 

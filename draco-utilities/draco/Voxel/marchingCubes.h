@@ -19,6 +19,7 @@ namespace Vox {
 	public:
 		static const byte VERTEX_DIMENSION = Mesh::VOXEL_DIMENSION + 2;
 
+		MarchingCubes();
 		MarchingCubes(byte isolevel);
 		MarchingCubes(double voxelSize, byte isolevel);
 

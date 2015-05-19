@@ -329,6 +329,7 @@ const byte triTable[256][15] = {
 ////////////////////////////
 //  Marching Cubes Class  //
 ////////////////////////////
+MarchingCubes::MarchingCubes(): Polygonizer(((byte)-1) /2) {}
 MarchingCubes::MarchingCubes(byte isolevel): Polygonizer(isolevel) {}
 MarchingCubes::MarchingCubes(double voxelSize, byte isolevel):
     Polygonizer(voxelSize, isolevel) {}

@@ -13,27 +13,22 @@ namespace Vox {
 
 	class DRACO_VOXEL_API Mutator {
 	public:
-//		enum TAction {
-//			traverse,
-//			ignore,
-//			replace
-//		};
-
 		void apply(Tree& target) const;
 
-
 	protected:
+		struct Action {
+			bool traverse;
+			bool modified;
+			Action(bool traverse, bool modified);
+		};
 		
-		class Application {
-		public:
+		struct Application {
 			Index min, max;
 			Tree* tree;
-			
-			Application();
 		};
 		
 	    virtual Application* setup(Tree& target) const;
-		virtual bool mutate(Application* app, const Index& pos, byte index, Node& parent) const = 0;
+		virtual Action mutate(Application* app, const Index& pos, byte index, Node& parent) const = 0;
 		virtual void breakdown(Application* app) const;
 		
 

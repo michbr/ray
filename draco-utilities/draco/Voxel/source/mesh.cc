@@ -9,6 +9,7 @@ using namespace Vox;
 
 
 unsigned long Mesh::count = 0;
+unsigned long Mesh::triangleCount = 0;
 double Mesh::treeWalkingTime = 0;
 double Mesh::marchingCubesTime = 0;
 double Mesh::meshCreateTime = 0;
@@ -73,6 +74,7 @@ void Mesh::update(MeshIterator iter) {
 			face->addVertex(vertices[tris[i+1]]);
 			face->addVertex(vertices[tris[i+2]]);
 			object.addFace(face);
+			++triangleCount;
 		}
 	}
 	end = clock();

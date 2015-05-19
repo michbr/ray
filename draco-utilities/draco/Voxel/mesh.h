@@ -21,7 +21,7 @@ namespace Vox {
 		static double marchingCubesTime;
 		static double meshCreateTime;
 		static double meshPushTime;
-		
+		static unsigned long triangleCount;
 		static unsigned long count;
 
 		Mesh(Tree* tree);

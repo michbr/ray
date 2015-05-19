@@ -16,7 +16,7 @@ SphereMut::SphereMut(const Vector3<double>& pos, double radius, const Voxel& val
 }
 
 
-bool SphereMut::mutate(Application* app, const Index& voxelPos, byte index, Node& parent) const {
+Mutator::Action SphereMut::mutate(Application* app, const Index& voxelPos, byte index, Node& parent) const {
 	SphereApplication* sApp = (SphereApplication*) app;
 	double voxelSize = app->tree->size / (1 << voxelPos.depth);
 	double disSqr = (pos -Vector3<double>(voxelPos.x +0.5, voxelPos.y +0.5, voxelPos.z +0.5) *voxelSize).magnitudeSquared();
@@ -27,17 +27,17 @@ bool SphereMut::mutate(Application* app, const Index& voxelPos, byte index, Node
 //	cout << disSqr << endl;
 //	cout << maxRadSqr << endl;
 	if (disSqr > maxRadSqr)
-		return false;
+		return Action(false, false);
 	//	cout << "YO!!! Hello there!" << sApp->maxRadius << endl;
 	double minRadius = radius -voxelSize *0.75;
 	double minRadSqr = minRadius *minRadius;
 //	cout << minRadSqr << endl;
 	if (disSqr < minRadSqr) {
 		parent.set(index, value);
-		return false;
+		return Action(false, true);
 	}
 	if (voxelPos.depth < app->tree->maxDepth)
-		return true;
+		return Action(true, false);
 //	cout << "setting something?" << endl;
 	double dis = sqrt(disSqr);
 	byte newOpacity = (byte)((parent.getOpacity(index) * (dis -minRadius) + value.opacity * (maxRadius - dis)) / 2);
@@ -45,7 +45,7 @@ bool SphereMut::mutate(Application* app, const Index& voxelPos, byte index, Node
 		parent.set(index, Voxel(value.material, newOpacity));
 	else
 		parent.set(index, Voxel(parent.getMaterial(index), newOpacity));
-	return false;
+	return Action(false, true);
 }
 
 Mutator::Application* SphereMut::setup(Tree& target) const {
