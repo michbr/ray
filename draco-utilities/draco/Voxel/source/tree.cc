@@ -36,7 +36,10 @@ void Tree::clearMeshes(WorldModel *world) const {
 }
 
 void Tree::pushDirtyMesh(Index mesh) {
-	dirtyMeshes.push_back(mesh);
+	if (dirtyMeshSet.find(mesh) == dirtyMeshSet.end())
+		return;
+	dirtyMeshQueue.push_back(mesh);
+	dirtyMeshSet.insert(mesh);
 }
 void Tree::pushMesh(SceneObject *mesh) const {
 	for(auto world: worlds) {
@@ -66,17 +69,17 @@ void Tree::updateMesh(const Index& i) {
 	m->update(MeshIterator(this, i));
 }
 bool Tree::updateDirtyMesh() {
-	if (dirtyMeshes.empty())
+	if (dirtyMeshQueue.empty())
 		return false;
-	Index i = dirtyMeshes.front();
-	dirtyMeshes.pop_front();
+	Index i = dirtyMeshQueue.front();
+	dirtyMeshQueue.pop_front();
 	updateMesh(i);
 	return true;
 }
 void Tree::updateDirtyMeshes() {
-	while(!dirtyMeshes.empty()) {
-		Index i = dirtyMeshes.front();
-		dirtyMeshes.pop_front();
+	while(!dirtyMeshQueue.empty()) {
+		Index i = dirtyMeshQueue.front();
+		dirtyMeshQueue.pop_front();
 		updateMesh(i);
 	}
 }

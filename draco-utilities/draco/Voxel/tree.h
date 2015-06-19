@@ -29,7 +29,7 @@ namespace Vox {
 
 		void addWorld(WorldModel* world);
 		void removeWorld(WorldModel* world);
-		const std::list<WorldModel*>& getWorlds() const;
+		virtual const std::list<WorldModel*>& getWorlds() const;
 
 		void pushDirtyMesh(Index mesh);
 		void pushMesh(SceneObject* mesh) const;
@@ -40,12 +40,13 @@ namespace Vox {
 
 		void updateMesh(const Index& i);
 		bool updateDirtyMesh();
-		void updateDirtyMeshes();
-		void updateAllMeshes();
+		virtual void updateDirtyMeshes();
+		virtual void updateAllMeshes();
 
 	protected:
 		std::unordered_map<Index, Mesh*> meshes;
-		std::list<Index> dirtyMeshes;
+		std::list<Index> dirtyMeshQueue;
+		std::unordered_set<Index> dirtyMeshSet;
 		std::list<WorldModel *> worlds;
 		Polygonizer* polygonizer;
 

@@ -3,7 +3,7 @@
 
 #include "EXPORT.h"
 #include "DragonMath/dragonmath.h"
-#include "TextureLoader/texture.h"
+//#include "TextureLoader/texture.h"
 
 #include <fstream>
 #include <vector>
@@ -18,13 +18,13 @@ private:
 	double Ns;
 	double Tr;
 	//void add_material(std::fstream &);
-	std::vector<Texture *> textures;
+	//std::vector<Texture *> textures;
 	std::vector<std::vector<double> *> * prepare_matrix(std::vector<double> *) const;
 public:
 	Material(std::string n);
 	//void load_materials(std::string);
 
-	void addTexture(std::string texPath);
+	//void addTexture(std::string texPath);
 	bool hasTexture() const;
 
 	void setAmbient(Vector3<double> a);

@@ -34,6 +34,7 @@ namespace Vox {
     private:
 		Tree* tree;
 		SceneObject object;
+		bool updateQueued;
 		
 		// depth must start at 0.
 		void populate(Pointer block, Index i, Voxel array[][VOXEL_DIMENSION][VOXEL_DIMENSION]) const;

@@ -12,7 +12,7 @@ Material::Material(string n) : Ka(0,0,0), Kd(0,0,0), Ks(0,0,0) {
 	name = n;
 }
 
-void Material::addTexture(string texPath) {
+//void Material::addTexture(string texPath) {
 //        vector<string> blah = head->getTextures();
         //char * cwd = new char[255];
         //getcwd(cwd, 255);
@@ -28,10 +28,11 @@ void Material::addTexture(string texPath) {
 			cout << out[0] << ", " << out[1] << ", " << out[2] << ", " << out[3] << endl;
 		}
 	}*/
-}
+//}
 
 bool Material::hasTexture() const {
-	return textures.size() > 0;
+	return false;
+	//return textures.size() > 0;
 }
 
 void Material::setAmbient(Vector3<double>  a) {

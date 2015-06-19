@@ -15,7 +15,7 @@ double Mesh::marchingCubesTime = 0;
 double Mesh::meshCreateTime = 0;
 double Mesh::meshPushTime = 0;
 
-Mesh::Mesh(Tree *tree): tree(tree) {
+Mesh::Mesh(Tree *tree): tree(tree), updateQueued(false) {
 	++count;
 	tree->pushMesh(&object);
 }

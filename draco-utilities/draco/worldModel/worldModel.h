@@ -6,7 +6,6 @@
 #include "EXPORT.h"
 #include "light.h"
 #include "sceneObject.h"
-#include "TextureLoader/texture.h"
 
 #include <list>
 #include <string>
@@ -28,8 +27,8 @@ public:
 	std::vector<Vector3<double>> getVertices();
 	std::vector<CameraStructure> cameras;
 
-	void addRenderer(BaseRenderer &rend);
-	void removeRenderer(BaseRenderer &rend);
+	virtual void addRenderer(BaseRenderer &rend);
+	virtual void removeRenderer(BaseRenderer &rend);
 
 private:
 	std::unordered_set<SceneObject *> assets;
