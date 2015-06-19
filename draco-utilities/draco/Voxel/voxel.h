@@ -8,7 +8,7 @@
 
 namespace Vox {
 
-	DRACO_VOXEL_API typedef unsigned char byte;
+	typedef unsigned char byte;
 
 	class DRACO_VOXEL_API Voxel {
 	public:
