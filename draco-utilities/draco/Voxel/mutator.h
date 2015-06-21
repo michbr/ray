@@ -13,7 +13,7 @@ namespace Vox {
 
 	class DRACO_VOXEL_API Mutator {
 	public:
-		void apply(Tree& target) const;
+		virtual void apply(Tree& target) const;
 
 	protected:
 		struct Action {
