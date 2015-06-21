@@ -20,10 +20,9 @@ extern "C" {
 	typedef void(* VoxEraseTreeFunc )(Vox::Tree* tree);
 
 
-	DRACO_VOXEL_API Vox::SphereMut* voxSphereMutator(Vox::Tree* tree,
-		double x, double y, double z,
+	DRACO_VOXEL_API Vox::SphereMut* voxSphereMutator(double x, double y, double z,
 		double radius, double opacity, unsigned short matType);
-	typedef Vox::SphereMut*(* VoxSphereMutatorFunc )(double x, double y, double z, double radis, double opacity, unsigned short matType);
+	typedef Vox::SphereMut*(* VoxSphereMutatorFunc )(double x, double y, double z, double radius, double opacity, unsigned short matType);
 
 #ifdef __cplusplus
 }

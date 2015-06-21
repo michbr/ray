@@ -19,13 +19,12 @@ public:
 	WorldModel();
 	WorldModel(const WorldModel &source);
 
-	void addObject(SceneObject *);
-	void removeObject(SceneObject *);
-	std::vector<Face *> & getFaces();
+	virtual void addObject(SceneObject *);
+	virtual void removeObject(SceneObject *);
+	virtual std::vector<Face *> & getFaces();
 	std::vector<Light *> getLights();
 
-	std::vector<Vector3<double>> getVertices();
-	std::vector<CameraStructure> cameras;
+	virtual std::vector<Vector3<double>> getVertices();
 
 	virtual void addRenderer(BaseRenderer &rend);
 	virtual void removeRenderer(BaseRenderer &rend);
@@ -34,6 +33,7 @@ private:
 	std::unordered_set<SceneObject *> assets;
 //	std::vector<Texture *> textures;
 	std::list<BaseRenderer *> renderers;
+	std::vector<CameraStructure> cameras;
 //	std::unordered_map<std::string, bool> supportedTypes { {"obj", true} };
 //	bool getFiles(std::string dir, std::vector<std::string> & files);
 };

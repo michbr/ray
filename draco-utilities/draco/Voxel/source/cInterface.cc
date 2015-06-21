@@ -1,7 +1,6 @@
 
 #include "cInterface.h"
 #include "marchingCubes.h"
-#include "tree.h"
 #include "worldModel/renderer.h"
 
 using namespace std;

@@ -30,6 +30,7 @@ file(GLOB SOURCES
 	${PROJECT_SOURCE_DIR}/source/**.cc
 	${PROJECT_SOURCE_DIR}/source/*/*.cc
 	${PROJECT_SOURCE_DIR}/**.h
+	${PROJECT_SOURCE_DIR}/*/*.h
 )
 
 
