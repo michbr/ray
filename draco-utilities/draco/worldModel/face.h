@@ -44,7 +44,7 @@ class DRACO_WORLD_MODEL_API Face {
 		Vector3<double> intersect(const Vector3<double> , const Vector3<double> , double *) const;  
 		bool isInside(Vector3<double> &) const;
 		
-		const std::vector<Vector3<double>> & getVertices() const;
+		virtual const std::vector<Vector3<double>> & getVertices() const;
 		const Material * get_material() const;
 		const Vector3<double> * getNormal() const;
 

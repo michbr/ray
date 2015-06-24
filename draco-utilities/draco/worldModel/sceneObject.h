@@ -32,7 +32,7 @@ public:
 	bool hasTexCoord(int index);
 	Vector3<double> * getTexVertex(int index);
 	const std::vector<std::string> getTextures();
-	std::vector<Face *> &getFaces();
+	virtual std::vector<Face *> &getFaces();
 	
 };
 
